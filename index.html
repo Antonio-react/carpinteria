@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carpintería y Decoración · Muebles a medida en toda España</title>
+    <meta
+      name="description"
+      content="Carpintería y ebanistería familiar con más de 40 años de experiencia. Medimos, diseñamos y montamos muebles a medida en toda España. Presupuesto gratis."
+    />
+    <!-- Indexación controlada por VITE_ROBOTS (.env): "noindex" en pruebas, "index, follow" al publicar. -->
+    <meta name="robots" content="%VITE_ROBOTS%" />
+    <meta name="theme-color" content="#0f0d0b" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- Imagen y textos al compartir el enlace: una sola configuración para toda la web. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:site_name" content="Carpintería y Decoración" />
+    <meta property="og:title" content="Carpintería y Decoración · Muebles a medida" />
+    <meta
+      property="og:description"
+      content="Más de 40 años haciendo muebles a medida. Medimos, diseñamos y montamos en toda España. Presupuesto gratis."
+    />
+    <meta property="og:url" content="https://%VITE_SITE_DOMAIN%/" />
+    <meta property="og:image" content="https://%VITE_SITE_DOMAIN%/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Mueble de salón a medida con el nombre Carpintería y Decoración detrás" />
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <!--
+      Formulario oculto para Netlify Forms: Netlify lee el HTML al publicar y así "descubre" el
+      formulario de contacto, que en la web lo pinta React. Los nombres de los campos deben coincidir
+      con los de src/components/contact/ContactForm.tsx (presupuesto guiado en 3 pasos, un solo formulario).
+    -->
+    <form name="contacto" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data" hidden>
+      <input type="text" name="nombre" />
+      <input type="email" name="email" />
+      <input type="tel" name="telefono" />
+      <input type="text" name="ubicacion" />
+      <input type="text" name="tipo" />
+      <textarea name="mensaje"></textarea>
+      <input type="file" name="adjunto-1" />
+      <input type="file" name="adjunto-2" />
+      <input type="checkbox" name="privacidad" />
+      <input type="text" name="bot-field" />
+    </form>
+
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

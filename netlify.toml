@@ -1,0 +1,22 @@
+[build]
+  # Primero genera src/config/site.ts desde las variables de entorno (no está en GitHub).
+  command = "node scripts/generate-site-config.mjs && npm run build"
+  publish = "dist"
+
+# SPA: cualquier ruta devuelve index.html, así F5 en /trabajos/cocinas no da 404.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Archivos con hash en el nombre (Vite): caché larga.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
