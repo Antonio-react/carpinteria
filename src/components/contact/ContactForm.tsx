@@ -95,7 +95,7 @@ export default function ContactForm() {
       onChange={onChange}
       // Escritorio: misma altura en los 3 pasos (la del más largo) y botones fijos abajo: centrado
       // junto al texto de la izquierda sin saltar al cambiar de paso.
-      className="rounded-[20px] border border-ink/10 bg-paper/60 p-5 sm:p-8 lg:flex lg:min-h-[48rem] lg:flex-col"
+      className="rounded-[20px] border border-ink/10 bg-paper/60 p-5 sm:p-8 lg:flex lg:min-h-[48rem] lg:flex-col lg:compact:min-h-[37rem] lg:compact:p-6"
     >
       <input type="hidden" name="form-name" value={FORM_NAME} />
       <p className="hidden">
@@ -106,17 +106,20 @@ export default function ContactForm() {
 
       <FormProgress current={step} steps={FORM_STEPS.map((item) => item.title)} />
 
-      <div className="mt-8 lg:flex-1">
+      <div className="mt-8 lg:flex-1 lg:compact:mt-6">
         {stepPanel(0, <WorkTypeChoice name="tipo" options={WORK_TYPES} labelledBy={titleId(0)} error={errors.tipo} onPick={next} />)}
 
         {stepPanel(
           1,
-          <div className="grid gap-6">
+          // Pantallas intermedias: la idea a la izquierda y localidad + adjuntos a la derecha (cabe sin bajar).
+          <div className="grid gap-6 lg:compact:grid-cols-2 lg:compact:gap-5">
             <TextField
               name="mensaje"
               label="Tu idea"
               multiline
               required
+              className="lg:compact:row-span-2"
+              controlClassName="lg:compact:h-[16.5rem]"
               placeholder="Qué quieres hacer, para qué estancia, medidas aproximadas si las tienes…"
               error={errors.mensaje}
             />
@@ -135,7 +138,7 @@ export default function ContactForm() {
               <p id={FILES_HINT_ID} className="mt-1 text-xs text-muted">
                 Imágenes, PDF o DWG. Entre los dos archivos, como máximo {MAX_UPLOAD_MB} MB.
               </p>
-              <div className="mt-3 grid gap-3 sm:grid-cols-2">
+              <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:compact:grid-cols-1">
                 <FileField name="adjunto-1" label="Adjuntar archivo" accept={ACCEPTED_FILES} error={errors['adjunto-1']} hintId={FILES_HINT_ID} />
                 <FileField name="adjunto-2" label="Adjuntar otro" accept={ACCEPTED_FILES} hintId={FILES_HINT_ID} />
               </div>
@@ -189,7 +192,7 @@ export default function ContactForm() {
       )}
 
       {/* Navegación entre pasos */}
-      <div className="mt-8 flex flex-wrap-reverse items-center justify-between gap-4 border-t border-ink/10 pt-6">
+      <div className="mt-8 flex flex-wrap-reverse items-center justify-between gap-4 border-t border-ink/10 pt-6 lg:compact:mt-6 lg:compact:pt-5">
         {step > 0 ? (
           <button
             type="button"

@@ -13,12 +13,14 @@ interface TextFieldProps {
   /** Área de texto de varias líneas en vez de una línea. */
   multiline?: boolean
   className?: string
+  /** Clases extra para el propio campo (input o textarea), p. ej. su alto. */
+  controlClassName?: string
 }
 
 /** Campo de texto (una línea o varias) con su etiqueta y su error. */
-export function TextField({ name, label, type = 'text', autoComplete, placeholder, required = false, hint, error, multiline = false, className }: TextFieldProps) {
+export function TextField({ name, label, type = 'text', autoComplete, placeholder, required = false, hint, error, multiline = false, className, controlClassName = '' }: TextFieldProps) {
   const id = `campo-${name}`
-  const shared = { id, name, placeholder, required, className: CONTROL_CLASSES, ...describedBy(id, hint, error) }
+  const shared = { id, name, placeholder, required, className: `${CONTROL_CLASSES} ${controlClassName}`, ...describedBy(id, hint, error) }
   return (
     <FieldShell id={id} label={label} required={required} hint={hint} error={error} className={className}>
       {multiline ? <textarea rows={6} {...shared} /> : <input type={type} autoComplete={autoComplete} {...shared} />}

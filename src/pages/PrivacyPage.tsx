@@ -45,8 +45,10 @@ export default function PrivacyPage() {
 
       <LegalSection title="Cuánto tiempo los conservamos">
         <p>
-          El tiempo necesario para atender tu consulta. Si no llega a haber encargo, los eliminamos en un plazo máximo de un año. Si
-          hay encargo, los conservamos durante la relación comercial y los plazos que exija la ley (por ejemplo, fiscales).
+          El tiempo necesario para atender tu consulta. Los envíos del formulario, con sus archivos adjuntos, se borran
+          automáticamente de Netlify a los 6 meses. La copia que nos llega por correo electrónico la eliminamos en un plazo máximo de
+          un año si no llega a haber encargo. Si hay encargo, conservamos los datos durante la relación comercial y los plazos que
+          exija la ley (por ejemplo, fiscales).
         </p>
       </LegalSection>
 

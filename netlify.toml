@@ -20,3 +20,8 @@
   [headers.values]
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Borrado automático de los envíos del formulario con más de 6 meses (política de privacidad).
+# Código y variables necesarias: netlify/functions/purge-form-submissions.mts
+[functions."purge-form-submissions"]
+  schedule = "@daily"

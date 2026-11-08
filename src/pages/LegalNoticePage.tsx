@@ -39,7 +39,8 @@ export default function LegalNoticePage() {
       <LegalSection title="Propiedad intelectual">
         <p>
           Los textos, el diseño, el logotipo y las fotografías de esta web pertenecen al titular o se usan con permiso de sus
-          autores. Las fotografías muestran trabajos realizados por la empresa, publicados con la autorización de sus propietarios.
+          autores. Las fotografías de trabajos muestran obras realizadas por la empresa, publicadas con la autorización de sus
+          propietarios.
           No se permite copiarlos ni reutilizarlos sin autorización por escrito.
         </p>
       </LegalSection>

@@ -14,7 +14,7 @@ export function LegalPage({ title, description, updated, children }: LegalPagePr
   return (
     <>
       <PageMeta title={`${title} · Carpintería y Decoración`} description={description} />
-      <article className="pt-32 pb-24 lg:pt-40">
+      <article className="pt-32 pb-24 lg:pt-40 lg:compact:pt-32">
         <Container className="max-w-3xl">
           <h1 className="text-4xl font-medium tracking-[-0.03em] [font-stretch:110%] sm:text-5xl">{title}</h1>
           <p className="mt-4 text-sm text-muted">Última actualización: {updated}</p>

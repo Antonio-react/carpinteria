@@ -20,7 +20,7 @@ const SPECS: readonly SpecRow[] = [
  */
 export function IntroSection() {
   return (
-    <section aria-labelledby="quienes-somos" className="py-24 lg:py-36">
+    <section aria-labelledby="quienes-somos" className="py-24 lg:py-36 lg:compact:py-24">
       <Container className="grid gap-14 lg:grid-cols-12 lg:gap-16">
         <div className="lg:col-span-7">
           <SectionHeading

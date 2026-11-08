@@ -16,7 +16,7 @@ export default function CategoryPage() {
   return (
     <>
       <PageMeta title={`${category.name} a medida · Carpintería y Decoración`} description={category.seoDescription} />
-      <section aria-labelledby="categoria-titulo" className="pt-32 pb-20 lg:pt-40 lg:pb-28">
+      <section aria-labelledby="categoria-titulo" className="pt-32 pb-20 lg:pt-40 lg:compact:pt-32 lg:pb-28 lg:compact:pb-20">
         <Container>
           <nav aria-label="Ruta" className="text-sm text-muted">
             <ol className="flex flex-wrap items-center gap-2">
@@ -39,7 +39,7 @@ export default function CategoryPage() {
           </nav>
 
           <div className="mt-8 grid gap-8 lg:grid-cols-12">
-            <h1 id="categoria-titulo" className="text-5xl leading-none font-medium tracking-[-0.03em] [font-stretch:110%] sm:text-6xl lg:col-span-6 lg:text-7xl">
+            <h1 id="categoria-titulo" className="text-5xl leading-none font-medium tracking-[-0.03em] [font-stretch:110%] sm:text-6xl lg:col-span-6 lg:text-7xl lg:compact:text-6xl">
               {category.name}
             </h1>
             <p className="max-w-xl text-left text-lg leading-relaxed text-pretty text-muted lg:col-span-6 lg:pt-3">{category.description}</p>

@@ -12,6 +12,9 @@ import { useTilt } from '@/hooks/useTilt'
  * Carrusel "coverflow" de categorías: sirve solo para ELEGIR categoría.
  * - Tarjeta central grande (enlace a la página de la categoría); laterales inclinadas en perspectiva.
  * - Píldoras arriba. Flechas: a los lados de la tarjeta central en móvil/tableta, debajo en escritorio.
+ * - Pantallas intermedias (variante "compact" a partir de lg: portátiles y tabletas apaisadas): tarjeta
+ *   más pequeña, calculada con el alto de la pantalla, y flechas a los extremos, fuera de las tarjetas,
+ *   para que todo quepa a la vista sin tener que bajar para llegar a ellas.
  * - Móvil: deslizamiento con el dedo. Escritorio: flechas (botones o ← → del teclado), sin arrastre con ratón.
  * - Sin rueda del ratón (evita "scroll jacking").
  * - En móvil se ven 3 tarjetas: la central y parte de las dos laterales.
@@ -61,7 +64,7 @@ export function CategoryCarousel({ tone = 'light' }: CategoryCarouselProps) {
         aria-roledescription="carrusel"
         aria-label="Categorías de trabajos"
         onKeyDown={onKeyDown}
-        className="relative mt-14 overflow-x-clip pt-8 [--card-w:min(60vw,22rem)] md:[--card-w:min(34vw,22rem)] lg:[--card-w:24rem]"
+        className="relative mt-14 overflow-x-clip pt-8 [--card-w:min(60vw,22rem)] md:[--card-w:min(34vw,22rem)] lg:[--card-w:24rem] lg:compact:[--card-w:min(20rem,calc((100svh-16rem)*0.8),28vw)]"
       >
         <div
           className="relative mx-auto aspect-[4/5] w-(--card-w) touch-pan-y select-none perspective-[1400px] [transform-style:preserve-3d]"
@@ -116,19 +119,20 @@ export function CategoryCarousel({ tone = 'light' }: CategoryCarouselProps) {
           })}
         </div>
 
-        {/* Flechas: en móvil y tableta a los lados de la tarjeta central; en escritorio, juntas debajo. */}
-        <div className="lg:mt-12 lg:flex lg:justify-center lg:gap-3">
+        {/* Flechas: en móvil y tableta a los lados de la tarjeta central; en escritorio, juntas debajo;
+            en pantallas intermedias, en los extremos (fuera de las tarjetas). */}
+        <div className="lg:mt-12 lg:flex lg:justify-center lg:gap-3 lg:compact:mt-0 lg:compact:block">
           <ArrowButton
             direction="previous"
             onClick={previous}
             label="Categoría anterior"
-            className="absolute top-1/2 left-[max(0.25rem,calc(50%-var(--card-w)/2-4.25rem))] -translate-y-1/2 lg:static lg:translate-y-0"
+            className="absolute top-1/2 left-[max(0.25rem,calc(50%-var(--card-w)/2-4.25rem))] -translate-y-1/2 lg:static lg:translate-y-0 lg:compact:absolute lg:compact:left-0 lg:compact:-translate-y-1/2"
           />
           <ArrowButton
             direction="next"
             onClick={next}
             label="Categoría siguiente"
-            className="absolute top-1/2 right-[max(0.25rem,calc(50%-var(--card-w)/2-4.25rem))] -translate-y-1/2 lg:static lg:translate-y-0"
+            className="absolute top-1/2 right-[max(0.25rem,calc(50%-var(--card-w)/2-4.25rem))] -translate-y-1/2 lg:static lg:translate-y-0 lg:compact:absolute lg:compact:right-0 lg:compact:-translate-y-1/2"
           />
         </div>
 

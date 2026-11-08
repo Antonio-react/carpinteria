@@ -22,7 +22,7 @@ export function WorkSection({ level = 'h2' }: WorkSectionProps) {
   return (
     <section
       aria-labelledby="trabajos-titulo"
-      className={`relative isolate overflow-x-clip ${isPage ? 'bg-night pt-36 pb-28 text-name lg:pt-44 lg:pb-36' : 'bg-bone py-24 lg:py-36'}`}
+      className={`relative isolate overflow-x-clip ${isPage ? 'bg-night pt-36 pb-28 text-name lg:pt-44 lg:compact:pt-32 lg:pb-36 lg:compact:pb-24' : 'bg-bone py-24 lg:py-36 lg:compact:py-24'}`}
     >
       {isPage && (
         <>

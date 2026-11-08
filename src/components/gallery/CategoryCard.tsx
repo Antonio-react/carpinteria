@@ -11,7 +11,7 @@ export function CategoryCard({ category }: CategoryCardProps) {
   const { cover, name, tagline } = category
   return (
     <Link to={categoryPath(category)} className="group block transition-transform duration-200 ease-out hover:-translate-y-0.5">
-      <div className="aspect-[4/5] overflow-hidden rounded-[14px] bg-placeholder sm:rounded-[20px]">
+      <div className="aspect-[4/5] overflow-hidden lg:compact:aspect-[4/3] rounded-[14px] bg-placeholder sm:rounded-[20px]">
         {cover ? (
           <img
             src={cover.src}

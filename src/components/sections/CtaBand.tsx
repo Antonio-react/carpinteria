@@ -14,10 +14,10 @@ interface CtaBandProps {
  */
 export function CtaBand({ title, text }: CtaBandProps) {
   return (
-    <section aria-labelledby="cta-titulo" className="bg-night py-20 text-name lg:py-28">
+    <section aria-labelledby="cta-titulo" className="bg-night py-20 text-name lg:py-28 lg:compact:py-20">
       <Container className="grid items-end gap-10 lg:grid-cols-12">
         <div className="lg:col-span-8">
-          <h2 id="cta-titulo" className="text-4xl leading-[1.02] font-medium tracking-[-0.025em] text-balance [font-stretch:105%] sm:text-5xl lg:text-6xl">
+          <h2 id="cta-titulo" className="text-4xl leading-[1.02] font-medium tracking-[-0.025em] text-balance [font-stretch:105%] sm:text-5xl lg:text-6xl lg:compact:text-5xl">
             {title}
           </h2>
           <p className="mt-5 max-w-xl text-left text-lg text-name/70">{text}</p>

@@ -38,7 +38,7 @@ export function WorkTypeChoice({ name, options, labelledBy, error, onPick }: Wor
               const input = event.currentTarget.querySelector('input')
               if (input?.checked) window.setTimeout(onPick, 120)
             }}
-            className="group relative flex min-h-24 cursor-pointer lg:min-h-36 flex-col justify-between rounded-[16px] border border-ink/15 bg-paper p-4 transition-[border-color,background-color,transform] duration-150 ease-out hover:border-ink/40 active:scale-[0.98] has-checked:border-ink has-checked:bg-ink has-checked:text-paper has-focus-visible:ring-2 has-focus-visible:ring-oak has-focus-visible:ring-offset-2 has-focus-visible:ring-offset-bone"
+            className="group relative flex min-h-24 cursor-pointer lg:min-h-36 lg:compact:min-h-24 flex-col justify-between rounded-[16px] border border-ink/15 bg-paper p-4 transition-[border-color,background-color,transform] duration-150 ease-out hover:border-ink/40 active:scale-[0.98] has-checked:border-ink has-checked:bg-ink has-checked:text-paper has-focus-visible:ring-2 has-focus-visible:ring-oak has-focus-visible:ring-offset-2 has-focus-visible:ring-offset-bone"
           >
             <input
               id={index === 0 ? `campo-${name}` : undefined}

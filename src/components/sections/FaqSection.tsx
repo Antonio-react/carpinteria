@@ -33,7 +33,7 @@ const FAQS = [
 /** Preguntas frecuentes (página Cómo trabajamos). No promete plazos fijos. */
 export function FaqSection() {
   return (
-    <section aria-labelledby="preguntas-titulo" className="bg-bone py-24 lg:py-32">
+    <section aria-labelledby="preguntas-titulo" className="bg-bone py-24 lg:py-32 lg:compact:py-24">
       <Container className="grid gap-12 lg:grid-cols-12">
         <SectionHeading id="preguntas-titulo" title="Preguntas frecuentes" className="lg:col-span-5" />
         <div className="lg:col-span-7">

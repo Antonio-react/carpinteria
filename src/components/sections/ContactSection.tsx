@@ -15,7 +15,7 @@ interface ContactSectionProps {
 
 export function ContactSection({ level = 'h2' }: ContactSectionProps) {
   return (
-    <section aria-labelledby="contacto-titulo" className={`relative bg-sawdust ${level === 'h1' ? 'pt-32 pb-24 lg:pt-40 lg:pb-32' : 'py-24 lg:py-36'}`}>
+    <section aria-labelledby="contacto-titulo" className={`relative bg-sawdust ${level === 'h1' ? 'pt-32 pb-24 lg:pt-40 lg:pb-32 lg:compact:pb-24' : 'py-24 lg:py-36 lg:compact:py-24'}`}>
       <Container className="grid gap-14 lg:grid-cols-12">
         <div className="lg:col-span-5">
           <SectionHeading

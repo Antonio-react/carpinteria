@@ -44,7 +44,7 @@ export function PlanToRealSection() {
   )
 
   return (
-    <section aria-labelledby="plano-titulo" className="bg-bone py-24 lg:py-36">
+    <section aria-labelledby="plano-titulo" className="bg-bone py-24 lg:py-36 lg:compact:py-24">
       <Container className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
         <SectionHeading
           id="plano-titulo"
@@ -68,7 +68,7 @@ export function PlanToRealSection() {
             afterLabel="Terminado"
             label="Comparar el plano con el mueble terminado"
             initial={55}
-            className="mx-auto aspect-[1656/1925] w-full max-w-xl rounded-[20px] border border-ink/10 shadow-[0_30px_80px_-30px_rgb(28_25_22/0.45)]"
+            className="mx-auto aspect-[1656/1925] w-full max-w-xl lg:compact:max-w-[min(36rem,calc((100svh-9rem)*0.86))] rounded-[20px] border border-ink/10 shadow-[0_30px_80px_-30px_rgb(28_25_22/0.45)]"
           />
         </div>
       </Container>

@@ -15,7 +15,7 @@ const TONES = {
 /**
  * Cajetín de plano: el recuadro que llevan los planos técnicos con hoja, título, escala y firma.
  * Cada página es una "hoja" del cuaderno de planos del taller. Decorativo (aria-hidden).
- * En móvil, solo la fila de arriba (compacta).
+ * En móvil y tableta, solo la fila de arriba (compacta): la firma bajaría hasta el título.
  */
 export function TitleBlock({ number, title, signature, tone = 'light', className = '' }: TitleBlockProps) {
   const styles = TONES[tone]
@@ -32,7 +32,7 @@ export function TitleBlock({ number, title, signature, tone = 'light', className
           <span className={styles.muted}>Esc.</span> 1:1
         </span>
       </div>
-      <div className={`hidden border-t px-2.5 py-2 tracking-[0.08em] normal-case sm:block ${styles.line} ${styles.muted}`}>{signature}</div>
+      <div className={`hidden border-t px-2.5 py-2 tracking-[0.08em] normal-case lg:block ${styles.line} ${styles.muted}`}>{signature}</div>
     </div>
   )
 }
