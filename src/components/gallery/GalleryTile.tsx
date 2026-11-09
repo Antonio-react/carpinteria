@@ -9,7 +9,8 @@ interface GalleryTileProps {
 }
 
 /**
- * Foto de la galería (botón que la amplía): la sierra gira mientras carga y la foto aparece con un
+ * Foto de la galería (botón que la amplía), con su proporción natural (la galería es un mosaico de
+ * tamaños distintos): la sierra gira mientras carga y la foto aparece con un
  * fundido suave. Al pasar el ratón, una lupa indica que se puede ampliar.
  */
 export function GalleryTile({ photo, onOpen }: GalleryTileProps) {
@@ -19,7 +20,8 @@ export function GalleryTile({ photo, onOpen }: GalleryTileProps) {
       type="button"
       onClick={onOpen}
       aria-label={`Ampliar foto: ${photo.alt}`}
-      className="group relative block aspect-[4/5] w-full cursor-zoom-in overflow-hidden rounded-[14px] bg-placeholder sm:rounded-[20px]"
+      style={{ aspectRatio: `${photo.width} / ${photo.height}` }}
+      className="group relative block w-full cursor-zoom-in overflow-hidden rounded-[14px] bg-placeholder sm:rounded-[20px]"
     >
       {!loaded && (
         <span className="absolute inset-0 grid place-items-center text-oak">

@@ -17,7 +17,7 @@ Construye la web entera, de principio a fin: incluye el formulario de contacto (
 * **Accesibilidad mínima:** todo botón, enlace e imagen necesita su texto alternativo (`alt`) o `aria-label` cuando el propósito no sea evidente por el texto visible.
 * **Mobile-first, pero cuidando igual de bien el escritorio.** La gente que busca una carpintería suele hacerlo desde el ordenador, no solo desde el móvil. El `Navbar` y el resto de componentes deben tener un diseño propio para cada tamaño, no solo "que no se rompa" en desktop.
 * **Si reescribes algo que yo ya había hecho, explícame qué estaba mal y por qué**, antes de sustituirlo. El objetivo es que aprenda, no solo que quede terminado.
-* **Para fotos de galería que aún no existen:** usar un placeholder gris con el nombre de la categoría centrado. **Nunca** fotos de stock (Unsplash o similar): riesgo de que se queden puestas en la web publicada mostrando trabajos que no son de la empresa.
+* **Para fotos de galería que aún no existen:** un boceto a lápiz del tipo de trabajo sobre papel de plano, con el nombre de la categoría al pie (`PhotoPlaceholder` + `src/data/sketches.ts`; antes era un hueco gris, cambiado con permiso del usuario). **Nunca** fotos de stock (Unsplash o similar): riesgo de que se queden puestas en la web publicada mostrando trabajos que no son de la empresa.
 
 ## Alias de rutas
 
@@ -93,7 +93,7 @@ En GitHub va `src/config/site.example.ts` (plantilla con datos de ejemplo). En N
 * **Diseño combinado:** mezclar lo mejor de las dos referencias de galería (píldoras de categoría + foto central destacada, y el *coverflow* 3D con título sobre la tarjeta).
 * **Dentro de cada categoría:** las fotos se ven de forma normal (galería simple), con una descripción general por categoría (no una por cada foto individual).
 * **Spinner de carga de la galería:** el logo de la sierra circular girando, animado.
-* **Fotos aún no disponibles:** placeholder gris con el nombre de la categoría centrado (nunca stock, ver regla en "Stack técnico").
+* **Fotos aún no disponibles:** boceto a lápiz del tipo de trabajo con su nombre (nunca stock, ver regla en "Stack técnico").
 
 ## Formulario de contacto
 

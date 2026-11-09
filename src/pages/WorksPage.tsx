@@ -1,6 +1,6 @@
 import { CategoryCard } from '@/components/gallery/CategoryCard'
 import { PageMeta } from '@/components/layout/PageMeta'
-import { CtaBand } from '@/components/sections/CtaBand'
+import { NoteCta } from '@/components/sections/NoteCta'
 import { WorkSection } from '@/components/sections/WorkSection'
 import { Container } from '@/components/ui/Container'
 import { CATEGORIES } from '@/data/categories'
@@ -33,7 +33,7 @@ export default function WorksPage() {
           </ul>
         </Container>
       </section>
-      <CtaBand title="Elige lo que te guste y lo adaptamos a tu casa." text="Al pedir presupuesto puedes adjuntar fotos de referencia." />
+      <NoteCta title="Cada encargo empieza desde cero. Cuéntanos el tuyo." text="Al pedir presupuesto puedes adjuntar fotos de referencia." />
     </>
   )
 }

@@ -1,5 +1,6 @@
 import { Container } from '@/components/ui/Container'
 import { PencilUnderline } from '@/components/ui/PencilUnderline'
+import { PinnedNote } from '@/components/ui/PinnedNote'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { SpecSheet, type SpecRow } from '@/components/ui/SpecSheet'
 import { siteConfig } from '@/config/site'
@@ -20,7 +21,7 @@ const SPECS: readonly SpecRow[] = [
  */
 export function IntroSection() {
   return (
-    <section aria-labelledby="quienes-somos" className="py-24 lg:py-36 lg:compact:py-24">
+    <section aria-labelledby="quienes-somos" className="pt-24 pb-10 lg:pt-36 lg:pb-14 lg:compact:pt-24 lg:compact:pb-10">
       <Container className="grid gap-14 lg:grid-cols-12 lg:gap-16">
         <div className="lg:col-span-7">
           <SectionHeading
@@ -36,6 +37,9 @@ export function IntroSection() {
             medimos el espacio, la diseñamos contigo y la montamos nosotros, sin intermediarios. Trabajamos para
             particulares y para empresas.
           </p>
+          <PinnedNote tilt={4} curl signature="El taller" className="mt-12 ml-4 max-w-xs">
+            Ninguna pared está recta. Por eso medimos nosotros.
+          </PinnedNote>
         </div>
         <SpecSheet title="Ficha del taller" rows={SPECS} className="lg:col-span-5 lg:self-center" />
       </Container>

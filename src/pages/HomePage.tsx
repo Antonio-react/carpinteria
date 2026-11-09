@@ -3,7 +3,7 @@ import { PageMeta } from '@/components/layout/PageMeta'
 import { CtaBand } from '@/components/sections/CtaBand'
 import { IntroSection } from '@/components/sections/IntroSection'
 import { PlanToRealSection } from '@/components/sections/PlanToRealSection'
-import { WorkSection } from '@/components/sections/WorkSection'
+import { CategoryDrawers } from '@/components/sections/CategoryDrawers'
 import { ScrollMarquee } from '@/components/ui/ScrollMarquee'
 import { siteConfig } from '@/config/site'
 import type { CSSProperties } from 'react'
@@ -33,8 +33,8 @@ export default function HomePage() {
         <IntroSection />
         <PlanToRealSection />
         <ScrollMarquee primary={siteConfig.lema} secondary={siteConfig.nombre} />
-        <WorkSection />
-        <CtaBand title="Mándanos tu idea, aunque sea un boceto." text="En el formulario puedes adjuntar planos, fotos o un dibujo hecho a mano." />
+        <CategoryDrawers />
+        <CtaBand title="Empieza contándonos tu idea." text="En el formulario puedes adjuntar planos, fotos o un dibujo hecho a mano." />
       </div>
     </>
   )

@@ -78,6 +78,7 @@ export function CategoryCarousel({ tone = 'light' }: CategoryCarouselProps) {
             const active = offset === 0
             const card = (
               <FolderCard
+                slug={category.slug}
                 name={category.name}
                 tagline={category.tagline}
                 cover={category.cover}

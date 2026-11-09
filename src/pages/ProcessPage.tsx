@@ -1,5 +1,5 @@
 import { PageMeta } from '@/components/layout/PageMeta'
-import { CtaBand } from '@/components/sections/CtaBand'
+import { SheetCta } from '@/components/sections/SheetCta'
 import { FaqSection } from '@/components/sections/FaqSection'
 import { ProcessSection } from '@/components/sections/ProcessSection'
 
@@ -13,7 +13,14 @@ export default function ProcessPage() {
       />
       <ProcessSection level="h1" />
       <FaqSection />
-      <CtaBand title="Pide tu presupuesto y empezamos a medir." text="El presupuesto es gratis." />
+      <SheetCta
+        title="Pide tu presupuesto y empezamos a medir."
+        rows={[
+          { label: 'Presupuesto', value: 'Gratis' },
+          { label: 'Medición', value: 'En tu casa o negocio', note: 'La hacemos nosotros.' },
+          { label: 'Zona', value: 'Toda España', note: 'Lo llevamos y lo montamos.' },
+        ]}
+      />
     </>
   )
 }

@@ -12,11 +12,12 @@ import { ACCEPTED_FILES, MAX_UPLOAD_MB } from '@/components/contact/validation'
 import { WorkTypeChoice, type WorkTypeOption } from '@/components/contact/WorkTypeChoice'
 import { siteConfig } from '@/config/site'
 import { CATEGORIES } from '@/data/categories'
+import { sketchFor } from '@/data/sketches'
 
 /** Opciones del paso 1: las categorías de la galería (sin "Otros trabajos") y "Otro". */
 const WORK_TYPES: readonly WorkTypeOption[] = [
-  ...CATEGORIES.filter((category) => category.slug !== 'otros-trabajos').map((category) => ({ value: category.name, hint: category.tagline })),
-  { value: 'Otro', hint: 'Cualquier otro trabajo en madera' },
+  ...CATEGORIES.filter((category) => category.slug !== 'otros-trabajos').map((category) => ({ value: category.name, hint: category.tagline, sketch: sketchFor(category.slug) })),
+  { value: 'Otro', hint: 'Cualquier otro trabajo en madera', sketch: sketchFor('otros-trabajos') },
 ]
 const FILES_HINT_ID = 'adjuntos-ayuda'
 const titleId = (index: number) => `paso-${FORM_STEPS[index]?.id ?? index}-titulo`

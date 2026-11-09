@@ -1,17 +1,18 @@
 import { Link } from 'react-router'
 import { PhotoPlaceholder } from '@/components/ui/PhotoPlaceholder'
 import { categoryPath, type Category } from '@/data/categories'
+import { sketchFor } from '@/data/sketches'
 
 interface CategoryCardProps {
   category: Category
 }
 
-/** Tarjeta de una categoría en la página de Trabajos: portada (o hueco gris), nombre y frase. */
+/** Tarjeta de una categoría en la página de Trabajos: portada (o su boceto a lápiz), nombre y frase. */
 export function CategoryCard({ category }: CategoryCardProps) {
   const { cover, name, tagline } = category
   return (
     <Link to={categoryPath(category)} className="group block transition-transform duration-200 ease-out hover:-translate-y-0.5">
-      <div className="aspect-[4/5] overflow-hidden lg:compact:aspect-[4/3] rounded-[14px] bg-placeholder sm:rounded-[20px]">
+      <div className="aspect-[4/5] overflow-hidden lg:compact:aspect-[4/3] rounded-[14px] border border-ink/10 bg-paper sm:rounded-[20px]">
         {cover ? (
           <img
             src={cover.src}
@@ -24,7 +25,7 @@ export function CategoryCard({ category }: CategoryCardProps) {
             className="size-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
           />
         ) : (
-          <PhotoPlaceholder label={name} className="size-full" />
+          <PhotoPlaceholder label={name} sketch={sketchFor(category.slug)} className="size-full" />
         )}
       </div>
       <p className="mt-3 text-base font-medium tracking-[-0.01em] [font-stretch:105%] sm:mt-4 sm:text-xl">{name}</p>

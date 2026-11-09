@@ -1,8 +1,12 @@
 import { useRef } from 'react'
+import { PencilSketch } from '@/components/ui/PencilSketch'
+import type { Sketch } from '@/data/sketches'
 
 export interface WorkTypeOption {
   value: string
   hint: string
+  /** Boceto a lápiz pequeño del tipo de trabajo. */
+  sketch: Sketch
 }
 
 interface WorkTypeChoiceProps {
@@ -52,8 +56,13 @@ export function WorkTypeChoice({ name, options, labelledBy, error, onPick }: Wor
                 window.setTimeout(onPick, 220)
               }}
             />
-            <span className="text-lg leading-tight font-medium tracking-[-0.01em] [font-stretch:105%]">{option.value}</span>
-            <span className="mt-2 text-xs leading-snug text-muted group-has-checked:text-paper/70">{option.hint}</span>
+            <PencilSketch
+              sketch={option.sketch}
+              seed={index + 7}
+              className="pointer-events-none absolute top-2 right-2 h-12 w-auto opacity-60 group-has-checked:opacity-90 group-has-checked:invert"
+            />
+            <span className="relative pr-12 text-lg leading-tight font-medium tracking-[-0.01em] [font-stretch:105%]">{option.value}</span>
+            <span className="relative mt-2 pr-10 text-xs leading-snug text-muted group-has-checked:text-paper/70">{option.hint}</span>
           </label>
         ))}
       </div>
