@@ -55,8 +55,8 @@ const OVER_TV_WHITE = 'rgb(172 160 145)'
 
 const OVER_TV_RIGHT_START = 0.42
 const OVER_TV_RIGHT_SPAN = 0.5
-/** Progreso en el que la puerta derecha de encima de la tele va por la mitad: ahí sube la cortina en móvil. */
-export const OVER_TV_RIGHT_HALF = OVER_TV_RIGHT_START + OVER_TV_RIGHT_SPAN / 2
+/** Progreso en el que la puerta derecha de encima de la tele termina de abrirse: ahí sube la cortina en móvil. */
+export const OVER_TV_RIGHT_OPEN = OVER_TV_RIGHT_START + OVER_TV_RIGHT_SPAN
 
 export const DOORS: readonly Door[] = [
   // La 1.ª columna usa el interior de la 2.ª reflejado: las dos comparten la caja vertical que tapa una

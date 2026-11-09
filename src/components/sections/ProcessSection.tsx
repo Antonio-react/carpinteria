@@ -51,7 +51,7 @@ export function ProcessSection({ level = 'h2' }: ProcessSectionProps) {
   return (
     <section
       aria-labelledby="como-trabajamos-titulo"
-      className={`border-y border-ink/10 bg-paper bg-[linear-gradient(to_right,rgb(28_25_22/0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgb(28_25_22/0.05)_1px,transparent_1px)] bg-size-[24px_24px] ${level === 'h1' ? 'pt-32 pb-24 lg:pt-40 lg:compact:pt-32' : 'py-24 lg:pt-36 lg:compact:pt-24'} lg:pb-36 lg:compact:pb-24`}
+      className={`border-y border-ink/10 bg-sawdust bg-[linear-gradient(to_right,rgb(28_25_22/0.07)_1px,transparent_1px),linear-gradient(to_bottom,rgb(28_25_22/0.07)_1px,transparent_1px)] bg-size-[24px_24px] ${level === 'h1' ? 'pt-32 pb-24 lg:pt-40 lg:compact:pt-32' : 'py-24 lg:pt-36 lg:compact:pt-24'} lg:pb-36 lg:compact:pb-24`}
     >
       <Container>
         <SectionHeading

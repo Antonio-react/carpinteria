@@ -1,6 +1,6 @@
 import { useEffect, useRef, type RefObject } from 'react'
 import type { HeroDoorsHandle } from '@/components/hero/HeroDoors'
-import { OPEN_COMPLETE, OVER_TV_RIGHT_HALF } from '@/components/hero/heroDoorsChoreography'
+import { OPEN_COMPLETE, OVER_TV_RIGHT_OPEN } from '@/components/hero/heroDoorsChoreography'
 
 /** Capas del hero que se mueven con el scroll. */
 export interface HeroLayers {
@@ -24,11 +24,20 @@ const OPEN_PAUSE = 0.12
  * Scroll (en pantallas) a partir del cual el contenido de Inicio sube por encima del hero (es el alto
  * del espaciador de HomePage):
  *   - escritorio: con el mueble abierto del todo, más una pequeña pausa (≈ 0,88), para que se vea entero;
- *   - móvil (vertical, o apaisado bajo): antes, cuando la puerta derecha de encima de la tele va por la
- *     mitad de su recorrido (≈ 0,5); el resto de la apertura se ve mientras sube.
+ *   - móvil (vertical, o apaisado bajo): cuando la puerta derecha de encima de la tele termina de abrirse
+ *     (≈ 0,69). Antes subía con esa puerta a medio abrir (≈ 0,5) y, con un tirón rápido del dedo, la
+ *     página tapaba el mueble antes de verlo. Lo que quede de apertura se ve mientras sube.
  */
 export const CURTAIN_SCREENS = (OPEN_COMPLETE + OPEN_PAUSE) * OPEN_SCREENS
-export const CURTAIN_SCREENS_MOBILE = OVER_TV_RIGHT_HALF * OPEN_SCREENS
+export const CURTAIN_SCREENS_MOBILE = OVER_TV_RIGHT_OPEN * OPEN_SCREENS
+
+/**
+ * Tiempo mínimo (s) que tarda la apertura completa del mueble. Con un scroll normal se va más
+ * despacio que esto y la animación sigue al dedo/rueda sin retraso; con un golpe rápido de rueda o un
+ * tirón en el móvil, la apertura no salta de golpe: va por detrás del scroll a esta velocidad máxima y
+ * se pone al día sola. (No frena la página: el scroll del usuario nunca se toca.)
+ */
+const MIN_OPEN_SECONDS = 0.7
 
 const clamp = (value: number) => Math.min(Math.max(value, 0), 1)
 const EMPTY: HeroLayers = { section: null, room: null, name: null, group: null, cabinet: null, tv: null, footer: null, shade: null }
@@ -63,6 +72,9 @@ export function useHeroParallax(doors?: RefObject<HeroDoorsHandle | null>) {
     let frame = 0
     // true desde que la cortina ha tapado el hero entero hasta que se vuelve arriba del todo.
     let assembled = false
+    // Scroll "mostrado": persigue a window.scrollY con velocidad limitada (ver MIN_OPEN_SECONDS).
+    let shown = window.scrollY
+    let lastTime = 0
 
     const set = (element: HTMLElement | null, transform: string, opacity?: number) => {
       if (!element) return
@@ -70,13 +82,19 @@ export function useHeroParallax(doors?: RefObject<HeroDoorsHandle | null>) {
       if (opacity !== undefined) element.style.opacity = String(opacity)
     }
 
-    const update = () => {
+    const update = (time: number = performance.now()) => {
       frame = 0
       const l = layers.current
       const vh = window.innerHeight
-      const scroll = window.scrollY
+      const real = window.scrollY
+      // Segundos desde el fotograma anterior (con tope: tras una pestaña en segundo plano no da un salto).
+      // Primer fotograma tras estar quieto: se cuenta como uno normal (1/60 s).
+      const dt = lastTime ? Math.min((time - lastTime) / 1000, 0.05) : 1 / 60
+      lastTime = time
 
       if (reduced.matches) {
+        const scroll = real
+        shown = real
         for (const key of ['room', 'name', 'group', 'cabinet', 'tv'] as const) set(l[key], '')
         doors?.current?.update(0)
         if (l.footer) l.footer.style.opacity = String(clamp(1 - (scroll / vh) * 2.5))
@@ -90,7 +108,14 @@ export function useHeroParallax(doors?: RefObject<HeroDoorsHandle | null>) {
       const curtain = document.querySelector<HTMLElement>('[data-curtain]')
       const cover = curtain ? clamp(1 - curtain.getBoundingClientRect().top / vh) : 0
       if (cover >= 0.99) assembled = true // hero tapado del todo: se monta sin que se vea
-      else if (scroll < 4) assembled = false // arriba del todo: vuelve a empezar la secuencia
+      else if (real < 4) assembled = false // arriba del todo: vuelve a empezar la secuencia
+
+      // Avance limitado del scroll mostrado. Montado (hero tapado o recién rearmado) no hay nada que
+      // animar: se iguala al real para que la siguiente apertura empiece desde donde está la página.
+      const maxStep = ((vh * OPEN_SCREENS) / MIN_OPEN_SECONDS) * dt
+      if (assembled) shown = real
+      else shown += Math.max(-maxStep, Math.min(maxStep, real - shown))
+      const scroll = shown
 
       // Montado: todo en reposo (e = 0, p = 0); la cortina sigue oscureciendo con "shade".
       const e = assembled ? 0 : clamp(scroll / (vh * OPEN_SCREENS)) // apertura 0 → 1
@@ -117,6 +142,10 @@ export function useHeroParallax(doors?: RefObject<HeroDoorsHandle | null>) {
       }
       if (l.shade) l.shade.style.opacity = String(clamp(cover * 0.9))
       if (l.section) l.section.dataset.covered = cover >= 0.99 ? 'true' : 'false'
+
+      // Aún no ha alcanzado al scroll real: sigue animando aunque ya no lleguen eventos de scroll.
+      if (Math.abs(real - shown) > 0.5) frame = requestAnimationFrame(update)
+      else lastTime = 0
     }
 
     const request = () => {
