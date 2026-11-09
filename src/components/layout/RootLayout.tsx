@@ -42,7 +42,8 @@ export function RootLayout() {
         )}
         <Suspense
           fallback={
-            <div className="grid min-h-svh place-items-center text-oak">
+            // La sierra solo se ve si la página tarda más de 300 ms (si no, ni aparece: sin parpadeo).
+            <div className="grid min-h-svh animate-appear-late place-items-center text-oak">
               <SawSpinner size={64} label="Cargando página" />
             </div>
           }

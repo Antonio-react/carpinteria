@@ -1,7 +1,7 @@
 import { lazy } from 'react'
 
-// Cada página se descarga solo cuando se visita (mientras, la sierra del logo gira).
-export const HomePage = lazy(() => import('@/pages/HomePage'))
+// Cada página se descarga solo cuando se visita (mientras, la sierra del logo gira si tarda).
+// Inicio NO va aquí: viene en el código principal (ver router.tsx).
 export const WorksPage = lazy(() => import('@/pages/WorksPage'))
 export const CategoryPage = lazy(() => import('@/pages/CategoryPage'))
 export const ProcessPage = lazy(() => import('@/pages/ProcessPage'))

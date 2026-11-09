@@ -33,7 +33,7 @@ export const MAX_PHOTOS_PER_CATEGORY = 10
 const salonesCover: GalleryPhoto = {
   src: salonesCoverLarge,
   srcSmall: salonesCoverSmall,
-  alt: 'Mueble de salón a medida con paneles lacados en blanco, pantalla empotrada, estantería de roble y zócalo negro con chimenea',
+  alt: 'Mueble de salón a medida con puertas lacadas en blanco, pantalla empotrada, estantería de roble y zócalo negro con chimenea',
   width: 960,
   height: 1200,
 }
@@ -93,12 +93,12 @@ export const CATEGORIES: readonly Category[] = [
   {
     slug: 'otros-trabajos',
     name: 'Otros trabajos',
-    tagline: 'Escaleras, porches, pérgolas y más',
+    tagline: 'Escaleras, revestimientos y más',
     description:
-      'Escaleras, revestimientos, porches, pérgolas, mobiliario y encargos especiales que no caben en una sola categoría.',
+      'Escaleras, revestimientos, mobiliario y encargos especiales que no caben en una sola categoría.',
     photos: [],
     placeholderCount: 6,
-    seoDescription: 'Escaleras, revestimientos, porches, pérgolas y encargos especiales en madera hechos a medida.',
+    seoDescription: 'Escaleras, revestimientos, mobiliario y encargos especiales en madera hechos a medida.',
   },
 ]
 

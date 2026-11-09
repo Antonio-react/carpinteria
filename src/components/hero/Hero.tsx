@@ -1,11 +1,13 @@
-import type { ReactNode } from 'react'
+import { useRef, type ReactNode } from 'react'
 import pieceLarge from '@/assets/hero/piece-1400.webp'
 import pieceFull from '@/assets/hero/piece-2000.webp'
 import pieceSmall from '@/assets/hero/piece-800.webp'
 import roomLarge from '@/assets/hero/room-1400.webp'
 import roomSmall from '@/assets/hero/room-800.webp'
+import oakFrameTop from '@/assets/hero/oak-frame-top.webp'
 import { FireGlow } from '@/components/hero/FireGlow'
 import { GiantName } from '@/components/hero/GiantName'
+import { HeroDoors, type HeroDoorsHandle } from '@/components/hero/HeroDoors'
 import { PIECE_CLIPS } from '@/components/hero/heroPieces'
 import { Button } from '@/components/ui/Button'
 import { DropIn } from '@/components/ui/DropIn'
@@ -17,8 +19,9 @@ import { useHeroParallax } from '@/hooks/useHeroParallax'
  * Hero de inicio. Capas con el MISMO lienzo (misma caja, imágenes recortadas igual):
  *   1. la sala completa, oscurecida (z-0)
  *   2. el nombre gigante (z-10)
- *   3. el mueble, en 2 piezas (el mueble entero con la chimenea, y la tele) que en reposo
- *      encajan sin costuras y con el scroll se separan (ver useHeroParallax) (z-20)
+ *   3. el mueble (z-20): en reposo, la foto tal cual. Con el scroll se queda quieto, se abren tres
+ *      puertas y la estantería de roble sale como un cajón (HeroDoors), y la tele, recortada aparte,
+ *      sale hacia delante (useHeroParallax)
  * Abajo: el botón principal y el lema.
  *
  * Variables (en la <section>):
@@ -45,6 +48,11 @@ const SCENE_VARS = [
   // acaba al 99 % del lienzo: shift = 2,49 × letra − 0,49 × ancho del lienzo (ajustado a ojo sobre capturas).
   // (Antes era 2vw fijo: en pantallas anchas tapaba cada vez más, hasta un cuarto de la "Ó".)
   '[--shift:min(0px,calc(50%-var(--pw)*0.49-6px))] md:[--shift:0px] xl:[--shift:calc(var(--name-size)*2.49_-_var(--pw)*0.49)]',
+  // Móvil en horizontal (~390px de alto): dos columnas. Nombre, lema y botón a la izquierda; el mueble a
+  // la derecha, a toda la altura bajo la barra, montando sobre el final del nombre (sigue "detrás").
+  'phone-land:[--name-top:5rem]! phone-land:[--name-size:min(6.6vw,15svh)]!',
+  'phone-land:[--pt:3.5rem]! phone-land:[--gap:0px]! phone-land:[--vis:0.98]!',
+  'phone-land:[--pw:calc(var(--ch)*0.8603)]! phone-land:[--shift:min(15%,calc(50%-var(--pw)/2-1rem))]!',
 ].join(' ')
 
 const CANVAS =
@@ -55,10 +63,11 @@ const SIZES = '(min-width: 1280px) 50vw, (min-width: 768px) 85vw, 100vw'
 const PIECE_SRCSET = `${pieceSmall} 800w, ${pieceLarge} 1400w, ${pieceFull} 2000w`
 
 const ALT =
-  'Mueble de salón a medida hecho por la empresa: paneles lacados en blanco con pantalla empotrada, estantería de roble y zócalo negro con chimenea'
+  'Mueble de salón a medida hecho por la empresa: puertas lacadas en blanco con pantalla empotrada, estantería de roble y zócalo negro con chimenea'
 
 export function Hero() {
-  const bind = useHeroParallax()
+  const doors = useRef<HeroDoorsHandle>(null)
+  const bind = useHeroParallax(doors)
 
   /** Una pieza del mueble: la misma foto recortada por su junta. */
   const piece = (key: keyof typeof PIECE_CLIPS, extra?: ReactNode) => (
@@ -101,7 +110,7 @@ export function Hero() {
       </div>
 
       {/* 2. Nombre gigante. */}
-      <div ref={bind('name')} className="absolute inset-x-0 top-(--name-top) z-10 origin-top px-4 text-center will-change-transform md:px-10">
+      <div ref={bind('name')} className="absolute inset-x-0 top-(--name-top) z-10 origin-top px-4 text-center will-change-transform md:px-10 phone-land:origin-top-left! phone-land:px-6! phone-land:text-left!">
         <GiantName
           lineClassName="text-(length:--name-size) font-semibold leading-[0.88] tracking-[-0.02em] whitespace-nowrap text-name/55 [font-stretch:110%]"
           connectorClassName="font-serif font-normal italic text-name/80 [font-stretch:100%]"
@@ -110,7 +119,22 @@ export function Hero() {
 
       {/* 3. Mueble en piezas (de atrás a delante). */}
       <div ref={bind('group')} className={`${CANVAS} z-20 will-change-transform`}>
-        {piece('cabinet', <FireGlow />)}
+        {piece(
+          'cabinet',
+          <>
+            <FireGlow />
+            {/* Borde de arriba del mueble junto a su esquina derecha, que el recorte de la foto dejaba bajo
+                (scripts/images/hero-oak-frame.mjs). Lienzo: x 1340–1655, y 0–200. */}
+            <img
+              src={oakFrameTop}
+              alt=""
+              aria-hidden="true"
+              draggable={false}
+              className="absolute top-0 left-[80.918%] h-[10.39%] w-[19.022%] max-w-none"
+            />
+          </>,
+        )}
+        <HeroDoors ref={doors} photoSrc={pieceFull} photoSrcSet={PIECE_SRCSET} sizes={SIZES} />
         {piece('tv')}
       </div>
 
@@ -123,14 +147,14 @@ export function Hero() {
       {/* Botón principal y lema. */}
       <div
         ref={bind('footer')}
-        className="absolute inset-x-0 bottom-0 z-40 flex flex-col-reverse items-start gap-3 px-4 pb-8 sm:flex-row sm:items-end sm:justify-between sm:px-6 md:pb-10 lg:px-10"
+        className="absolute inset-x-0 bottom-0 z-40 flex flex-col-reverse items-start gap-3 px-4 pb-8 sm:flex-row sm:items-end sm:justify-between sm:px-6 md:pb-10 lg:px-10 phone-land:right-auto! phone-land:flex-col-reverse! phone-land:items-start! phone-land:px-6! phone-land:pb-6!"
       >
         <DropIn order={3}>
           <Button to={QUOTE_PATH} tone="light" withArrow>
             Pedir presupuesto
           </Button>
         </DropIn>
-        <DropIn as="p" order={4} className="font-serif text-3xl text-name/85 italic sm:text-4xl">
+        <DropIn as="p" order={4} className="font-serif text-3xl text-name/85 italic sm:text-4xl phone-land:text-3xl!">
           {siteConfig.lema}
         </DropIn>
       </div>

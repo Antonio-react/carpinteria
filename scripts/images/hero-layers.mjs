@@ -51,7 +51,9 @@ eachIn(glass, (x, y) => {
 // 4) Silueta. Lateral derecho: el canto de la columna está INCLINADO (x≈1650 arriba, ≈1635 abajo),
 //    así que el corte sigue esa inclinación, 1-2 px por dentro del canto, y luego el zócalo.
 const yb = (x) => zocaloBottom(x)
-const outline = [[152,700],[1462,28],[1649,188],[1648,400],[1634,1490],[1633,1500],[1632,yb(1632)],[650,yb(650)],[445,1690],[272,1622],[141,1580],[139,1380]].map(P)
+// Arriba de la estantería de roble el recorte sigue el canto EXTERIOR del cerco ((1462,10)–(1649,186));
+// antes iba por (1462,28)–(1649,188) y cortaba el cerco por la mitad (ver hero-oak-frame.mjs).
+const outline = [[152,700],[1462,10],[1649,186],[1648,400],[1634,1490],[1633,1500],[1632,yb(1632)],[650,yb(650)],[445,1690],[272,1622],[141,1580],[139,1380]].map(P)
 const mask = Buffer.from(`<svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg"><polygon points="${outline.map((p) => p.map((v) => v.toFixed(1)).join(',')).join(' ')}" fill="#fff"/></svg>`)
 const alpha = await sharp(mask).blur(1.1 * S).extractChannel(0).raw().toBuffer()
 const rgba = Buffer.alloc(W * H * 4)

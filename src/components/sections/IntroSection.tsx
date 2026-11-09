@@ -8,7 +8,7 @@ const { localidad, provincia } = siteConfig.direccion
 
 /** Los datos concretos que más pesan al elegir carpintero, en forma de ficha de taller. */
 const SPECS: readonly SpecRow[] = [
-  { label: 'Oficio', value: 'Carpintería y ebanistería', note: 'Padre e hijo, más de 40 años en el oficio.' },
+  { label: 'Oficio', value: 'Ebanistería y carpintería', note: 'Padre e hijo, más de 40 años en el oficio.' },
   { label: 'Zona', value: 'Toda España', note: 'Lo llevamos y lo montamos nosotros.' },
   { label: 'Presupuesto', value: 'Gratis' },
   { label: 'Taller', value: `${localidad} (${provincia})` },
@@ -32,7 +32,7 @@ export function IntroSection() {
             }
           />
           <p className="mt-8 max-w-xl text-lg leading-relaxed text-pretty text-muted">
-            Somos una empresa familiar de carpintería y ebanistería. No trabajamos con catálogo: escuchamos tu idea,
+            Somos una empresa familiar de ebanistería y carpintería. No trabajamos con catálogo: escuchamos tu idea,
             medimos el espacio, la diseñamos contigo y la montamos nosotros, sin intermediarios. Trabajamos para
             particulares y para empresas.
           </p>

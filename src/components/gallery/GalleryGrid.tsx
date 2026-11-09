@@ -21,7 +21,7 @@ export function GalleryGrid({ category }: GalleryGridProps) {
 
   return (
     <>
-      <ul className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3 lg:compact:grid-cols-4">
+      <ul className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3 lg:compact:grid-cols-4 phone-land:grid-cols-4!">
         {photos.map((photo, index) => (
           <li key={photo.src}>
             <GalleryTile photo={photo} onOpen={() => setOpenIndex(index)} />

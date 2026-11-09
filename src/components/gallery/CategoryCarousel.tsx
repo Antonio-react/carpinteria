@@ -64,7 +64,7 @@ export function CategoryCarousel({ tone = 'light' }: CategoryCarouselProps) {
         aria-roledescription="carrusel"
         aria-label="Categorías de trabajos"
         onKeyDown={onKeyDown}
-        className="relative mt-14 overflow-x-clip pt-8 [--card-w:min(60vw,22rem)] md:[--card-w:min(34vw,22rem)] lg:[--card-w:24rem] lg:compact:[--card-w:min(20rem,calc((100svh-16rem)*0.8),28vw)]"
+        className="relative mt-14 overflow-x-clip pt-8 [--card-w:min(60vw,22rem)] md:[--card-w:min(34vw,22rem)] lg:[--card-w:24rem] lg:compact:[--card-w:min(20rem,calc((100svh-16rem)*0.8),28vw)] phone-land:mt-8! phone-land:pt-4! phone-land:[--card-w:min(15rem,calc((100svh-6rem)*0.8))]!"
       >
         <div
           className="relative mx-auto aspect-[4/5] w-(--card-w) touch-pan-y select-none perspective-[1400px] [transform-style:preserve-3d]"

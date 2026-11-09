@@ -1,12 +1,26 @@
 @import "tailwindcss";
 
 /*
- * "compact": pantallas donde la barra fija resta demasiado sitio: móvil, tableta y portátiles
- * (hasta 1535px de ancho o 900px de alto). Ahí la barra se esconde al bajar y vuelve al subir.
- * En monitores grandes (1536px o más de ancho y más de 900px de alto) se queda siempre fija.
+ * "compact": pantallas pequeñas o bajas: móvil, tableta y portátiles. Lo decide sobre todo el ALTO:
+ * hasta 900px de alto si además miden menos de 1920px de ancho (un portátil escalado al 125-150 % es bajo y
+ * estrecho; un monitor panorámico de 34" también puede ser bajo, pero es muy ancho, y NO cuenta como portátil).
+ * Por ancho, solo lo estrecho de verdad (menos de 1280px: móvil y tableta). Así una ventana a media pantalla
+ * en un monitor alto (p. ej. 1376x1018) se ve como escritorio.
+ * Ahí la barra se esconde al bajar y los bloques grandes se compactan. En monitores se queda todo como siempre.
  */
 @custom-variant compact {
-  @media (max-width: 1535.98px), (max-height: 900px) {
+  @media (max-width: 1279.98px), (max-height: 900px) and (max-width: 1919.98px) {
+    @slot;
+  }
+}
+
+/*
+ * "phone-land": SOLO móvil en horizontal (pantalla apaisada y de menos de 500px de alto).
+ * Las tabletas en horizontal miden más de 500px de alto y no entran. Se usa con "!" para que
+ * gane siempre a md:/xl: (un móvil apaisado puede medir más de 768px de ancho).
+ */
+@custom-variant phone-land {
+  @media (orientation: landscape) and (max-height: 500px) {
     @slot;
   }
 }
@@ -44,9 +58,10 @@
   /* Entrada del hero: caída corta y lenta con un ligero desenfoque que se aclara (más elegante). */
   --animate-drop: drop 1100ms var(--ease-out-strong) both;
   --animate-rise: rise 600ms var(--ease-out-strong) both;
-  --animate-ember-breathe: ember-breathe 4.7s ease-in-out infinite alternate;
-  --animate-ember-flicker: ember-flicker 2.3s ease-in-out infinite;
+  --animate-ember-breathe: ember-breathe 3.2s ease-in-out infinite alternate;
+  --animate-ember-flicker: ember-flicker 1.9s ease-in-out infinite;
   --animate-saw-spin: saw-spin 0.9s linear infinite;
+  --animate-appear-late: appear 200ms ease-out 300ms both;
   --animate-saw-stroke: saw-stroke 0.5s ease-in-out infinite alternate;
   --animate-cut: cut 2.4s linear infinite;
 
@@ -57,15 +72,24 @@
     from { opacity: 0; transform: translateY(16px); }
   }
   @keyframes ember-breathe {
-    0% { opacity: 0.7; }
+    0% { opacity: 0.45; }
     100% { opacity: 1; }
   }
+  /* Parpadeo de las brasas: solo brillo, con saltos irregulares (más amplios que al principio). */
   @keyframes ember-flicker {
     0%, 100% { opacity: 0.85; }
     18% { opacity: 1; }
-    34% { opacity: 0.72; }
+    34% { opacity: 0.6; }
     52% { opacity: 0.95; }
-    71% { opacity: 0.78; }
+    71% { opacity: 0.65; }
+  }
+  @keyframes appear {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
   @keyframes saw-spin {
     to { transform: rotate(360deg); }
@@ -91,6 +115,13 @@
     /* Los enlaces a #secciones no quedan tapados por la barra de navegación fija. */
     scroll-padding-top: 5rem;
     text-rendering: optimizeLegibility;
+    /* Sin barra de desplazamiento del navegador: su papel lo hace la cinta métrica del borde
+       derecho (ScrollTape), que se puede arrastrar. Solo la de la página: menús y ventanas
+       con scroll propio conservan la suya. */
+    scrollbar-width: none;
+  }
+  html::-webkit-scrollbar {
+    display: none;
   }
 
   /*

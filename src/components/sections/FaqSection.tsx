@@ -14,11 +14,11 @@ const FAQS = [
   {
     question: '¿Cuánto se tarda?',
     answer:
-      'Depende de cada trabajo: no damos plazos cerrados sin conocer el proyecto. Cuando lo veamos, te diremos cómo lo organizamos. A las consultas respondemos lo antes posible.',
+      'No te vamos a prometer una fecha que no podamos cumplir. Te decimos cuándo estará cuando lo sepamos de verdad. A las consultas, eso sí, respondemos lo antes posible.',
   },
   {
     question: '¿Qué tipo de trabajos hacéis?',
-    answer: 'Todo lo que sea madera: armarios, puertas, suelos, cocinas, muebles de salón, porches, pérgolas y encargos especiales.',
+    answer: 'Todo lo que sea madera: armarios, puertas, suelos, cocinas, muebles de salón, escaleras y encargos especiales.',
   },
   {
     question: '¿Trabajáis también para empresas?',

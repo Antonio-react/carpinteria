@@ -100,7 +100,10 @@ export function Footer() {
               <ul key={group[0]?.to} className="space-y-1">
                 {group.map((link) => (
                   <li key={link.to}>
-                    <Link to={link.to} className="inline-flex min-h-11 items-center text-name/75 transition-colors hover:text-name">
+                    <Link
+                      to={link.to}
+                      onClick={() => scrollTopIfSame(link.to)}
+                      className="inline-flex min-h-11 items-center text-name/75 transition-colors hover:text-name">
                       {link.label}
                     </Link>
                   </li>
@@ -110,8 +113,11 @@ export function Footer() {
           </div>
         </nav>
       </Container>
-      <Container className="border-t border-white/10 py-6 text-center text-xs text-name/50">
-        © {year} Carpintería y Decoración. Todos los derechos reservados.
+      <Container className="flex flex-col items-center gap-2 border-t border-white/10 py-6 text-center text-xs text-name/50 sm:flex-row sm:justify-between sm:text-left">
+        <p>© {year} Carpintería y Decoración. Todos los derechos reservados.</p>
+        <p>
+          Web diseñada y desarrollada por <span className="font-medium text-name/80">Antonio</span>
+        </p>
       </Container>
     </footer>
   )

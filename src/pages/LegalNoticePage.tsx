@@ -24,7 +24,7 @@ export default function LegalNoticePage() {
             Correo electrónico: <a href={`mailto:${email}`}>{email}</a>
           </li>
           <li>Teléfono: {telefonos.principal}</li>
-          <li>Actividad: carpintería y ebanistería a medida.</li>
+          <li>Actividad: ebanistería y carpintería a medida.</li>
         </ul>
       </LegalSection>
 

@@ -42,11 +42,11 @@ export function MobileMenu({ id, open, links, onClose }: MobileMenuProps) {
       aria-modal="true"
       aria-label="Menú"
       inert={!open}
-      className={`fixed inset-0 z-40 flex flex-col bg-night px-6 pt-28 pb-10 text-name transition-[opacity,transform] duration-300 ease-(--ease-out-strong) lg:hidden ${
+      className={`fixed inset-0 z-40 flex flex-col overflow-y-auto bg-night px-6 pt-28 pb-10 text-name phone-land:pt-20! phone-land:pb-5! transition-[opacity,transform] duration-300 ease-(--ease-out-strong) lg:hidden ${
         open ? 'translate-y-0 opacity-100' : 'pointer-events-none -translate-y-4 opacity-0'
       }`}
     >
-      <nav aria-label="Menú móvil" className="flex flex-col gap-2">
+      <nav aria-label="Menú móvil" className="flex flex-col gap-2 phone-land:grid! phone-land:grid-cols-2! phone-land:gap-x-10!">
         {links.map((link, index) => (
           <RouterNavLink
             key={link.to}
@@ -57,7 +57,7 @@ export function MobileMenu({ id, open, links, onClose }: MobileMenuProps) {
               onClose()
               scrollTopIfSame(link.to)
             }}
-            className="flex min-h-14 items-center justify-between border-b border-white/10 text-3xl font-medium tracking-[-0.02em] text-name/50 transition-colors duration-150 [font-stretch:110%] aria-[current=page]:text-name"
+            className="flex min-h-14 items-center justify-between border-b border-white/10 text-3xl font-medium tracking-[-0.02em] text-name/50 transition-colors duration-150 [font-stretch:110%] aria-[current=page]:text-name phone-land:min-h-12! phone-land:text-2xl!"
           >
             {({ isActive }) => (
               <>
@@ -68,9 +68,9 @@ export function MobileMenu({ id, open, links, onClose }: MobileMenuProps) {
           </RouterNavLink>
         ))}
       </nav>
-      <div className="mt-auto">
+      <div className="mt-auto phone-land:pt-5">
         {/* Cierra el menú también si ya estás en Contacto (la página no cambia y no se cerraría solo). */}
-        <Button to={QUOTE_PATH} onClick={onClose} tone="light" withArrow className="w-full justify-between">
+        <Button to={QUOTE_PATH} onClick={onClose} tone="light" withArrow className="w-full justify-between phone-land:w-auto!">
           Pedir presupuesto
         </Button>
       </div>

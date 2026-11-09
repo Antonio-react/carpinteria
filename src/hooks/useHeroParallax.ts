@@ -1,4 +1,6 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, type RefObject } from 'react'
+import type { HeroDoorsHandle } from '@/components/hero/HeroDoors'
+import { OPEN_COMPLETE, OVER_TV_RIGHT_HALF } from '@/components/hero/heroDoorsChoreography'
 
 /** Capas del hero que se mueven con el scroll. */
 export interface HeroLayers {
@@ -12,27 +14,43 @@ export interface HeroLayers {
   shade: HTMLElement | null
 }
 
-/** Parte del alto de pantalla que dura el despiece (coincide con el espaciador de HomePage: 75svh). */
-export const EXPLODE_SCREENS = 0.75
+/** Alto de pantalla de scroll que dura la apertura del mueble (progreso 0 → 1 de las puertas). */
+export const OPEN_SCREENS = 0.75
+
+/** Pausa (en progreso) con el mueble ya abierto, para verlo entero antes de que suba la cortina. */
+const OPEN_PAUSE = 0.12
+
+/**
+ * Scroll (en pantallas) a partir del cual el contenido de Inicio sube por encima del hero (es el alto
+ * del espaciador de HomePage):
+ *   - escritorio: con el mueble abierto del todo, más una pequeña pausa (≈ 0,88), para que se vea entero;
+ *   - móvil (vertical, o apaisado bajo): antes, cuando la puerta derecha de encima de la tele va por la
+ *     mitad de su recorrido (≈ 0,5); el resto de la apertura se ve mientras sube.
+ */
+export const CURTAIN_SCREENS = (OPEN_COMPLETE + OPEN_PAUSE) * OPEN_SCREENS
+export const CURTAIN_SCREENS_MOBILE = OVER_TV_RIGHT_HALF * OPEN_SCREENS
 
 const clamp = (value: number) => Math.min(Math.max(value, 0), 1)
 const EMPTY: HeroLayers = { section: null, room: null, name: null, group: null, cabinet: null, tv: null, footer: null, shade: null }
 
 /**
  * "Desmontaje" del hero con el scroll, como un plano de montaje que se abre:
- *   1) Despiece en 2 piezas (primer 75 % de pantalla, con el hero fijo y a la vista):
- *      el mueble entero (con la chimenea) se aleja: se encoge un poco y se aparta a la derecha y
- *      arriba; la tele sale con fuerza hacia delante y a la izquierda, dejando su hueco. El nombre
- *      se encoge y se apaga: sensación de alejarse del título.
- *   2) Cortina: el contenido claro sube por encima mientras el hero se oscurece.
+ *   1) Apertura (0,75 pantallas de scroll, con el hero fijo): el mueble se queda
+ *      quieto y se abren algunas de sus puertas, la estantería de roble sale como un cajón (ver
+ *      HeroDoors). La tele se queda en su sitio. El nombre se encoge y se apaga: sensación de
+ *      alejarse del título.
+ *   2) Cortina: con el mueble ya abierto del todo (y una pequeña pausa), el contenido claro sube por
+ *      encima mientras el hero se oscurece.
  * Una vez que la cortina tapa el hero ENTERO, el mueble se vuelve a montar por detrás (sin que se
- * vea): al subir de nuevo, el hero aparece montado, sin el efecto al revés. Al llegar arriba del
- * todo se "rearma" y, si se vuelve a bajar, se desmonta otra vez.
+ * vea): al subir de nuevo, el hero aparece montado. Al llegar arriba del todo se "rearma" y, si se
+ * vuelve a bajar, la secuencia empieza otra vez. "Tapado" se mide por la posición REAL de la cortina:
+ * con una fórmula aparte no coincidía en móvil (la barra del navegador cambia el alto de la pantalla)
+ * y allí no llegaba a rearmarse.
  * Solo transform y opacity, escritos directamente en el DOM (sin re-renders).
  * Con prefers-reduced-motion: sin desplazamientos (el espaciador también desaparece).
  * Cuando el hero queda tapado, pausa sus animaciones (brasas) con data-covered.
  */
-export function useHeroParallax() {
+export function useHeroParallax(doors?: RefObject<HeroDoorsHandle | null>) {
   const layers = useRef<HeroLayers>({ ...EMPTY })
 
   /** Devuelve el ref de una capa: <div ref={bind('room')}>. */
@@ -56,43 +74,42 @@ export function useHeroParallax() {
       frame = 0
       const l = layers.current
       const vh = window.innerHeight
-      const vw = window.innerWidth
       const scroll = window.scrollY
 
       if (reduced.matches) {
         for (const key of ['room', 'name', 'group', 'cabinet', 'tv'] as const) set(l[key], '')
+        doors?.current?.update(0)
         if (l.footer) l.footer.style.opacity = String(clamp(1 - (scroll / vh) * 2.5))
         if (l.shade) l.shade.style.opacity = String(clamp((scroll / vh) * 0.9))
         if (l.section) l.section.dataset.covered = scroll >= vh ? 'true' : 'false'
         return
       }
 
-      const cover = clamp((scroll - vh * EXPLODE_SCREENS) / vh) // cortina 0 → 1
+      // Cortina 0 → 1, medida sobre su posición real (vale para el espaciador de escritorio y el de móvil,
+      // y no depende de que svh e innerHeight coincidan).
+      const curtain = document.querySelector<HTMLElement>('[data-curtain]')
+      const cover = curtain ? clamp(1 - curtain.getBoundingClientRect().top / vh) : 0
       if (cover >= 0.99) assembled = true // hero tapado del todo: se monta sin que se vea
-      else if (scroll < 4) assembled = false // arriba del todo: se rearma el efecto
+      else if (scroll < 4) assembled = false // arriba del todo: vuelve a empezar la secuencia
 
       // Montado: todo en reposo (e = 0, p = 0); la cortina sigue oscureciendo con "shade".
-      const e = assembled ? 0 : clamp(scroll / (vh * EXPLODE_SCREENS)) // despiece 0 → 1
+      const e = assembled ? 0 : clamp(scroll / (vh * OPEN_SCREENS)) // apertura 0 → 1
       const ease = 1 - (1 - e) * (1 - e) // ease-out: arranca rápido, se asienta al final
       // Mientras sube la cortina el despiece NO se congela: sigue abriéndose, a ~1/4 de velocidad.
       const p = assembled ? 0 : ease + cover * 0.25
-      const narrow = vw < 768
 
       // Se encoge desde su borde superior (origin-top): se aleja sin meterse bajo la barra.
       set(l.name, `scale(${(1 - p * 0.16).toFixed(4)})`, assembled ? 1 : 1 - ease * 0.65 - cover * 0.35)
       const group = `scale(${(1 + p * 0.03).toFixed(4)})`
       set(l.group, group)
-      // Mueble entero: se aleja (más pequeño), a la derecha y arriba. En móvil se desplaza menos:
-      // está alineado al borde derecho y al encogerse ya gana el margen que pierde al moverse.
-      const cabinet = `translate3d(${(p * (narrow ? 0.015 : 0.04) * vw).toFixed(1)}px, ${(-p * 0.03 * vh).toFixed(1)}px, 0) scale(${(1 - p * 0.06).toFixed(4)})`
-      set(l.cabinet, cabinet)
-      // La sala (solo se ve su mitad inferior: el suelo) va pegada al mueble: mismo lienzo y mismo
-      // movimiento (el del grupo y el del mueble, en ese orden), para que el suelo no se despegue
-      // de la chimenea. Se va oscureciendo.
-      set(l.room, `${group} ${cabinet}`, 1 - ease * 0.6)
-      // Tele: sale hacia delante (más grande) y a la izquierda, con más fuerza que antes al ser la única pieza.
-      // Sube un poco para no tapar la chimenea al crecer.
-      set(l.tv, `translate3d(${(-p * (narrow ? 0.1 : 0.08) * vw).toFixed(1)}px, ${(-p * 0.02 * vh).toFixed(1)}px, 0) scale(${(1 + p * 0.18).toFixed(4)})`)
+      // El mueble (y la tele) se quedan quietos: lo que se mueve son las puertas y la estantería de roble.
+      // Avance LINEAL con el scroll (no con la curva "ease" del resto, que arranca muy rápido: con muy
+      // poco scroll la primera puerta ya estaba abierta). Cada puerta suaviza su propio movimiento.
+      // (Sin tope en 1: las últimas puertas terminan cuando la cortina ya está subiendo.)
+      doors?.current?.update(assembled ? 0 : scroll / (vh * OPEN_SCREENS))
+      // La sala (solo se ve su mitad inferior: el suelo) va pegada al mueble (mismo lienzo y el mismo
+      // acercamiento del grupo). Se va oscureciendo.
+      set(l.room, group, 1 - ease * 0.6)
       if (l.footer) {
         l.footer.style.opacity = String(clamp(1 - e * 2.5))
         // Baja hacia el borde de la pantalla mientras se apaga (opacidad 0 en e = 0,4 → ~40 px abajo).
@@ -116,7 +133,7 @@ export function useHeroParallax() {
       reduced.removeEventListener('change', request)
       cancelAnimationFrame(frame)
     }
-  }, [])
+  }, [doors])
 
   return bind
 }

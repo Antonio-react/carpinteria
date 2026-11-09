@@ -33,7 +33,7 @@ export function PlanToRealSection() {
         src={pieceLarge}
         srcSet={`${pieceSmall} 800w, ${pieceLarge} 1400w`}
         sizes={SIZES}
-        alt="El mueble terminado: paneles lacados en blanco con la tele empotrada, estantería de roble y zócalo negro con chimenea"
+        alt="El mueble terminado: puertas lacadas en blanco con la tele empotrada, estantería de roble y zócalo negro con chimenea"
         width={1400}
         height={1627}
         loading="lazy"
@@ -68,7 +68,7 @@ export function PlanToRealSection() {
             afterLabel="Terminado"
             label="Comparar el plano con el mueble terminado"
             initial={55}
-            className="mx-auto aspect-[1656/1925] w-full max-w-xl lg:compact:max-w-[min(36rem,calc((100svh-9rem)*0.86))] rounded-[20px] border border-ink/10 shadow-[0_30px_80px_-30px_rgb(28_25_22/0.45)]"
+            className="mx-auto aspect-[1656/1925] w-full max-w-xl lg:compact:max-w-[min(36rem,calc((100svh-9rem)*0.86))] phone-land:max-w-[calc((100svh-3rem)*0.86)]! rounded-[20px] border border-ink/10 shadow-[0_30px_80px_-30px_rgb(28_25_22/0.45)]"
           />
         </div>
       </Container>

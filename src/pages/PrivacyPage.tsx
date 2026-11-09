@@ -9,6 +9,11 @@ export default function PrivacyPage() {
   return (
     <LegalPage title="Política de privacidad" description="Cómo tratamos los datos que nos envías por el formulario o por correo." updated="noviembre de 2026">
       <LegalSection title="Responsable del tratamiento">
+        <p>
+          En cumplimiento del Reglamento (UE) 2016/679 del Parlamento Europeo y del Consejo, de 27 de abril de 2016 (RGPD), y de la Ley
+          Orgánica 3/2018, de 5 de diciembre, de Protección de Datos Personales y garantía de los derechos digitales (LOPDGDD), te
+          informamos de que el responsable del tratamiento de tus datos es:
+        </p>
         <ul>
           <li>
             {titular} · NIF {nif}
@@ -31,8 +36,8 @@ export default function PrivacyPage() {
 
       <LegalSection title="Para qué los usamos">
         <p>
-          Únicamente para responder a tu consulta y, si lo pides, preparar un presupuesto. No los usamos para enviarte publicidad ni
-          tomamos decisiones automatizadas con ellos.
+          Únicamente para responder a tu consulta, preparar un presupuesto si lo pides y mantener el contacto y la comunicación
+          contigo mientras dure el trabajo. No los usamos para enviarte publicidad ni tomamos decisiones automatizadas con ellos.
         </p>
       </LegalSection>
 
@@ -67,7 +72,8 @@ export default function PrivacyPage() {
       <LegalSection title="Tus derechos">
         <p>
           Puedes pedir acceder a tus datos, rectificarlos o suprimirlos, oponerte a su tratamiento, limitarlo, solicitar su
-          portabilidad y retirar tu consentimiento en cualquier momento, escribiendo a <a href={`mailto:${email}`}>{email}</a>. Si
+          portabilidad y retirar tu consentimiento en cualquier momento, de forma gratuita, escribiendo a{' '}
+          <a href={`mailto:${email}`}>{email}</a>. Si
           crees que no hemos atendido bien tu solicitud, puedes reclamar ante la Agencia Española de Protección de Datos (
           <a href="https://www.aepd.es" rel="noopener noreferrer" target="_blank">
             www.aepd.es

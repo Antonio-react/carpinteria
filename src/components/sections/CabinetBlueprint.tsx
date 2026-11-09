@@ -54,7 +54,7 @@ interface Note {
 }
 
 const NOTES: readonly Note[] = [
-  { text: 'Paneles lacados', at: [12, 23], leader: [[20, 24.5], [24, 36]] },
+  { text: 'Puertas lacadas', at: [12, 23], leader: [[20, 24.5], [24, 36]] },
   { text: 'Estantería de roble', at: [50, 9.5], leader: [[78.5, 10.5], [93, 18]] },
   { text: 'Hueco para la tele', at: [52, 54], anchor: 'middle' },
   { text: 'Chimenea', at: [5, 93], leader: [[13, 91.5], [20, 84]] },
