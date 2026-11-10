@@ -61,8 +61,8 @@ export const OVER_TV_RIGHT_OPEN = OVER_TV_RIGHT_START + OVER_TV_RIGHT_SPAN
 export const DOORS: readonly Door[] = [
   // La 1.ª columna usa el interior de la 2.ª reflejado: las dos comparten la caja vertical que tapa una
   // tubería, así que en la 1.ª queda a la derecha (junto a la 2.ª) y en la 2.ª a la izquierda.
-  { panel: CABINET.columnA, hinge: 'left', angle: 105, start: 0.03, span: 0.85, inside: { src: insideColumn, width: 372, height: 872, mirror: true }, rails: { top: true, bottom: false, color: COLUMN_WHITE } },
-  { panel: CABINET.columnB, hinge: 'left', angle: 95, start: 0.2, span: 0.85, inside: { src: insideColumn, width: 372, height: 872 }, rails: { top: true, bottom: false, color: COLUMN_WHITE } },
+  { panel: CABINET.columnA, hinge: 'left', angle: 65, start: 0.03, span: 0.85, inside: { src: insideColumn, width: 372, height: 872, mirror: true }, rails: { top: true, bottom: false, color: COLUMN_WHITE } },
+  { panel: CABINET.columnB, hinge: 'left', angle: 55, start: 0.2, span: 0.85, inside: { src: insideColumn, width: 372, height: 872 }, rails: { top: true, bottom: false, color: COLUMN_WHITE } },
   { panel: CABINET.overTvLeft, hinge: 'left', angle: 55, start: 0.35, span: 0.55, trim: { right: 0.007, bottom: 0.006 }, inside: { src: insideTop, width: 344, height: 314, bleed: 0.006 }, rails: { top: true, bottom: true, color: OVER_TV_WHITE } },
   // Reflejado: la pared lateral en sombra del armario queda junto a la bisagra (tapada por la puerta) y
   // no en la rendija, donde se leía como una franja gris.
