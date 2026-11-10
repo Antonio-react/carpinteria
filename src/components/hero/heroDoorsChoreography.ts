@@ -72,8 +72,12 @@ export const DOORS: readonly Door[] = [
 /**
  * Estantería de roble: sale por el extremo del mueble, como un cajón (metros de recorrido).
  * Solo se mueve la madera marrón; el cerco blanco es del mueble y no se toca.
+ * En móvil, móvil apaisado y tableta vertical el mueble ocupa todo el ancho y 12 cm la llevan justo al
+ * borde de la pantalla. En tableta horizontal y escritorio
+ * hay sitio libre a la derecha y sale más (OAK_WIDE_MEDIA decide cuál se usa).
  */
-export const OAK_TRAVEL = 0.12
+export const OAK_TRAVEL = { mobile: 0.12, wide: 0.18 } as const
+export const OAK_WIDE_MEDIA = '(min-width: 768px) and (orientation: landscape) and (min-height: 501px)'
 export const OAK_START = 0.25
 export const OAK_SPAN = 0.6
 

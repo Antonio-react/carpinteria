@@ -15,7 +15,7 @@ import {
   type Point,
   type Quad,
 } from '@/components/hero/doorGeometry'
-import { DOORS, OAK_SPAN, OAK_START, OAK_TRAVEL, RAIL, type Door } from '@/components/hero/heroDoorsChoreography'
+import { DOORS, OAK_SPAN, OAK_START, OAK_TRAVEL, OAK_WIDE_MEDIA, RAIL, type Door } from '@/components/hero/heroDoorsChoreography'
 
 export interface HeroDoorsHandle {
   /** progress: 0 = mueble cerrado; 1 = todo abierto y la estantería fuera. */
@@ -31,6 +31,8 @@ interface HeroDoorsProps {
 }
 
 const OAK_TEXTURE = { width: 110, height: 380 }
+/** Se consulta en cada fotograma (.matches): sigue al instante si se gira o redimensiona la pantalla. */
+const wideScreen = window.matchMedia(OAK_WIDE_MEDIA)
 
 /** Cara interior lacada de una hoja: en sombra, con las cazoletas de las bisagras junto al canto de giro. */
 const BACK_FACE: Record<Hinge, string> = {
@@ -156,7 +158,8 @@ export function HeroDoors({ ref, photoSrc, photoSrcSet, sizes }: HeroDoorsProps)
       // moverla con la perspectiva de un plano la deformaba. Se usa la transformación "rígida" (mover +
       // escalar por igual en alto y ancho) que mejor sigue a sus 4 esquinas al salir d metros: así se
       // acerca a quien tira (crece un poco) sin estirarse.
-      const d = OAK_TRAVEL * easeSmooth(clamp((progress - OAK_START) / OAK_SPAN))
+      const travel = wideScreen.matches ? OAK_TRAVEL.wide : OAK_TRAVEL.mobile
+      const d = travel * easeSmooth(clamp((progress - OAK_START) / OAK_SPAN))
       const out = d > 0.0005
       show('oak-hole', out)
       show('oak-side', out)
