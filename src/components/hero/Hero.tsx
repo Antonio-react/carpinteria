@@ -108,6 +108,23 @@ export function Hero() {
           fetchPriority="low"
           className="size-full brightness-[0.32] saturate-[0.75] sepia-[0.2] [mask-image:radial-gradient(closest-side,#000_60%,transparent),linear-gradient(to_bottom,transparent_50%,#000_85%)] [mask-composite:intersect]"
         />
+        {/* Bajo los enchufes, el recorte del mueble corta el zócalo algo más arriba de donde acaba en la foto, y
+            ese trozo de zócalo (oscurecido aquí) quedaba como una franja negra recta entre el mueble y el suelo
+            (12 px junto a la chimenea, 47 px al final; lienzo). La misma foto, subida justo esa altura (sube y se
+            inclina: 12 px en x=800 → 47 px en x=1500), pone el suelo pegado al zócalo. Mismo tono y fundido. */}
+        <div className="absolute inset-0 [clip-path:polygon(42.271%_85.091%,96.618%_96.416%,99.336%_96.935%,99.336%_100%,42.271%_100%)] [mask-image:linear-gradient(to_right,transparent_43%,#000_52%)]">
+          <img
+            src={roomLarge}
+            srcSet={`${roomSmall} 800w, ${roomLarge} 1400w`}
+            sizes={SIZES}
+            alt=""
+            aria-hidden="true"
+            width={1400}
+            height={1627}
+            fetchPriority="low"
+            className="size-full origin-top-left transform-[translateY(1.4545%)_skewY(-2.862deg)] brightness-[0.32] saturate-[0.75] sepia-[0.2] [mask-image:radial-gradient(closest-side,#000_60%,transparent),linear-gradient(to_bottom,transparent_50%,#000_85%)] [mask-composite:intersect]"
+          />
+        </div>
       </div>
 
       {/* 2. Nombre gigante. */}

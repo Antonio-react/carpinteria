@@ -16,6 +16,10 @@ export function FireGlow() {
           parezca que la luz (o la chimenea) sobresale del cerco. */}
       <div className="absolute top-[74%] left-[12%] h-[20%] w-[22%] bg-[radial-gradient(closest-side,rgb(255_140_60/0.16),transparent)] mix-blend-screen motion-safe:animate-ember-breathe" />
 
+      {/* Luz del fuego en el suelo: un charco aplanado delante de la chimenea, que respira al mismo ritmo
+          que las brasas. */}
+      <div className="absolute top-[84.5%] left-[11%] h-[6.5%] w-[23%] bg-[radial-gradient(closest-side,rgb(255_140_60/0.16),rgb(255_120_50/0.06)_60%,transparent)] mix-blend-screen motion-safe:animate-ember-breathe" />
+
       {/* Interior del cristal DENTRO del cerco negro (el "core" de hero-layers.mjs: (299,1418) (440,1438)
           (440,1657) (299,1613) en la foto original). Con el cristal entero, las brasas tapaban el cerco. */}
       <div className="absolute top-[72.623%] left-[18.056%] h-[12.416%] w-[8.514%] [clip-path:polygon(0_0,100%_8.37%,100%_100%,0_81.59%)]">
