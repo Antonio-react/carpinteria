@@ -50,6 +50,8 @@
   /* ── Tipografía ── */
   --font-sans: "Archivo Variable", system-ui, sans-serif;
   --font-serif: "Instrument Serif", Georgia, serif;
+  /* Máquina de escribir: respuestas del FAQ y rótulos de la tarjeta de contacto (se lee mejor que la cursiva). */
+  --font-type: "Courier Prime", "Courier New", monospace;
 
   /* ── Movimiento (criterio Emil Kowalski: ease-out fuerte, corto) ── */
   --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
@@ -64,6 +66,8 @@
   --animate-appear-late: appear 200ms ease-out 300ms both;
   --animate-saw-stroke: saw-stroke 0.5s ease-in-out infinite alternate;
   --animate-cut: cut 2.4s linear infinite;
+  /* Aviso de "hay más abajo": la hoja de Inicio asoma bajo el hero cada 5.2 s (tras la entrada). */
+  --animate-peek: peek 5.2s linear 2.6s infinite both;
 
   @keyframes drop {
     from { opacity: 0; transform: translateY(-12px); filter: blur(6px); }
@@ -102,6 +106,14 @@
   @keyframes cut {
     from { transform: scaleX(0); }
     to { transform: scaleX(1); }
+  }
+  /* Sube 20 px (0.5 s), se asienta en 14 px como si tuviera peso, espera, baja y descansa ~3 s.
+     Escondida, queda 24 px más abajo de su altura para que tampoco asome la sombra. */
+  @keyframes peek {
+    0% { transform: translateY(calc(100% + 24px)); animation-timing-function: var(--ease-out-strong); }
+    10% { transform: translateY(calc(100% - 20px)); animation-timing-function: ease-in-out; }
+    16%, 31% { transform: translateY(calc(100% - 14px)); animation-timing-function: ease-in; }
+    41%, 100% { transform: translateY(calc(100% + 24px)); }
   }
 }
 

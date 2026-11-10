@@ -39,7 +39,7 @@ export function WorkSection({ level = 'h2' }: WorkSectionProps) {
             tone={tone}
             title={
               <>
-                Elige un tipo de trabajo y mira lo que hemos hecho.
+                Elige un tipo de trabajo y mira lo que hemos hecho
               </>
             }
           />

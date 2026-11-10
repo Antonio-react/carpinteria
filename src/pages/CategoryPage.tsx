@@ -51,7 +51,7 @@ export default function CategoryPage() {
 
           <div className="mt-20 grid gap-10 border-t border-ink/10 pt-12 lg:grid-cols-12">
             <div className="lg:col-span-7">
-              <h2 className="text-3xl font-medium tracking-[-0.02em] [font-stretch:105%]">Hacemos el tuyo a medida.</h2>
+              <h2 className="text-3xl font-medium tracking-[-0.02em] [font-stretch:105%]">Hacemos el tuyo a medida</h2>
               <p className="mt-3 text-muted">Cuéntanos cómo es tu espacio y te preparamos el presupuesto sin coste.</p>
               <div className="mt-6">
                 <Button to={QUOTE_PATH} withArrow>

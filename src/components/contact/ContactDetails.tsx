@@ -5,8 +5,8 @@ import { PhoneLinks } from '@/components/ui/PhoneLinks'
 import { formatLocality } from '@/utils/address'
 import { mapsHref } from '@/utils/contactLinks'
 
-/** Rótulo a mano (serif cursiva en lápiz rojo), en vez de etiquetas en mayúsculas de plantilla. */
-const LABEL = 'font-serif text-base text-pencil italic'
+/** Rótulo a máquina de escribir con cinta roja, en vez de etiquetas en mayúsculas de plantilla. */
+const LABEL = 'font-type text-sm text-pencil'
 
 /**
  * Datos de contacto como la tarjeta del taller: papel de estraza pegado con cinta, algo torcido, con el

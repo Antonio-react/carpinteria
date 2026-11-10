@@ -15,7 +15,7 @@ export default function NotFoundPage() {
           </div>
           <p className="mt-8 text-sm tracking-[0.2em] text-muted uppercase">Error 404</p>
           <h1 id="error-titulo" className="mt-4 text-5xl font-medium tracking-[-0.03em] text-balance [font-stretch:110%] sm:text-6xl">
-            Aquí no hay nada que cortar.
+            Aquí no hay nada que cortar
           </h1>
           <p className="mx-auto mt-5 max-w-md text-lg text-muted">La página que buscas no existe o ha cambiado de dirección.</p>
           <div className="mt-10">

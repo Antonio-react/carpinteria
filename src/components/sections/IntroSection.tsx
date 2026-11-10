@@ -28,17 +28,18 @@ export function IntroSection() {
             id="quienes-somos"
             title={
               <>
-                Hacemos en madera lo que tienes en la <PencilUnderline>cabeza</PencilUnderline>.
+                Hacemos en madera lo que tienes en la <PencilUnderline>cabeza</PencilUnderline>
               </>
             }
           />
           <p className="mt-8 max-w-xl text-lg leading-relaxed text-pretty text-muted">
-            Somos una empresa familiar de ebanistería y carpintería. No trabajamos con catálogo: escuchamos tu idea,
+            Somos una empresa familiar de ebanistería y carpintería. No trabajamos con catálogo. Escuchamos tu idea,
             medimos el espacio, la diseñamos contigo y la montamos nosotros, sin intermediarios. Trabajamos para
             particulares y para empresas.
           </p>
-          <PinnedNote tilt={4} curl signature="El taller" className="mt-12 ml-4 max-w-xs">
-            Ninguna pared está recta. Por eso medimos nosotros.
+          {/* Móvil: tal cual. Tableta y escritorio: nota más grande (con 320 px se quedaba pequeña al lado del texto). */}
+          <PinnedNote tilt={4} curl signature="El taller" className="mt-12 ml-4 max-w-xs md:max-w-sm lg:mt-14 lg:max-w-md">
+            <span className="block md:text-[1.75rem] md:text-balance lg:text-[2rem]">Ninguna pared está recta. Por eso medimos nosotros.</span>
           </PinnedNote>
         </div>
         <SpecSheet title="Ficha del taller" rows={SPECS} className="lg:col-span-5 lg:self-center" />

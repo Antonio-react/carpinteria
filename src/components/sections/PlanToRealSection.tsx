@@ -50,7 +50,7 @@ export function PlanToRealSection() {
           id="plano-titulo"
           title={
             <>
-              Primero lo dibujamos. Luego lo <PencilUnderline>montamos</PencilUnderline>.
+              Primero lo dibujamos. Luego lo <PencilUnderline>montamos</PencilUnderline>
             </>
           }
           intro="Cada mueble empieza como un plano a lápiz sobre las medidas reales de tu pared. Arrastra la barra y mira cómo ese plano se convierte en el mueble terminado."

@@ -4,6 +4,7 @@ import { RouterProvider } from 'react-router/dom'
 // Fuentes alojadas en el propio proyecto (sin CDN ni cookies de terceros).
 import '@fontsource-variable/archivo/wdth.css'
 import '@fontsource/instrument-serif/400-italic.css'
+import '@fontsource/courier-prime/400.css'
 import './index.css'
 import { router } from '@/router'
 

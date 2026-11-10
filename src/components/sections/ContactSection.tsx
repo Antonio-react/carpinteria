@@ -21,7 +21,7 @@ export function ContactSection({ level = 'h2' }: ContactSectionProps) {
           <SectionHeading
             id="contacto-titulo"
             level={level}
-            title="Cuéntanos tu idea y la hacemos realidad."
+            title="Cuéntanos tu idea y la hacemos realidad"
             intro="El presupuesto es gratis. Te responderemos lo antes posible."
           />
           <div className="mt-12">

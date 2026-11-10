@@ -17,7 +17,7 @@ export function CategoryDrawers() {
     <section aria-labelledby="trabajos-titulo" className="bg-bone py-24 lg:py-36 lg:compact:py-24">
       <Container>
         <div className="flex flex-wrap items-end justify-between gap-8">
-          <SectionHeading id="trabajos-titulo" title="Abre el cajón que quieras y mira lo que guarda dentro." />
+          <SectionHeading id="trabajos-titulo" title="Abre el cajón que quieras y mira lo que guarda dentro" />
           <Link to="/trabajos" className="inline-flex min-h-11 items-center gap-2 text-sm font-medium underline decoration-ink/30 underline-offset-4 hover:decoration-ink">
             Ver todos los trabajos
           </Link>

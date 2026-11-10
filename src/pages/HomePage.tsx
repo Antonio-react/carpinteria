@@ -34,7 +34,7 @@ export default function HomePage() {
         <PlanToRealSection />
         <ScrollMarquee primary={siteConfig.lema} secondary={siteConfig.nombre} />
         <CategoryDrawers />
-        <CtaBand title="Empieza contándonos tu idea." text="En el formulario puedes adjuntar planos, fotos o un dibujo hecho a mano." />
+        <CtaBand title="Empieza contándonos tu idea" text="En el formulario puedes adjuntar planos, fotos o un dibujo hecho a mano." />
       </div>
     </>
   )

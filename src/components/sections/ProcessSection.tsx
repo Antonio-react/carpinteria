@@ -57,8 +57,8 @@ export function ProcessSection({ level = 'h2' }: ProcessSectionProps) {
         <SectionHeading
           id="como-trabajamos-titulo"
           level={level}
-          title="Medimos, diseñamos y montamos nosotros."
-          intro="Nadie intermedia entre tu idea y el mueble terminado: las personas que miden tu espacio son las que lo diseñan, lo fabrican y lo montan, estés donde estés de España."
+          title="Medimos, diseñamos y montamos nosotros"
+          intro="Nadie intermedia entre tu idea y el mueble terminado. Las personas que miden tu espacio son las que lo diseñan, lo fabrican y lo montan, estés donde estés de España."
         />
         <ol className="mt-16 grid gap-14 md:grid-cols-[repeat(14,minmax(0,1fr))] md:gap-x-0 md:gap-y-8 lg:mt-20 lg:compact:mt-14">
           {STEPS.map((step) => (

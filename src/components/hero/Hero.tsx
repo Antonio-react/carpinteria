@@ -8,6 +8,7 @@ import oakFrameTop from '@/assets/hero/oak-frame-top.webp'
 import { FireGlow } from '@/components/hero/FireGlow'
 import { GiantName } from '@/components/hero/GiantName'
 import { HeroDoors, type HeroDoorsHandle } from '@/components/hero/HeroDoors'
+import { HeroPeek } from '@/components/hero/HeroPeek'
 import { PIECE_CLIPS } from '@/components/hero/heroPieces'
 import { Button } from '@/components/ui/Button'
 import { DropIn } from '@/components/ui/DropIn'
@@ -113,7 +114,7 @@ export function Hero() {
       <div ref={bind('name')} className="absolute inset-x-0 top-(--name-top) z-10 origin-top px-4 text-center will-change-transform md:px-10 phone-land:origin-top-left! phone-land:px-6! phone-land:text-left!">
         <GiantName
           lineClassName="text-(length:--name-size) font-semibold leading-[0.88] tracking-[-0.02em] whitespace-nowrap text-name/55 [font-stretch:110%]"
-          connectorClassName="font-serif font-normal italic text-name/80 [font-stretch:100%]"
+          connectorClassName="font-serif font-normal italic text-name/68 [font-stretch:100%]"
         />
       </div>
 
@@ -143,6 +144,9 @@ export function Hero() {
 
       {/* Oscurecimiento mientras la página sube por encima. */}
       <div ref={bind('shade')} aria-hidden="true" className="pointer-events-none absolute inset-0 z-30 bg-night opacity-0" />
+
+      {/* Hay más abajo: la hoja de Inicio asoma de vez en cuando (por debajo del botón y el lema). */}
+      <HeroPeek />
 
       {/* Botón principal y lema. */}
       <div
