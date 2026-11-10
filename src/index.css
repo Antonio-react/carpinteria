@@ -64,8 +64,8 @@
   --animate-ember-flicker: ember-flicker 1.9s ease-in-out infinite;
   --animate-saw-spin: saw-spin 0.9s linear infinite;
   --animate-appear-late: appear 200ms ease-out 300ms both;
-  --animate-saw-stroke: saw-stroke 0.5s ease-in-out infinite alternate;
-  --animate-cut: cut 2.4s linear infinite;
+  --animate-saw-stroke: saw-stroke 0.42s ease-in-out infinite alternate;
+  --animate-sawdust: sawdust 0.9s ease-in infinite;
   /* Aviso de "hay más abajo": la hoja de Inicio asoma bajo el hero cada 5.2 s (tras la entrada). */
   --animate-peek: peek 5.2s linear 2.6s infinite both;
 
@@ -98,14 +98,16 @@
   @keyframes saw-spin {
     to { transform: rotate(360deg); }
   }
-  /* Serrucho del botón de enviar: va y viene mientras corta la tabla. */
+  /* Serrucho del botón de enviar: va y viene a lo largo de la hoja (unidades del dibujo, viewBox 96 × 32). */
   @keyframes saw-stroke {
-    from { transform: translateX(-10%); }
-    to { transform: translateX(10%); }
+    from { transform: translateX(-5px); }
+    to { transform: translateX(5px); }
   }
-  @keyframes cut {
-    from { transform: scaleX(0); }
-    to { transform: scaleX(1); }
+  /* Serrín que cae por debajo de la tabla; cada mota se desvía hacia su lado (--dx). */
+  @keyframes sawdust {
+    0% { transform: translate(0, 0); opacity: 0; }
+    15% { opacity: 1; }
+    100% { transform: translate(var(--dx), 9px); opacity: 0; }
   }
   /* Sube 20 px (0.5 s), se asienta en 14 px como si tuviera peso, espera, baja y descansa ~3 s.
      Escondida, queda 24 px más abajo de su altura para que tampoco asome la sombra. */
