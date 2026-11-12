@@ -1,16 +1,16 @@
 import { useEffect, useRef, type ReactNode } from 'react'
 import { Link } from 'react-router'
+import { AttachmentFields } from '@/components/contact/AttachmentFields'
 import { CheckboxField } from '@/components/contact/CheckboxField'
-import { FileField } from '@/components/contact/FileField'
 import { FormProgress } from '@/components/contact/FormProgress'
 import { FORM_STEPS, LAST_STEP } from '@/components/contact/formSteps'
 import { FormStatusMessage } from '@/components/contact/FormStatusMessage'
 import { SubmitButton } from '@/components/contact/SubmitButton'
 import { TextField } from '@/components/contact/TextField'
 import { FORM_NAME, useContactForm } from '@/components/contact/useContactForm'
-import { ACCEPTED_FILES, MAX_UPLOAD_MB } from '@/components/contact/validation'
 import { WorkTypeChoice, type WorkTypeOption } from '@/components/contact/WorkTypeChoice'
 import { siteConfig } from '@/config/site'
+import { EmailText } from '@/components/ui/EmailText'
 import { CATEGORIES } from '@/data/categories'
 import { sketchFor } from '@/data/sketches'
 
@@ -19,7 +19,8 @@ const WORK_TYPES: readonly WorkTypeOption[] = [
   ...CATEGORIES.filter((category) => category.slug !== 'otros-trabajos').map((category) => ({ value: category.name, hint: category.tagline, sketch: sketchFor(category.slug) })),
   { value: 'Otro', hint: 'Cualquier otro trabajo en madera', sketch: sketchFor('otros-trabajos') },
 ]
-const FILES_HINT_ID = 'adjuntos-ayuda'
+/** Por debajo de lg, el formulario va debajo del texto de la sección (no al lado). */
+const STACKED_LAYOUT = '(max-width: 1023px)'
 const titleId = (index: number) => `paso-${FORM_STEPS[index]?.id ?? index}-titulo`
 
 /**
@@ -31,6 +32,7 @@ export default function ContactForm() {
   const { formRef, status, step, errors, answers, senderName, next, back, onSubmit, onChange, reset } = useContactForm()
   const headings = useRef<(HTMLHeadingElement | null)[]>([])
   const previousStep = useRef(step)
+  const successRef = useRef<HTMLDivElement>(null)
 
   // Al CAMBIAR de paso (nunca al abrir la página), el foco va a su título: lectores de pantalla y
   // teclado saben dónde están. Se compara con el paso anterior en vez de usar una marca de
@@ -44,9 +46,24 @@ export default function ContactForm() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step])
 
+  // Al enviar, el formulario (alto) se cambia por el aviso (bajo) y la página encoge: en móvil y
+  // tableta, donde el formulario va debajo del texto, la pantalla se quedaba vacía por debajo del
+  // aviso. Se lleva el aviso al centro de la pantalla. En escritorio ya se ve junto al título.
+  // El foco también pasa al aviso (el botón de enviar ha desaparecido).
+  useEffect(() => {
+    if (status !== 'sent') return
+    const message = successRef.current
+    if (!message) return
+    message.focus({ preventScroll: true })
+    if (window.matchMedia(STACKED_LAYOUT).matches) {
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      message.scrollIntoView({ block: 'center', behavior: reduced ? 'instant' : 'smooth' })
+    }
+  }, [status])
+
   if (status === 'sent') {
     return (
-      <div className="space-y-6">
+      <div ref={successRef} tabIndex={-1} className="space-y-6 outline-none">
         <FormStatusMessage tone="success" title="Mensaje enviado">
           <p>
             Gracias{senderName ? `, ${senderName}` : ''}. Hemos recibido tu idea y te contestaremos lo antes posible.
@@ -84,6 +101,7 @@ export default function ContactForm() {
   const hasErrors = Object.keys(errors).length > 0
 
   return (
+    <>
     <form
       ref={formRef}
       name={FORM_NAME}
@@ -132,18 +150,7 @@ export default function ContactForm() {
               required
               error={errors.ubicacion}
             />
-            <fieldset>
-              <legend className="text-sm font-medium">
-                Planos o fotos de referencia <span className="font-normal text-muted">(opcional)</span>
-              </legend>
-              <p id={FILES_HINT_ID} className="mt-1 text-xs text-muted">
-                Imágenes, PDF o DWG. Entre los dos archivos, como máximo {MAX_UPLOAD_MB} MB.
-              </p>
-              <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:compact:grid-cols-1">
-                <FileField name="adjunto-1" label="Adjuntar archivo" accept={ACCEPTED_FILES} error={errors['adjunto-1']} hintId={FILES_HINT_ID} />
-                <FileField name="adjunto-2" label="Adjuntar otro" accept={ACCEPTED_FILES} hintId={FILES_HINT_ID} />
-              </div>
-            </fieldset>
+            <AttachmentFields error={errors['adjunto-1']} />
           </div>,
         )}
 
@@ -221,5 +228,15 @@ export default function ContactForm() {
         )}
       </div>
     </form>
+    {/* Alternativa discreta: quien no quiera rellenar nada puede escribir directamente. */}
+    <p className="mt-4 px-1 text-left text-sm text-muted">
+      ¿Prefieres no rellenar nada? Escríbenos directamente a{' '}
+      {/* Móvil: el correo en su propia línea y sin cortarse; desde sm, seguido en la frase. */}
+      <a href={`mailto:${siteConfig.email}`} className="mt-1 block w-fit whitespace-nowrap text-ink underline decoration-ink/30 underline-offset-4 hover:decoration-ink sm:mt-0 sm:inline sm:whitespace-normal">
+        <EmailText email={siteConfig.email} />
+      </a>
+      <span className="hidden sm:inline">.</span>
+    </p>
+    </>
   )
 }

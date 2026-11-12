@@ -6,6 +6,9 @@ export type ContactStatus = 'idle' | 'sending' | 'sent' | 'error'
 
 export const FORM_NAME = 'contacto'
 
+/** Tiempo mínimo de la animación de enviar (serrucho), para que dé tiempo a verla. */
+const MIN_SENDING_MS = 2000
+
 /** Orden de los campos en pantalla, para llevar el foco al primer error. */
 const FIELD_ORDER: readonly ContactField[] = ['tipo', 'mensaje', 'ubicacion', 'adjunto-1', 'adjunto-2', 'nombre', 'email', 'telefono', 'privacidad']
 
@@ -99,18 +102,21 @@ export function useContactForm() {
     if (data.get('bot-field')) return
 
     setStatus('sending')
+    // El serrucho se ve al menos MIN_SENDING_MS aunque Netlify conteste antes (si no, apenas asoma).
+    const minimum = new Promise<void>((resolve) => setTimeout(resolve, MIN_SENDING_MS))
     try {
-      if (import.meta.env.DEV) {
-        await new Promise((resolve) => setTimeout(resolve, 2400))
-      } else {
+      // En desarrollo no existe el servicio de Netlify: el envío se simula con la espera mínima.
+      if (!import.meta.env.DEV) {
         const response = await fetch('/', { method: 'POST', body: data })
         if (!response.ok) throw new Error(`Netlify respondió ${response.status}`)
       }
+      await minimum
       setSenderName(textOf(data, 'nombre').split(' ')[0] ?? '')
       setStatus('sent')
       form.reset()
       goToStep(0)
     } catch {
+      await minimum
       setStatus('error')
     }
   }

@@ -4,6 +4,7 @@ import { NoteCta } from '@/components/sections/NoteCta'
 import { WorkSection } from '@/components/sections/WorkSection'
 import { Container } from '@/components/ui/Container'
 import { CATEGORIES } from '@/data/categories'
+import { ALL_WORKS_ID } from '@/data/categoryOrigin'
 
 /** Página Trabajos: el carrusel de carpetas y, debajo, todas las categorías a la vista. */
 export default function WorksPage() {
@@ -15,9 +16,10 @@ export default function WorksPage() {
       />
       <WorkSection level="h1" />
       <section
+        id={ALL_WORKS_ID}
         aria-labelledby="todas-titulo"
         data-curtain
-        className="relative z-10 -mt-8 rounded-t-[28px] bg-bone pt-4 pb-24 shadow-[0_-24px_60px_rgb(0_0_0/0.35)] lg:pb-32 lg:compact:pb-24"
+        className="relative z-10 -mt-8 scroll-mt-8 rounded-t-[28px] bg-bone pt-4 pb-24 shadow-[0_-24px_60px_rgb(0_0_0/0.35)] lg:pb-32 lg:compact:pb-24"
       >
         <Container>
           <h2 id="todas-titulo" className="pt-12 text-2xl font-medium tracking-[-0.02em] [font-stretch:105%]">

@@ -1,7 +1,10 @@
 import { Link } from 'react-router'
 import { PhotoPlaceholder } from '@/components/ui/PhotoPlaceholder'
 import { categoryPath, type Category } from '@/data/categories'
+import type { CategoryLinkState } from '@/data/categoryOrigin'
 import { sketchFor } from '@/data/sketches'
+
+const FOLDERS_STATE: CategoryLinkState = { from: 'folders' }
 
 interface CategoryCardProps {
   category: Category
@@ -11,7 +14,7 @@ interface CategoryCardProps {
 export function CategoryCard({ category }: CategoryCardProps) {
   const { cover, name, tagline } = category
   return (
-    <Link to={categoryPath(category)} className="group block transition-transform duration-200 ease-out hover:-translate-y-0.5">
+    <Link to={categoryPath(category)} state={FOLDERS_STATE} className="group block transition-transform duration-200 ease-out hover:-translate-y-0.5">
       <div className="aspect-[4/5] overflow-hidden lg:compact:aspect-[4/3] rounded-[14px] border border-ink/10 bg-paper sm:rounded-[20px]">
         {cover ? (
           <img

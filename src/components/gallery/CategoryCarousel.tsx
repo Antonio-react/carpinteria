@@ -1,9 +1,10 @@
 import type { CSSProperties, KeyboardEvent } from 'react'
-import { Link } from 'react-router'
+import { Link, useLocation } from 'react-router'
 import { CategoryPills } from '@/components/gallery/CategoryPills'
 import { FolderCard } from '@/components/gallery/FolderCard'
 import { ArrowButton } from '@/components/ui/ArrowButton'
 import { CATEGORIES, categoryPath } from '@/data/categories'
+import { readCarouselFocus, type CategoryLinkState } from '@/data/categoryOrigin'
 import { useCarousel } from '@/hooks/useCarousel'
 import { useSwipe } from '@/hooks/useSwipe'
 import { useTilt } from '@/hooks/useTilt'
@@ -20,6 +21,8 @@ import { useTilt } from '@/hooks/useTilt'
  * - En móvil se ven 3 tarjetas: la central y parte de las dos laterales.
  * - Solo la central se inclina hacia el cursor (useTilt).
  */
+const CAROUSEL_STATE: CategoryLinkState = { from: 'carousel' }
+
 function cardStyle(offset: number): CSSProperties {
   const distance = Math.abs(offset)
   if (distance > 2) return { transform: 'translateX(-50%) scale(0.5)', opacity: 0, pointerEvents: 'none' }
@@ -40,7 +43,11 @@ interface CategoryCarouselProps {
 }
 
 export function CategoryCarousel({ tone = 'light' }: CategoryCarouselProps) {
-  const { index, goTo, next, previous, offsetOf } = useCarousel(CATEGORIES.length)
+  // Al volver desde una categoría, esa tarjeta queda en el centro (lista para pasar a la siguiente).
+  const { state } = useLocation()
+  const focusSlug = readCarouselFocus(state)
+  const initialIndex = Math.max(0, CATEGORIES.findIndex((category) => category.slug === focusSlug))
+  const { index, goTo, next, previous, offsetOf } = useCarousel(CATEGORIES.length, initialIndex)
   const swipe = useSwipe(next, previous)
   const tilt = useTilt<HTMLAnchorElement>(true)
   const current = CATEGORIES[index]
@@ -96,6 +103,7 @@ export function CategoryCarousel({ tone = 'light' }: CategoryCarouselProps) {
                   <Link
                     ref={tilt.ref}
                     to={categoryPath(category)}
+                    state={CAROUSEL_STATE}
                     aria-label={`Ver trabajos de ${category.name}`}
                     onPointerMove={tilt.onPointerMove}
                     onPointerLeave={tilt.onPointerLeave}

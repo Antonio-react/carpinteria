@@ -28,6 +28,18 @@ const FAQS: readonly { question: string; answer: ReactNode }[] = [
     answer: 'Sí, tanto para particulares como para empresas: oficinas, locales, tiendas o lo que necesites en madera.',
   },
   {
+    question: '¿Puedo escribiros sin rellenar el formulario?',
+    answer: (
+      <>
+        Claro. Escríbenos a{' '}
+        <a href={`mailto:${siteConfig.email}`} className="underline decoration-ink/30 underline-offset-4 hover:decoration-ink">
+          <EmailText email={siteConfig.email} />
+        </a>{' '}
+        y cuéntanos qué necesitas y en qué localidad sería. El formulario solo te ayuda a no dejarte nada.
+      </>
+    ),
+  },
+  {
     question: '¿Puedo enviaros planos o fotos?',
     answer: (
       <>

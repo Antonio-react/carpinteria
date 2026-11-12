@@ -1,24 +1,33 @@
-import { Link, useParams } from 'react-router'
+import { Link, useLocation, useParams } from 'react-router'
 import { GalleryGrid } from '@/components/gallery/GalleryGrid'
 import { PageMeta } from '@/components/layout/PageMeta'
+import { BackLink } from '@/components/ui/BackLink'
 import { Button } from '@/components/ui/Button'
 import { Container } from '@/components/ui/Container'
 import { CATEGORIES, categoryPath, findCategory } from '@/data/categories'
+import { backTargetFor, readCategoryOrigin } from '@/data/categoryOrigin'
 import { QUOTE_PATH } from '@/data/navigation'
 import NotFoundPage from '@/pages/NotFoundPage'
 
 /** Página propia de cada categoría (/trabajos/:slug): descripción general y galería simple. */
 export default function CategoryPage() {
   const { slug } = useParams()
+  const { state } = useLocation()
   const category = findCategory(slug)
   if (!category) return <NotFoundPage />
+  // "Volver" lleva a donde se abrió la categoría (cajones de Inicio, carrusel o lista de Trabajos).
+  const back = backTargetFor(readCategoryOrigin(state), category.slug)
 
   return (
     <>
       <PageMeta title={`${category.name} a medida · Carpintería y Decoración`} description={category.seoDescription} />
       <section aria-labelledby="categoria-titulo" className="pt-32 pb-20 lg:pt-40 lg:compact:pt-32 lg:pb-28 lg:compact:pb-20">
         <Container>
-          <nav aria-label="Ruta" className="text-sm text-muted">
+          {/* Arriba, "volver" discreto (para quien quiera salir enseguida); el botón principal va bajo
+              las fotos. Móvil: solo el enlace de volver; desde sm, también la ruta (Inicio / Trabajos / …). */}
+          <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2">
+            <BackLink to={back.to} label={back.label} state={back.state} variant="text" />
+          <nav aria-label="Ruta" className="hidden text-sm text-muted sm:block">
             <ol className="flex flex-wrap items-center gap-2">
               <li>
                 <Link to="/" className="inline-flex min-h-11 items-center hover:text-ink">
@@ -37,6 +46,7 @@ export default function CategoryPage() {
               </li>
             </ol>
           </nav>
+          </div>
 
           <div className="mt-8 grid gap-8 lg:grid-cols-12">
             <h1 id="categoria-titulo" className="text-5xl leading-none font-medium tracking-[-0.03em] [font-stretch:110%] sm:text-6xl lg:col-span-6 lg:text-7xl lg:compact:text-6xl">
@@ -47,6 +57,11 @@ export default function CategoryPage() {
 
           <div className="mt-14">
             <GalleryGrid category={category} />
+          </div>
+
+          {/* Al terminar de ver las fotos: volver a donde se abrió la categoría. */}
+          <div className="mt-10 flex justify-center">
+            <BackLink to={back.to} label={back.label} state={back.state} />
           </div>
 
           <div className="mt-20 grid gap-10 border-t border-ink/10 pt-12 lg:grid-cols-12">
@@ -66,6 +81,8 @@ export default function CategoryPage() {
                   <li key={other.slug}>
                     <Link
                       to={categoryPath(other)}
+                      // Conserva el origen: "Volver" sigue llevando al mismo sitio.
+                      state={state}
                       className="inline-flex min-h-11 items-center rounded-full border border-ink/15 px-5 text-sm text-ink/80 transition-colors hover:border-ink/40 hover:text-ink"
                     >
                       {other.name}
