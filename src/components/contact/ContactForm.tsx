@@ -102,6 +102,7 @@ export default function ContactForm() {
 
   return (
     <>
+    <div className="rounded-xl bg-bone p-2.5 shadow-[0_24px_48px_-28px_rgb(28_25_22/0.45)]">
     <form
       ref={formRef}
       name={FORM_NAME}
@@ -112,9 +113,13 @@ export default function ContactForm() {
       noValidate
       onSubmit={onSubmit}
       onChange={onChange}
+      // Hoja de encargo (como el boceto aprobado): raya oscura recta en el mismo borde, pintada como fondo para
+      // que el redondeo de la hoja la recorte en las esquinas (los dos trazos no llegan a juntarse); 5px más
+      // adentro, raya más suave cerrada y de esquinas rectas (outline hacia dentro). Alrededor, una tarjeta
+      // clara con un pequeño margen (el <div> que envuelve el formulario).
       // Escritorio: misma altura en los 3 pasos (la del más largo) y botones fijos abajo: centrado
       // junto al texto de la izquierda sin saltar al cambiar de paso.
-      className="rounded-[20px] border border-ink/10 bg-paper/60 p-5 sm:p-8 lg:flex lg:min-h-[48rem] lg:flex-col lg:compact:min-h-[37rem] lg:compact:p-6"
+      className="rounded-md [background:linear-gradient(rgb(28_25_22/0.55),rgb(28_25_22/0.55))_top/100%_1px_no-repeat,linear-gradient(rgb(28_25_22/0.55),rgb(28_25_22/0.55))_bottom/100%_1px_no-repeat,linear-gradient(rgb(28_25_22/0.55),rgb(28_25_22/0.55))_left/1px_100%_no-repeat,linear-gradient(rgb(28_25_22/0.55),rgb(28_25_22/0.55))_right/1px_100%_no-repeat,var(--color-paper)] outline-1 -outline-offset-6 outline-ink/35 p-6 sm:p-9 lg:flex lg:min-h-[40rem] lg:flex-col lg:compact:min-h-[38.5rem] lg:compact:p-6"
     >
       <input type="hidden" name="form-name" value={FORM_NAME} />
       <p className="hidden">
@@ -130,15 +135,12 @@ export default function ContactForm() {
 
         {stepPanel(
           1,
-          // Pantallas intermedias: la idea a la izquierda y localidad + adjuntos a la derecha (cabe sin bajar).
-          <div className="grid gap-6 lg:compact:grid-cols-2 lg:compact:gap-5">
+          <div className="grid gap-6">
             <TextField
               name="mensaje"
               label="Tu idea"
               multiline
               required
-              className="lg:compact:row-span-2"
-              controlClassName="lg:compact:h-[16.5rem]"
               placeholder="Qué quieres hacer, para qué estancia, medidas aproximadas si las tienes…"
               error={errors.mensaje}
             />
@@ -228,6 +230,7 @@ export default function ContactForm() {
         )}
       </div>
     </form>
+    </div>
     {/* Alternativa discreta: quien no quiera rellenar nada puede escribir directamente. */}
     <p className="mt-4 px-1 text-left text-sm text-muted">
       ¿Prefieres no rellenar nada? Escríbenos directamente a{' '}

@@ -53,7 +53,7 @@ export function PlanToRealSection() {
               Primero lo dibujamos. Luego lo <PencilUnderline>montamos</PencilUnderline>
             </>
           }
-          intro="Cada mueble empieza como un plano a lápiz sobre las medidas reales de tu pared. Arrastra la barra y mira cómo ese plano se convierte en el mueble terminado."
+          intro="Cada mueble empieza como un plano a lápiz sobre las medidas reales de tu pared. Arrastra la barra y compara el plano con el mueble ya montado."
           className="lg:col-span-6"
         />
         <div

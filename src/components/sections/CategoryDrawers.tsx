@@ -10,7 +10,7 @@ import { sketchFor } from '@/data/sketches'
 /**
  * Inicio: los tipos de trabajo como una cajonera de taller, de madera de verdad: la estructura usa la
  * foto de madera del pie y los frentes son de roble claro con su veta. Cada cajón lleva su etiqueta
- * numerada en un portaetiquetas de latón, un boceto pequeño y su tirador; al pasar el ratón sale un poco.
+ * (sin número: los cajones no van en orden) en un portaetiquetas de latón, un boceto pequeño y su tirador; al pasar el ratón sale un poco.
  * Sustituye al carrusel que había aquí, que repetía exactamente el de la página Trabajos.
  */
 const DRAWERS_STATE: CategoryLinkState = { from: 'drawers' }
@@ -40,8 +40,7 @@ export function CategoryDrawers() {
               >
                 <div className="min-w-0 flex-1">
                   {/* Portaetiquetas de latón con la etiqueta escrita */}
-                  <p className="inline-flex items-baseline gap-2 rounded-[2px] border border-[#a88b52] bg-[#fbf8f0] px-2.5 py-1 shadow-[inset_0_0_0_2px_rgb(200_170_110/0.35)]">
-                    <span className="text-[11px] font-medium tracking-[0.18em] text-pencil">{String(index + 1).padStart(2, '0')}</span>
+                  <p className="inline-flex items-baseline rounded-[2px] border border-[#a88b52] bg-[#fbf8f0] px-2.5 py-1 shadow-[inset_0_0_0_2px_rgb(200_170_110/0.35)]">
                     <span className="text-lg font-medium tracking-[-0.01em] text-ink [font-stretch:105%]">{category.name}</span>
                   </p>
                   <p className="mt-3 text-left text-sm text-ink/70">{category.tagline}</p>

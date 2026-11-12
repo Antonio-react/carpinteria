@@ -32,7 +32,7 @@ export function AttachmentFields({ error }: AttachmentFieldsProps) {
       <p id={HINT_ID} className="mt-1 text-xs text-muted">
         Hasta dos archivos (imágenes, PDF o DWG), {MAX_UPLOAD_MB} MB entre los dos.
       </p>
-      <div className={`mt-3 grid gap-3 ${showSecond ? 'sm:grid-cols-2 lg:compact:grid-cols-1' : ''}`}>
+      <div className={`mt-3 grid gap-3 ${showSecond ? 'sm:grid-cols-2' : ''}`}>
         <div className="flex items-start gap-3">
           <div className="min-w-0 flex-1">
             <FileField name="adjunto-1" label="Adjuntar archivo" accept={ACCEPTED_FILES} error={error} hintId={HINT_ID} />

@@ -31,7 +31,7 @@ export function SheetCta({ title, rows }: SheetCtaProps) {
                 Pedir presupuesto
               </Button>
             </div>
-            <SpecSheet title="Encargo" rows={rows} className="bg-paper lg:col-span-5" />
+            <SpecSheet title="encargo" rows={rows} className="bg-paper lg:col-span-5" />
           </div>
         </div>
       </Container>

@@ -9,9 +9,9 @@ const { localidad, provincia } = siteConfig.direccion
 
 /** Los datos concretos que más pesan al elegir carpintero, en forma de ficha de taller. */
 const SPECS: readonly SpecRow[] = [
-  { label: 'Oficio', value: 'Ebanistería y carpintería', note: 'Padre e hijo, más de 40 años en el oficio.' },
-  { label: 'Zona', value: 'Toda España', note: 'Lo llevamos y lo montamos nosotros.' },
-  { label: 'Presupuesto', value: 'Gratis' },
+  { label: 'Oficio', value: 'Ebanistería y carpintería', note: 'Padre e hijo, más de 40 años en el oficio' },
+  { label: 'Zona', value: 'Toda España', note: 'Lo llevamos y lo montamos nosotros' },
+  { label: 'Presupuesto', value: 'Gratis', note: 'Sin compromiso' },
   { label: 'Taller', value: `${localidad} (${provincia})` },
 ]
 
@@ -33,16 +33,16 @@ export function IntroSection() {
             }
           />
           <p className="mt-8 max-w-xl text-lg leading-relaxed text-pretty text-muted">
-            Somos una empresa familiar de ebanistería y carpintería. No trabajamos con catálogo. Escuchamos tu idea,
-            medimos el espacio, la diseñamos contigo y la montamos nosotros, sin intermediarios. Trabajamos para
-            particulares y para empresas.
+            Somos una empresa familiar de ebanistería y carpintería. Aquí no hay catálogo: cada pieza se dibuja y se
+            corta para un sitio concreto. Tomamos las medidas, lo dibujamos contigo y lo montamos nosotros, sin
+            intermediarios. Trabajamos para particulares y para empresas.
           </p>
           {/* Móvil: tal cual. Tableta y escritorio: nota más grande (con 320 px se quedaba pequeña al lado del texto). */}
           <PinnedNote tilt={4} curl signature="El taller" className="mt-12 ml-4 max-w-xs md:max-w-sm lg:mt-14 lg:max-w-md">
             <span className="block md:text-[1.75rem] md:text-balance lg:text-[2rem]">Ninguna pared está recta. Por eso medimos nosotros.</span>
           </PinnedNote>
         </div>
-        <SpecSheet title="Ficha del taller" rows={SPECS} className="lg:col-span-5 lg:self-center" />
+        <SpecSheet title="ficha del taller" rows={SPECS} className="lg:col-span-5 lg:self-center" />
       </Container>
     </section>
   )

@@ -1,3 +1,5 @@
+import { DimensionLabel } from '@/components/ui/DimensionLabel'
+
 export interface SpecRow {
   label: string
   value: string
@@ -18,7 +20,9 @@ interface SpecSheetProps {
 export function SpecSheet({ title, rows, className = '' }: SpecSheetProps) {
   return (
     <div className={`border border-ink/25 ${className}`}>
-      <p className="border-b border-ink/25 px-4 py-2.5 text-[11px] leading-none font-medium tracking-[0.14em] text-ink/60 uppercase">{title}</p>
+      <p className="border-b border-ink/25 px-4 py-2 leading-none">
+        <DimensionLabel>{title}</DimensionLabel>
+      </p>
       <dl>
         {rows.map((row) => (
           <div key={row.label} className="grid grid-cols-[7.75rem_1fr] border-b border-ink/15 last:border-b-0 sm:grid-cols-[8rem_1fr]">

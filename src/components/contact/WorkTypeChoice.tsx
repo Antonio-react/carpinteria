@@ -29,7 +29,7 @@ export function WorkTypeChoice({ name, options, labelledBy, error, onPick }: Wor
 
   return (
     <div>
-      <div role="radiogroup" aria-labelledby={labelledBy} aria-describedby={error ? errorId : undefined} className="grid grid-cols-2 gap-3 lg:grid-cols-3">
+      <div role="radiogroup" aria-labelledby={labelledBy} aria-describedby={error ? errorId : undefined} className="grid grid-cols-1 gap-x-8 sm:grid-cols-2 lg:grid-cols-3">
         {options.map((option, index) => (
           <label
             key={option.value}
@@ -42,7 +42,7 @@ export function WorkTypeChoice({ name, options, labelledBy, error, onPick }: Wor
               const input = event.currentTarget.querySelector('input')
               if (input?.checked) window.setTimeout(onPick, 120)
             }}
-            className="group relative flex min-h-24 cursor-pointer lg:min-h-36 lg:compact:min-h-24 flex-col justify-between rounded-[16px] border border-ink/15 bg-paper p-4 transition-[border-color,background-color,transform] duration-150 ease-out hover:border-ink/40 active:scale-[0.98] has-checked:border-ink has-checked:bg-ink has-checked:text-paper has-focus-visible:ring-2 has-focus-visible:ring-oak has-focus-visible:ring-offset-2 has-focus-visible:ring-offset-bone"
+            className="group relative flex cursor-pointer flex-col justify-center border-b border-ink/15 py-3.5 pr-16 pl-3 transition-[background-color,box-shadow] duration-150 ease-out hover:bg-ink/[0.03] has-checked:bg-oak/10 has-checked:shadow-[inset_3px_0_0_var(--color-oak)] has-focus-visible:ring-2 has-focus-visible:ring-oak has-focus-visible:ring-inset"
           >
             <input
               id={index === 0 ? `campo-${name}` : undefined}
@@ -59,10 +59,10 @@ export function WorkTypeChoice({ name, options, labelledBy, error, onPick }: Wor
             <PencilSketch
               sketch={option.sketch}
               seed={index + 7}
-              className="pointer-events-none absolute top-2 right-2 h-12 w-auto opacity-60 group-has-checked:opacity-90 group-has-checked:invert"
+              className="pointer-events-none absolute top-1/2 right-1.5 h-10 w-auto -translate-y-1/2 opacity-60 group-has-checked:opacity-90"
             />
-            <span className="relative pr-12 text-lg leading-tight font-medium tracking-[-0.01em] [font-stretch:105%]">{option.value}</span>
-            <span className="relative mt-2 pr-10 text-xs leading-snug text-muted group-has-checked:text-paper/70">{option.hint}</span>
+            <span className="relative text-lg leading-tight font-medium tracking-[-0.01em] [font-stretch:105%]">{option.value}</span>
+            <span className="relative mt-1 text-xs leading-snug text-muted">{option.hint}</span>
           </label>
         ))}
       </div>

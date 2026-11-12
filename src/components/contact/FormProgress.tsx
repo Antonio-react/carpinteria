@@ -1,3 +1,5 @@
+import { DimensionLabel } from '@/components/ui/DimensionLabel'
+
 interface FormProgressProps {
   /** Paso actual (desde 0). */
   current: number
@@ -9,9 +11,11 @@ interface FormProgressProps {
 export function FormProgress({ current, steps }: FormProgressProps) {
   return (
     <div>
-      <p className="text-xs font-medium tracking-[0.2em] text-muted uppercase" aria-live="polite">
-        Paso {current + 1} de {steps.length}
-        <span className="sr-only">: {steps[current]}</span>
+      <p aria-live="polite">
+        <DimensionLabel>
+          paso {current + 1} de {steps.length}
+          <span className="sr-only">: {steps[current]}</span>
+        </DimensionLabel>
       </p>
       <ol className="mt-3 grid gap-2" style={{ gridTemplateColumns: `repeat(${steps.length}, minmax(0, 1fr))` }}>
         {steps.map((title, index) => (

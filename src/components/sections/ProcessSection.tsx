@@ -7,9 +7,8 @@ import { SectionHeading } from '@/components/ui/SectionHeading'
  * Cada lámina con su tamaño, solape y giro: hojas sueltas sobre la mesa del taller, no tres tarjetas
  * iguales en fila. En móvil van una debajo de otra, con un giro leve alterno.
  */
-const STEPS: readonly { number: string; title: string; text: string; stage: ProcessStage; className: string; sheetClassName: string; textClassName: string }[] = [
+const STEPS: readonly { title: string; text: string; stage: ProcessStage; className: string; sheetClassName: string; textClassName: string }[] = [
   {
-    number: '01',
     title: 'Medimos',
     text: 'Vamos a tu casa o a tu negocio y tomamos las medidas reales del espacio: paredes que no están a escuadra, rodapiés, enchufes. Así la pieza encaja a la primera.',
     stage: 'measure',
@@ -18,16 +17,14 @@ const STEPS: readonly { number: string; title: string; text: string; stage: Proc
     textClassName: 'md:pr-16',
   },
   {
-    number: '02',
     title: 'Diseñamos',
-    text: 'Te proponemos el diseño, los materiales y los acabados, y lo ajustamos contigo hasta que sea lo que imaginabas.',
+    text: 'Te dibujamos el mueble con sus medidas, te enseñamos maderas y acabados, y lo cambiamos contigo hasta que sea justo lo que tenías en la cabeza.',
     stage: 'design',
     className: 'z-10 md:col-span-4 md:-ml-12 md:mt-20',
     sheetClassName: 'rotate-1 md:rotate-[1.5deg]',
     textClassName: 'md:pr-14 md:pl-14',
   },
   {
-    number: '03',
     title: 'Montamos',
     text: 'Lo fabricamos en nuestro taller, lo llevamos y lo montamos nosotros mismos, en cualquier punto de España.',
     stage: 'build',
@@ -58,11 +55,11 @@ export function ProcessSection({ level = 'h2' }: ProcessSectionProps) {
           id="como-trabajamos-titulo"
           level={level}
           title="Medimos, diseñamos y montamos nosotros"
-          intro="Nadie intermedia entre tu idea y el mueble terminado. Las personas que miden tu espacio son las que lo diseñan, lo fabrican y lo montan, estés donde estés de España."
+          intro="Entre tu idea y el mueble terminado no hay nadie más: quien te toma las medidas es quien lo dibuja, lo fabrica y te lo monta, estés donde estés."
         />
         <ol className="mt-16 grid gap-14 md:grid-cols-[repeat(14,minmax(0,1fr))] md:gap-x-0 md:gap-y-8 lg:mt-20 lg:compact:mt-14">
           {STEPS.map((step) => (
-            <ProcessStep key={step.number} {...step} />
+            <ProcessStep key={step.title} {...step} />
           ))}
         </ol>
       </Container>

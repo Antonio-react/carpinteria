@@ -2,6 +2,7 @@ import { Link, useLocation, useParams } from 'react-router'
 import { GalleryGrid } from '@/components/gallery/GalleryGrid'
 import { PageMeta } from '@/components/layout/PageMeta'
 import { BackLink } from '@/components/ui/BackLink'
+import { DimensionLabel } from '@/components/ui/DimensionLabel'
 import { Button } from '@/components/ui/Button'
 import { Container } from '@/components/ui/Container'
 import { CATEGORIES, categoryPath, findCategory } from '@/data/categories'
@@ -75,7 +76,9 @@ export default function CategoryPage() {
               </div>
             </div>
             <nav aria-label="Otras categorías" className="lg:col-span-5">
-              <h2 className="text-xs tracking-[0.2em] text-muted uppercase">Otros tipos de trabajo</h2>
+              <h2>
+                <DimensionLabel>otros tipos de trabajo</DimensionLabel>
+              </h2>
               <ul className="mt-4 flex flex-wrap gap-2">
                 {CATEGORIES.filter((other) => other.slug !== category.slug).map((other) => (
                   <li key={other.slug}>

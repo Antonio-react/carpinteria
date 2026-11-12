@@ -3,6 +3,7 @@ import woodLarge from '@/assets/textures/footer-wood-1600.webp'
 import woodSmall from '@/assets/textures/footer-wood-1000.webp'
 import { BrandBadge } from '@/components/ui/BrandBadge'
 import { Container } from '@/components/ui/Container'
+import { DimensionLabel } from '@/components/ui/DimensionLabel'
 import { siteConfig } from '@/config/site'
 import { LEGAL_LINKS, NAV_LINKS } from '@/data/navigation'
 import { useSamePageScrollTop } from '@/hooks/useSamePageScrollTop'
@@ -55,12 +56,14 @@ export function Footer() {
             </span>
           </Link>
           <p className="mt-6 max-w-sm text-sm leading-relaxed text-name/65">
-            Ebanistería familiar con más de 40 años de oficio. Medimos, diseñamos y montamos en toda España.
+            Taller familiar de ebanistería y carpintería. Más de 40 años trabajando la madera
           </p>
         </div>
 
         <div className="text-sm md:col-span-4">
-          <h2 className="text-xs tracking-[0.2em] text-name/55 uppercase">Contacto</h2>
+          <h2>
+            <DimensionLabel tone="dark">contacto</DimensionLabel>
+          </h2>
           <ul className="mt-4 space-y-2">
             <li>
               <a href={`mailto:${email}`} className="inline-flex min-h-11 items-center break-all underline decoration-name/30 underline-offset-4 hover:decoration-name">
@@ -94,7 +97,9 @@ export function Footer() {
         </div>
 
         <nav aria-label="Pie de página" className="text-sm md:col-span-3">
-          <h2 className="text-xs tracking-[0.2em] text-name/55 uppercase">Web</h2>
+          <h2>
+            <DimensionLabel tone="dark">web</DimensionLabel>
+          </h2>
           <div className="mt-4 grid grid-cols-2 gap-x-6 md:grid-cols-1 md:gap-y-1">
             {[NAV_LINKS, LEGAL_LINKS].map((group) => (
               <ul key={group[0]?.to} className="space-y-1">
