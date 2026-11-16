@@ -15,16 +15,16 @@ interface FaqItemProps {
 export function FaqItem({ number, question, children }: FaqItemProps) {
   return (
     <details className="group">
-      <summary className="flex cursor-pointer list-none items-end gap-4 pt-[1.875rem] pb-1.5 text-lg leading-[2.25rem] font-medium [&::-webkit-details-marker]:hidden">
+      <summary className="flex cursor-pointer list-none items-end gap-4 pt-7.5 pb-1.5 text-lg leading-9 font-medium [&::-webkit-details-marker]:hidden">
         <span className="flex-1">
           <span aria-hidden="true" className="mr-3 inline-block w-5 font-serif text-pencil italic">{number}.</span>
           {question}
         </span>
-        <span aria-hidden="true" className="shrink-0 font-serif text-2xl text-pencil transition-transform duration-200 ease-(--ease-out-strong) group-open:rotate-45">
+        <span aria-hidden="true" className="shrink-0 font-serif text-2xl text-pencil transition-transform duration-200 ease-out-strong group-open:rotate-45">
           +
         </span>
       </summary>
-      <div className="relative -top-1.5 pl-10 font-type *:text-left text-[15px] leading-[2.25rem] text-ink/85">{children}</div>
+      <div className="relative -top-1.5 pl-10 font-type *:text-left text-[15px] leading-9 text-ink/85">{children}</div>
     </details>
   )
 }

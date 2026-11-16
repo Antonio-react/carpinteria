@@ -48,7 +48,7 @@ const SCENE_VARS = [
   // cualquier pantalla. La "Ó" empieza a 2,32 × tamaño de letra del centro (medido) y la estantería
   // acaba al 99 % del lienzo: shift = 2,49 × letra − 0,49 × ancho del lienzo (ajustado a ojo sobre capturas).
   // (Antes era 2vw fijo: en pantallas anchas tapaba cada vez más, hasta un cuarto de la "Ó".)
-  '[--shift:min(0px,calc(50%-var(--pw)*0.49-6px))] md:[--shift:0px] xl:[--shift:calc(var(--name-size)*2.49_-_var(--pw)*0.49)]',
+  '[--shift:min(0px,calc(50%-var(--pw)*0.49-6px))] md:[--shift:0px] xl:[--shift:calc(var(--name-size)*2.49-var(--pw)*0.49)]',
   // Móvil en horizontal (~390px de alto): dos columnas. Nombre, lema y botón a la izquierda; el mueble a
   // la derecha, a toda la altura bajo la barra, montando sobre el final del nombre (sigue "detrás").
   'phone-land:[--name-top:5rem]! phone-land:[--name-size:min(6.6vw,15svh)]!',
@@ -57,7 +57,7 @@ const SCENE_VARS = [
 ].join(' ')
 
 const CANVAS =
-  'pointer-events-none absolute top-(--pt) left-[calc(50%-var(--pw)/2+var(--shift))] aspect-[1656/1925] w-(--pw) max-w-none select-none'
+  'pointer-events-none absolute top-(--pt) left-[calc(50%-var(--pw)/2+var(--shift))] aspect-1656/1925 w-(--pw) max-w-none select-none'
 
 // Ancho real que ocupa el lienzo: ~50 % en escritorio, ~85 % en tableta, todo el ancho en móvil.
 const SIZES = '(min-width: 1280px) 50vw, (min-width: 768px) 85vw, 100vw'
@@ -106,13 +106,13 @@ export function Hero() {
           width={1400}
           height={1627}
           fetchPriority="low"
-          className="size-full brightness-[0.32] saturate-[0.75] sepia-[0.2] [mask-image:radial-gradient(closest-side,#000_60%,transparent),linear-gradient(to_bottom,transparent_50%,#000_85%)] [mask-composite:intersect]"
+          className="size-full brightness-[0.32] saturate-[0.75] sepia-[0.2] mask-[radial-gradient(closest-side,#000_60%,transparent),linear-gradient(to_bottom,transparent_50%,#000_85%)] mask-intersect"
         />
         {/* Bajo los enchufes, el recorte del mueble corta el zócalo algo más arriba de donde acaba en la foto, y
             ese trozo de zócalo (oscurecido aquí) quedaba como una franja negra recta entre el mueble y el suelo
             (12 px junto a la chimenea, 47 px al final; lienzo). La misma foto, subida justo esa altura (sube y se
             inclina: 12 px en x=800 → 47 px en x=1500), pone el suelo pegado al zócalo. Mismo tono y fundido. */}
-        <div className="absolute inset-0 [clip-path:polygon(42.271%_85.091%,96.618%_96.416%,99.336%_96.935%,99.336%_100%,42.271%_100%)] [mask-image:linear-gradient(to_right,transparent_43%,#000_52%)]">
+        <div className="absolute inset-0 [clip-path:polygon(42.271%_85.091%,96.618%_96.416%,99.336%_96.935%,99.336%_100%,42.271%_100%)] mask-[linear-gradient(to_right,transparent_43%,#000_52%)]">
           <img
             src={roomLarge}
             srcSet={`${roomSmall} 800w, ${roomLarge} 1400w`}
@@ -122,7 +122,7 @@ export function Hero() {
             width={1400}
             height={1627}
             fetchPriority="low"
-            className="size-full origin-top-left transform-[translateY(1.4545%)_skewY(-2.862deg)] brightness-[0.32] saturate-[0.75] sepia-[0.2] [mask-image:radial-gradient(closest-side,#000_60%,transparent),linear-gradient(to_bottom,transparent_50%,#000_85%)] [mask-composite:intersect]"
+            className="size-full origin-top-left transform-[translateY(1.4545%)_skewY(-2.862deg)] brightness-[0.32] saturate-[0.75] sepia-[0.2] mask-[radial-gradient(closest-side,#000_60%,transparent),linear-gradient(to_bottom,transparent_50%,#000_85%)] mask-intersect"
           />
         </div>
       </div>
@@ -130,8 +130,8 @@ export function Hero() {
       {/* 2. Nombre gigante. */}
       <div ref={bind('name')} className="absolute inset-x-0 top-(--name-top) z-10 origin-top px-4 text-center will-change-transform md:px-10 phone-land:origin-top-left! phone-land:px-6! phone-land:text-left!">
         <GiantName
-          lineClassName="text-(length:--name-size) font-semibold leading-[0.88] tracking-[-0.02em] whitespace-nowrap text-name/55 [font-stretch:110%]"
-          connectorClassName="font-serif font-normal italic text-name/68 [font-stretch:100%]"
+          lineClassName="text-(length:--name-size) font-semibold leading-[0.88] tracking-[-0.02em] whitespace-nowrap text-name/55 font-stretch-110%"
+          connectorClassName="font-serif font-normal italic text-name/68 font-stretch-100%"
         />
       </div>
 

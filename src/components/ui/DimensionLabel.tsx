@@ -11,7 +11,7 @@ function Tick() {
   return (
     <span
       aria-hidden="true"
-      className="h-[7px] w-[22px] shrink-0 border-x border-current bg-[linear-gradient(currentColor,currentColor)] bg-[length:100%_1px] bg-center bg-no-repeat opacity-70"
+      className="h-[7px] w-[22px] shrink-0 border-x border-current bg-[linear-gradient(currentColor,currentColor)] bg-size-[100%_1px] bg-center bg-no-repeat opacity-70"
     />
   )
 }

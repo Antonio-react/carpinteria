@@ -78,7 +78,7 @@ export function ScrollTape() {
       aria-hidden="true"
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
-      className="group pointer-events-none fixed inset-y-0 right-0 z-[55] flex w-4 justify-end pointer-fine:pointer-events-auto pointer-fine:cursor-ns-resize"
+      className="group pointer-events-none fixed inset-y-0 right-0 z-55 flex w-4 justify-end pointer-fine:pointer-events-auto pointer-fine:cursor-ns-resize"
     >
       <div className="relative h-full w-1.5 transition-[width] duration-150 ease-out sm:w-2 pointer-fine:group-hover:w-2.5">
         {/* Rastro de la cinta (al pasar el ratón): indica que se puede agarrar aunque esté recogida. */}

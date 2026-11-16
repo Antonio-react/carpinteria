@@ -10,9 +10,9 @@ interface ProcessDrawingProps {
  * Las líneas usan pathLength=1 para poder "trazarse" con stroke-dashoffset (ver ProcessSection).
  * Las cotas no llevan cifras: no inventamos medidas.
  */
-const LINE = 'fill-none stroke-ink [stroke-width:1.4] [stroke-dasharray:1] [stroke-dashoffset:var(--draw)] transition-[stroke-dashoffset] duration-[1400ms] ease-(--ease-in-out-strong)'
-const COTA = 'fill-none stroke-pencil [stroke-width:1.2] [stroke-dasharray:1] [stroke-dashoffset:var(--draw)] transition-[stroke-dashoffset] delay-300 duration-[1400ms] ease-(--ease-in-out-strong)'
-const FILL = 'opacity-(--fill) transition-opacity delay-[900ms] duration-700'
+const LINE = 'fill-none stroke-ink stroke-[1.4] [stroke-dasharray:1] [stroke-dashoffset:var(--draw)] transition-[stroke-dashoffset] duration-1400 ease-in-out-strong'
+const COTA = 'fill-none stroke-pencil stroke-[1.2] [stroke-dasharray:1] [stroke-dashoffset:var(--draw)] transition-[stroke-dashoffset] delay-300 duration-1400 ease-in-out-strong'
+const FILL = 'opacity-(--fill) transition-opacity delay-900 duration-700'
 
 function WallHole() {
   return (

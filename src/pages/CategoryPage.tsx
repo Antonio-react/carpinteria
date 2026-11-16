@@ -28,7 +28,7 @@ export default function CategoryPage() {
           <BackLink to={back.to} label={back.label} state={back.state} variant="text" />
 
           <div className="mt-8 grid gap-8 lg:grid-cols-12">
-            <h1 id="categoria-titulo" className="text-5xl leading-none font-medium tracking-[-0.03em] [font-stretch:110%] sm:text-6xl lg:col-span-6 lg:text-7xl lg:compact:text-6xl">
+            <h1 id="categoria-titulo" className="text-5xl leading-none font-medium tracking-[-0.03em] font-stretch-110% sm:text-6xl lg:col-span-6 lg:text-7xl lg:compact:text-6xl">
               {category.name}
             </h1>
             <p className="max-w-xl text-left text-lg leading-relaxed text-pretty text-muted lg:col-span-6 lg:pt-3">{category.description}</p>
@@ -45,7 +45,7 @@ export default function CategoryPage() {
 
           <div className="mt-20 grid gap-10 border-t border-ink/10 pt-12 lg:grid-cols-12">
             <div className="lg:col-span-7">
-              <h2 className="text-3xl font-medium tracking-[-0.02em] [font-stretch:105%]">Hacemos el tuyo a medida</h2>
+              <h2 className="text-3xl font-medium tracking-[-0.02em] font-stretch-105%">Hacemos el tuyo a medida</h2>
               <p className="mt-3 text-muted">Cuéntanos cómo es tu espacio y te preparamos el presupuesto sin coste.</p>
               <div className="mt-6">
                 <Button to={QUOTE_PATH} withArrow>

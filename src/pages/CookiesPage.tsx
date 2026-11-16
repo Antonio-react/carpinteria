@@ -5,7 +5,7 @@ import { siteConfig } from '@/config/site'
 /** Política de cookies: la web no usa cookies (sin analítica, sin terceros, fuentes alojadas en la propia web). */
 export default function CookiesPage() {
   return (
-    <LegalPage title="Política de cookies" description="Esta web no utiliza cookies de análisis, publicidad ni de terceros." updated="noviembre de 2026">
+    <LegalPage title="Política de cookies" description="Política de cookies de Carpintería y Decoración: esta web no utiliza cookies de análisis, publicidad ni de terceros." updated="noviembre de 2026">
       <LegalSection title="Esta web no usa cookies">
         <p>
           No utilizamos cookies de análisis, de publicidad ni de redes sociales, ni herramientas de estadísticas como Google

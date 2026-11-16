@@ -33,7 +33,7 @@ export function Button(props: ButtonProps) {
       {withArrow && (
         <span
           aria-hidden="true"
-          className={`grid size-9 place-items-center rounded-full transition-transform duration-200 ease-(--ease-out-strong) group-hover:translate-x-0.5 ${styles.arrow}`}
+          className={`grid size-9 place-items-center rounded-full transition-transform duration-200 ease-out-strong group-hover:translate-x-0.5 ${styles.arrow}`}
         >
           →
         </span>

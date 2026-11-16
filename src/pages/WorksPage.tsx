@@ -22,7 +22,7 @@ export default function WorksPage() {
         className="relative z-10 -mt-8 scroll-mt-8 rounded-t-[28px] bg-bone pt-4 pb-24 shadow-[0_-24px_60px_rgb(0_0_0/0.35)] lg:pb-32 lg:compact:pb-24"
       >
         <Container>
-          <h2 id="todas-titulo" className="pt-12 text-2xl font-medium tracking-[-0.02em] [font-stretch:105%]">
+          <h2 id="todas-titulo" className="pt-12 text-2xl font-medium tracking-[-0.02em] font-stretch-105%">
             Todos los trabajos
           </h2>
           {/* Móvil: 2 columnas (menos scroll); escritorio: 3. */}

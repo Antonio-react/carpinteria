@@ -7,7 +7,7 @@ import { formatLocality } from '@/utils/address'
 export default function LegalNoticePage() {
   const { titular, nif, nombre, direccion, email, telefonos, dominio } = siteConfig
   return (
-    <LegalPage title="Aviso legal" description="Datos del titular de la web y condiciones de uso." updated="noviembre de 2026">
+    <LegalPage title="Aviso legal" description="Aviso legal de Carpintería y Decoración: datos del titular de la web, condiciones de uso y propiedad de los contenidos." updated="noviembre de 2026">
       <LegalSection title="Titular de la web">
         <p>
           En cumplimiento de la Ley 34/2002, de Servicios de la Sociedad de la Información y de Comercio Electrónico (LSSI-CE),

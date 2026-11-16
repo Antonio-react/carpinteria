@@ -36,12 +36,12 @@ export function CategoryDrawers() {
               <Link
                 to={categoryPath(category)}
                 state={DRAWERS_STATE}
-                className="group relative flex h-full min-h-40 items-center gap-4 rounded-[2px] bg-[#d9b98e] bg-[repeating-linear-gradient(90deg,rgb(140_90_45/0.07)_0_1px,transparent_1px_7px),repeating-linear-gradient(90deg,rgb(110_70_35/0.06)_0_3px,transparent_3px_23px),linear-gradient(180deg,rgb(255_245_225/0.35),rgb(120_80_40/0.12))] px-5 py-5 shadow-[inset_0_1px_0_rgb(255_240_215/0.5),inset_0_-3px_0_rgb(60_35_15/0.18)] transition-[transform,box-shadow] duration-300 ease-(--ease-out-strong) hover:-translate-y-1 hover:shadow-[inset_0_-3px_0_rgb(28_25_22/0.08),0_14px_24px_-12px_rgb(0_0_0/0.55)] focus-visible:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+                className="group relative flex h-full min-h-40 items-center gap-4 rounded-[2px] bg-[#d9b98e] bg-[repeating-linear-gradient(90deg,rgb(140_90_45/0.07)_0_1px,transparent_1px_7px),repeating-linear-gradient(90deg,rgb(110_70_35/0.06)_0_3px,transparent_3px_23px),linear-gradient(180deg,rgb(255_245_225/0.35),rgb(120_80_40/0.12))] px-5 py-5 shadow-[inset_0_1px_0_rgb(255_240_215/0.5),inset_0_-3px_0_rgb(60_35_15/0.18)] transition-[transform,box-shadow] duration-300 ease-out-strong hover:-translate-y-1 hover:shadow-[inset_0_-3px_0_rgb(28_25_22/0.08),0_14px_24px_-12px_rgb(0_0_0/0.55)] focus-visible:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
               >
                 <div className="min-w-0 flex-1">
                   {/* Portaetiquetas de latón con la etiqueta escrita */}
                   <p className="inline-flex items-baseline rounded-[2px] border border-[#a88b52] bg-[#fbf8f0] px-2.5 py-1 shadow-[inset_0_0_0_2px_rgb(200_170_110/0.35)]">
-                    <span className="text-lg font-medium tracking-[-0.01em] text-ink [font-stretch:105%]">{category.name}</span>
+                    <span className="text-lg font-medium tracking-[-0.01em] text-ink font-stretch-105%">{category.name}</span>
                   </p>
                   <p className="mt-3 text-left text-sm text-ink/70">{category.tagline}</p>
                   {/* Tirador */}

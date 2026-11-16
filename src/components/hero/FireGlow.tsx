@@ -28,7 +28,7 @@ export function FireGlow() {
         {/* Resplandor de las brasas: ilumina las paredes y el fondo del hogar entero (no solo la base). */}
         <div className="absolute inset-0 bg-[radial-gradient(90%_60%_at_55%_92%,rgb(255_135_50/0.8),rgb(210_75_20/0.38)_45%,transparent_80%),radial-gradient(120%_100%_at_50%_75%,rgb(255_120_45/0.28),rgb(180_60_20/0.12)_60%,transparent)] mix-blend-screen motion-safe:animate-ember-breathe" />
         {/* Lecho de brasas: una franja baja, más viva, siguiendo la inclinación del fondo. */}
-        <div className="absolute inset-x-[10%] bottom-[8%] h-[16%] origin-center rotate-[16deg] rounded-[50%] bg-[radial-gradient(closest-side,rgb(255_205_120/0.95),rgb(255_95_25/0.65)_45%,transparent)] blur-[1.5px] mix-blend-screen motion-safe:animate-ember-flicker" />
+        <div className="absolute inset-x-[10%] bottom-[8%] h-[16%] origin-center rotate-16 rounded-[50%] bg-[radial-gradient(closest-side,rgb(255_205_120/0.95),rgb(255_95_25/0.65)_45%,transparent)] blur-[1.5px] mix-blend-screen motion-safe:animate-ember-flicker" />
       </div>
     </div>
   )

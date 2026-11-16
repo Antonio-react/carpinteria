@@ -6,7 +6,7 @@ import { MAX_PHOTOS_PER_CATEGORY, type Category } from '@/data/categories'
 import { sketchFor } from '@/data/sketches'
 
 /** Proporciones que van alternando los bocetos, para que el mosaico no salga en cuadrícula. */
-const PLACEHOLDER_SHAPES = ['aspect-[4/5]', 'aspect-square', 'aspect-[3/4]', 'aspect-[5/4]', 'aspect-[4/5]', 'aspect-[2/3]'] as const
+const PLACEHOLDER_SHAPES = ['aspect-4/5', 'aspect-square', 'aspect-3/4', 'aspect-5/4', 'aspect-4/5', 'aspect-2/3'] as const
 
 interface GalleryGridProps {
   category: Category

@@ -92,9 +92,9 @@ export function BeforeAfter({ before, after, beforeLabel, afterLabel, label, ini
       <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 w-0" style={{ left: `${position}%` }}>
         <div className="absolute inset-y-0 -left-px w-0.5 bg-paper shadow-[0_0_0_1px_rgb(28_25_22/0.15)]" />
         <div
-          className={`absolute top-1/2 left-0 grid size-12 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-paper text-ink shadow-[0_8px_24px_-6px_rgb(28_25_22/0.45)] ring-ink/50 ring-offset-2 ring-offset-paper/0 transition-transform duration-150 ease-(--ease-out-strong) [.peer:focus-visible~*_&]:ring-2 ${dragging ? 'scale-95' : ''}`}
+          className={`absolute top-1/2 left-0 grid size-12 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-paper text-ink shadow-[0_8px_24px_-6px_rgb(28_25_22/0.45)] ring-ink/50 ring-offset-2 ring-offset-paper/0 transition-transform duration-150 ease-out-strong [.peer:focus-visible~*_&]:ring-2 ${dragging ? 'scale-95' : ''}`}
         >
-          <span className="text-sm tracking-[-0.1em]">←→</span>
+          <span className="text-sm -tracking-widest">←→</span>
         </div>
       </div>
     </div>

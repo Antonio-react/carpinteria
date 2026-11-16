@@ -15,7 +15,7 @@ export function CategoryCard({ category }: CategoryCardProps) {
   const { cover, name, tagline } = category
   return (
     <Link to={categoryPath(category)} state={FOLDERS_STATE} className="group block transition-transform duration-200 ease-out hover:-translate-y-0.5">
-      <div className="aspect-[4/5] overflow-hidden lg:compact:aspect-[4/3] rounded-[14px] border border-ink/10 bg-paper sm:rounded-[20px]">
+      <div className="aspect-4/5 overflow-hidden lg:compact:aspect-4/3 rounded-[14px] border border-ink/10 bg-paper sm:rounded-[20px]">
         {cover ? (
           <img
             src={cover.src}
@@ -31,7 +31,7 @@ export function CategoryCard({ category }: CategoryCardProps) {
           <PhotoPlaceholder label={name} sketch={sketchFor(category.slug)} className="size-full" />
         )}
       </div>
-      <p className="mt-3 text-base font-medium tracking-[-0.01em] [font-stretch:105%] sm:mt-4 sm:text-xl">{name}</p>
+      <p className="mt-3 text-base font-medium tracking-[-0.01em] font-stretch-105% sm:mt-4 sm:text-xl">{name}</p>
       <p className="mt-1 text-left text-xs text-muted sm:text-sm">{tagline}</p>
     </Link>
   )

@@ -18,7 +18,7 @@ const VARIANTS = {
 export function BackLink({ to, label, state, variant = 'pill' }: BackLinkProps) {
   return (
     <Link to={to} state={state} className={`group inline-flex min-h-11 items-center gap-2 text-sm ${VARIANTS[variant]}`}>
-      <span aria-hidden="true" className="transition-transform duration-200 ease-(--ease-out-strong) group-hover:-translate-x-0.5">
+      <span aria-hidden="true" className="transition-transform duration-200 ease-out-strong group-hover:-translate-x-0.5">
         ←
       </span>
       {label}

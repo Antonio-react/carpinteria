@@ -21,29 +21,44 @@ export function MobileMenu({ id, open, links, onClose }: MobileMenuProps) {
   const firstLinkRef = useRef<HTMLAnchorElement>(null)
   const scrollTopIfSame = useSamePageScrollTop()
 
+  const dialogRef = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
     if (!open) return
     const previousOverflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'
+    // Ventana modal de verdad: lo que queda detrás (enlace de saltar, contenido, pie) se vuelve
+    // "inert" (ni Tab ni lector de pantalla llegan). Solo quedan vivos el menú y la barra, que
+    // tiene el botón de cerrar.
+    const dialog = dialogRef.current
+    const behind = dialog?.parentElement
+      ? [...dialog.parentElement.children].filter((el): el is HTMLElement => el instanceof HTMLElement && el !== dialog && el.tagName !== 'HEADER' && !el.inert)
+      : []
+    for (const el of behind) el.inert = true
     firstLinkRef.current?.focus()
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onClose()
+      if (event.key !== 'Escape') return
+      onClose()
+      // Con Escape el foco vuelve al botón que abrió el menú (si no, se pierde al cerrarse).
+      document.querySelector<HTMLElement>(`[aria-controls="${id}"]`)?.focus()
     }
     window.addEventListener('keydown', onKey)
     return () => {
       document.body.style.overflow = previousOverflow
+      for (const el of behind) el.inert = false
       window.removeEventListener('keydown', onKey)
     }
-  }, [open, onClose])
+  }, [open, onClose, id])
 
   return (
     <div
+      ref={dialogRef}
       id={id}
       role="dialog"
       aria-modal="true"
       aria-label="Menú"
       inert={!open}
-      className={`fixed inset-0 z-40 flex flex-col overflow-y-auto bg-night px-6 pt-28 pb-10 text-name phone-land:pt-20! phone-land:pb-5! transition-[opacity,transform] duration-300 ease-(--ease-out-strong) lg:hidden ${
+      className={`fixed inset-0 z-40 flex flex-col overflow-y-auto bg-night px-6 pt-28 pb-10 text-name phone-land:pt-20! phone-land:pb-5! transition-[opacity,transform] duration-300 ease-out-strong lg:hidden ${
         open ? 'translate-y-0 opacity-100' : 'pointer-events-none -translate-y-4 opacity-0'
       }`}
     >
@@ -58,13 +73,13 @@ export function MobileMenu({ id, open, links, onClose }: MobileMenuProps) {
               onClose()
               scrollTopIfSame(link.to)
             }}
-            className="flex min-h-14 items-center justify-between border-b border-white/10 text-3xl font-medium tracking-[-0.02em] text-name/50 transition-colors duration-150 [font-stretch:110%] aria-[current=page]:text-name phone-land:min-h-12! phone-land:text-2xl!"
+            className="flex min-h-14 items-center justify-between border-b border-white/10 text-3xl font-medium tracking-[-0.02em] text-name/50 transition-colors duration-150 font-stretch-110% aria-[current=page]:text-name phone-land:min-h-12! phone-land:text-2xl!"
           >
             {({ isActive }) => (
               <>
                 {/* Número de cajón (como las etiquetas de la cajonera de Inicio): decorativo. */}
                 <span className="flex items-baseline gap-4">
-                  <span aria-hidden="true" className="w-6 font-type text-[13px] tracking-[0.05em] text-[#e07055]">
+                  <span aria-hidden="true" className="w-6 font-type text-[13px] tracking-wider text-pencil-light">
                     {String(index + 1).padStart(2, '0')}
                   </span>
                   {link.label}

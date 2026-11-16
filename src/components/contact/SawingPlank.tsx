@@ -57,13 +57,13 @@ export function SawingPlank() {
         <g className="motion-safe:animate-saw-stroke">
           <path d="M 21 12 L 64 12 L 64 22 L 20.5 16 Q 19.5 14 21 12 Z" fill={`url(#${steel})`} />
           <path d={TEETH_PATH} className="fill-[#8f969f]" />
-          <path d="M 21 12.45 L 62 12.45" className="stroke-[#f2f4f6] [stroke-width:0.6] opacity-85" />
+          <path d="M 21 12.45 L 62 12.45" className="stroke-[#f2f4f6] stroke-[0.6] opacity-85" />
           {/* Agujero de la punta */}
           <rect x="22.5" y="13" width="3.2" height="1.4" rx="0.7" className="fill-ink" />
           {/* Mango: más corto en horizontal (escala 0,82 desde su frente, que agarra la hoja). */}
           <g transform="translate(60 0) scale(0.82 1) translate(-60 0)">
             <path fillRule="evenodd" d={HANDLE_PATH} className="fill-[#6b4226]" />
-            <path d="M 60.6 11.4 C 64 10.7 72.44 11 75.44 10.1" className="fill-none stroke-[#94643e] [stroke-width:0.5] opacity-80" />
+            <path d="M 60.6 11.4 C 64 10.7 72.44 11 75.44 10.1" className="fill-none stroke-[#94643e] stroke-[0.5] opacity-80" />
           </g>
           <circle cx="62.6" cy="14" r="0.75" className="fill-[#d6d9de]" />
           <circle cx="63.4" cy="17.6" r="0.75" className="fill-[#d6d9de]" />
@@ -74,7 +74,7 @@ export function SawingPlank() {
       {/* Tabla, por delante de la hoja: canto claro arriba y veta. */}
       <rect x="4" y="23" width="88" height="8.5" rx="1" className="fill-oak" />
       <rect x="4" y="23" width="88" height="1.2" className="fill-[#c08350]" />
-      <path d="M 8 26.5 C 20 25.5 30 28 44 26.7 M 56 28.5 C 66 27.5 76 29.5 88 28" className="fill-none stroke-oak-dark [stroke-width:0.7]" />
+      <path d="M 8 26.5 C 20 25.5 30 28 44 26.7 M 56 28.5 C 66 27.5 76 29.5 88 28" className="fill-none stroke-oak-dark stroke-[0.7]" />
 
       {SAWDUST.map(({ dx, delay, x }) => (
         <circle

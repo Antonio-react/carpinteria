@@ -74,7 +74,7 @@ export function CategoryCarousel({ tone = 'light' }: CategoryCarouselProps) {
         className="relative mt-14 overflow-x-clip pt-8 [--card-w:min(60vw,22rem)] md:[--card-w:min(34vw,22rem)] lg:[--card-w:24rem] lg:compact:[--card-w:min(20rem,calc((100svh-16rem)*0.8),28vw)] phone-land:mt-8! phone-land:pt-4! phone-land:[--card-w:min(15rem,calc((100svh-6rem)*0.8))]!"
       >
         <div
-          className="relative mx-auto aspect-[4/5] w-(--card-w) touch-pan-y select-none perspective-[1400px] [transform-style:preserve-3d]"
+          className="relative mx-auto aspect-4/5 w-(--card-w) touch-pan-y select-none perspective-[1400px] transform-3d"
           onPointerDown={swipe.onPointerDown}
           onPointerUp={swipe.onPointerUp}
           onPointerCancel={swipe.onPointerCancel}
@@ -95,7 +95,7 @@ export function CategoryCarousel({ tone = 'light' }: CategoryCarouselProps) {
             return (
               <div
                 key={category.slug}
-                className="absolute top-0 left-1/2 h-full w-full transition-[transform,opacity] duration-500 ease-(--ease-in-out-strong) motion-reduce:transition-none"
+                className="absolute top-0 left-1/2 h-full w-full transition-[transform,opacity] duration-500 ease-in-out-strong motion-reduce:transition-none"
                 style={cardStyle(offset)}
                 aria-hidden={!active}
               >
@@ -104,11 +104,12 @@ export function CategoryCarousel({ tone = 'light' }: CategoryCarouselProps) {
                     ref={tilt.ref}
                     to={categoryPath(category)}
                     state={CAROUSEL_STATE}
-                    aria-label={`Ver trabajos de ${category.name}`}
+                    // Mismo texto que se ve en la tarjeta (nombre, frase y "Ver trabajos"), sin la descripción larga de la foto.
+                    aria-label={`${category.name}, ${category.tagline}, Ver trabajos`}
                     onPointerMove={tilt.onPointerMove}
                     onPointerLeave={tilt.onPointerLeave}
                     draggable={false}
-                    className="block size-full rounded-[20px] transition-transform duration-200 ease-out [--rx:0deg] [--ry:0deg] [transform:rotateX(var(--rx))_rotateY(var(--ry))]"
+                    className="block size-full rounded-[20px] transition-transform duration-200 ease-out [--rx:0deg] [--ry:0deg] transform-[rotateX(var(--rx))_rotateY(var(--ry))]"
                   >
                     {card}
                   </Link>

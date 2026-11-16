@@ -44,7 +44,7 @@ export function Navbar() {
     <>
       <header
         onFocusCapture={reveal}
-        className={`fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,color,transform] duration-300 ease-(--ease-out-strong) motion-reduce:transition-none lg:border-transparent ${
+        className={`fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,color,transform] duration-300 ease-out-strong motion-reduce:transition-none lg:border-transparent ${
           tucked ? '-translate-y-full' : ''
         } ${
           overlay
@@ -76,7 +76,7 @@ export function Navbar() {
             }`}
           >
             Pedir presupuesto
-            <span aria-hidden="true" className="transition-transform duration-200 ease-(--ease-out-strong) group-hover:translate-x-0.5">
+            <span aria-hidden="true" className="transition-transform duration-200 ease-out-strong group-hover:translate-x-0.5">
               →
             </span>
           </Link>
@@ -90,8 +90,8 @@ export function Navbar() {
             className="relative z-50 grid size-11 place-items-center rounded-full transition-transform duration-150 active:scale-95 lg:hidden"
           >
             <span aria-hidden="true" className="relative block h-3 w-6">
-              <span className={`absolute left-0 h-0.5 w-6 rounded bg-current transition-transform duration-200 ease-(--ease-out-strong) ${menuOpen ? 'top-1.5 rotate-45' : 'top-0'}`} />
-              <span className={`absolute left-0 h-0.5 w-6 rounded bg-current transition-transform duration-200 ease-(--ease-out-strong) ${menuOpen ? 'top-1.5 -rotate-45' : 'top-3'}`} />
+              <span className={`absolute left-0 h-0.5 w-6 rounded bg-current transition-transform duration-200 ease-out-strong ${menuOpen ? 'top-1.5 rotate-45' : 'top-0'}`} />
+              <span className={`absolute left-0 h-0.5 w-6 rounded bg-current transition-transform duration-200 ease-out-strong ${menuOpen ? 'top-1.5 -rotate-45' : 'top-3'}`} />
             </span>
           </button>
         </div>

@@ -9,7 +9,7 @@ import { mapsHref } from '@/utils/contactLinks'
 const LINE = 'border-ink/20'
 /** Rótulo a máquina en rojo lápiz (como el cajetín del menú móvil y la ficha del taller). */
 const LABEL = `${LINE} border-r py-3.5 pr-4 font-type text-xs text-pencil`
-const VALUE = `${LINE} min-w-0 pl-4 text-[15px] leading-relaxed text-ink [overflow-wrap:anywhere]`
+const VALUE = `${LINE} min-w-0 pl-4 text-[15px] leading-relaxed text-ink wrap-anywhere`
 const LINK = 'underline decoration-ink/30 underline-offset-4 hover:decoration-ink'
 
 /**
@@ -53,12 +53,14 @@ export function ContactDetails() {
             href={mapsHref(direccion)}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={`Ver el taller en Google Maps: ${direccion.calle}, ${formatLocality(direccion)} (se abre en una pestaña nueva)`}
             className={`inline-block ${LINK}`}
           >
             {direccion.calle}, {direccion.poligono}
             <br />
             {formatLocality(direccion)}
+            {/* El nombre del enlace es la dirección que se ve + este añadido (WCAG 2.5.3: quien usa control
+                por voz dice lo que ve, "Calle Mecánicos...", y tiene que coincidir con el nombre). */}
+            <span className="sr-only"> (ver en Google Maps, se abre en una pestaña nueva)</span>
             <span aria-hidden="true" className="ml-1.5 inline-block text-ink/60 no-underline">
               ↗
             </span>

@@ -23,7 +23,7 @@ export function RootLayout() {
     <>
       <a
         href="#contenido"
-        className="fixed top-3 left-3 z-[60] -translate-y-24 rounded-full bg-ink px-5 py-3 text-sm text-paper transition-transform focus:translate-y-0"
+        className="fixed top-3 left-3 z-60 -translate-y-24 rounded-full bg-ink px-5 py-3 text-sm text-paper transition-transform focus:translate-y-0"
       >
         Saltar al contenido
       </a>

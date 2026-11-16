@@ -49,7 +49,7 @@ export function Footer() {
             className="inline-flex items-center gap-4"
           >
             <BrandBadge size={60} />
-            <span className="text-lg leading-tight font-medium [font-stretch:110%]">
+            <span className="text-lg leading-tight font-medium font-stretch-110%">
               Carpintería
               <br />
               <span className="font-serif text-xl font-normal italic">y</span> Decoración
@@ -85,12 +85,13 @@ export function Footer() {
                 href={mapsHref(direccion)}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`Ver el taller en Google Maps: ${direccion.calle}, ${formatLocality(direccion)} (se abre en una pestaña nueva)`}
                 className="inline-block py-1 underline decoration-name/20 underline-offset-4 hover:text-name hover:decoration-name"
               >
                 {direccion.calle}, {direccion.poligono}
                 <br />
                 {formatLocality(direccion)}
+                {/* Nombre del enlace = dirección visible + este añadido (WCAG 2.5.3, ver ContactDetails). */}
+                <span className="sr-only"> (ver en Google Maps, se abre en una pestaña nueva)</span>
                 <span aria-hidden="true" className="ml-1.5 inline-block no-underline">↗</span>
               </a>
             </li>

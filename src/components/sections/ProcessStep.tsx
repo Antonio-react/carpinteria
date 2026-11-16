@@ -10,6 +10,8 @@ interface ProcessStepProps {
   sheetClassName?: string
   /** Márgenes del texto para que no se monte con el del paso de al lado (las hojas se solapan). */
   textClassName?: string
+  /** Nivel del título: h3 bajo un h2 (Inicio); h2 cuando la sección es la cabecera (h1) de su página. */
+  headingLevel?: 'h2' | 'h3'
 }
 
 /**
@@ -19,7 +21,8 @@ interface ProcessStepProps {
  * se dibujan según bajas; en escritorio están en la misma fila y se dibujan a la vez).
  * Las variables --draw / --fill las leen las líneas y rellenos de ProcessDrawing.
  */
-export function ProcessStep({ title, text, stage, className = '', sheetClassName = '', textClassName = '' }: ProcessStepProps) {
+export function ProcessStep({ title, text, stage, className = '', sheetClassName = '', textClassName = '', headingLevel = 'h3' }: ProcessStepProps) {
+  const Heading = headingLevel
   const { ref, revealed } = useRevealOnce<HTMLLIElement>()
   return (
     <li
@@ -32,7 +35,7 @@ export function ProcessStep({ title, text, stage, className = '', sheetClassName
         <ProcessDrawing stage={stage} />
       </div>
       <div className={textClassName}>
-        <h3 className="mt-6 text-2xl font-medium tracking-[-0.02em] [font-stretch:110%]">{title}</h3>
+        <Heading className="mt-6 text-2xl font-medium tracking-[-0.02em] font-stretch-110%">{title}</Heading>
         {/* Columna estrecha: a la izquierda (justificado abría huecos grandes entre palabras). */}
         <p className="mt-3 max-w-sm text-left leading-relaxed text-muted">{text}</p>
       </div>

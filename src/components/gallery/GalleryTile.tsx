@@ -43,7 +43,7 @@ export function GalleryTile({ photo, onOpen }: GalleryTileProps) {
         aria-hidden="true"
         className="absolute right-3 bottom-3 grid size-9 place-items-center rounded-full bg-paper/90 text-ink opacity-0 shadow-sm transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100"
       >
-        <svg viewBox="0 0 20 20" className="size-4 fill-none stroke-current [stroke-width:1.8]">
+        <svg viewBox="0 0 20 20" className="size-4 fill-none stroke-current stroke-[1.8]">
           <circle cx="8.5" cy="8.5" r="5.5" />
           <path d="M12.5 12.5 17 17M8.5 6v5M6 8.5h5" strokeLinecap="round" />
         </svg>

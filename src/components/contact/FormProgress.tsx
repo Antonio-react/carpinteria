@@ -21,7 +21,7 @@ export function FormProgress({ current, steps }: FormProgressProps) {
         {steps.map((title, index) => (
           <li key={title} aria-hidden="true" className="h-1 overflow-hidden rounded-full bg-ink/10">
             <span
-              className={`block h-full origin-left rounded-full transition-[transform,background-color] duration-500 ease-(--ease-out-strong) ${
+              className={`block h-full origin-left rounded-full transition-[transform,background-color] duration-500 ease-out-strong ${
                 index < current ? 'scale-x-100 bg-ink' : index === current ? 'scale-x-100 bg-oak' : 'scale-x-0 bg-ink'
               }`}
             />

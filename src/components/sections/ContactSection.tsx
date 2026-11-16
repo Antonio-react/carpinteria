@@ -30,7 +30,7 @@ export function ContactSection({ level = 'h2' }: ContactSectionProps) {
         </div>
         {/* En escritorio, centrado en vertical respecto a la columna de la izquierda. */}
         <LazySection id={CONTACT_FORM_ID} anchorMobileOnly minHeight="40rem" className="lg:col-span-7 lg:self-center">
-          <ContactForm />
+          <ContactForm stepHeadingLevel={level === 'h1' ? 'h2' : 'h3'} />
         </LazySection>
       </Container>
     </section>

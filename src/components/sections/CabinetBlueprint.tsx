@@ -60,18 +60,18 @@ const NOTES: readonly Note[] = [
   { text: 'Chimenea', at: [5, 93], leader: [[13, 91.5], [20, 84]] },
 ]
 
-const STROKE = 'fill-none [stroke-dasharray:1] [stroke-dashoffset:var(--draw)] transition-[stroke-dashoffset] ease-(--ease-in-out-strong)'
-const INK = `${STROKE} stroke-ink [stroke-width:3.2] duration-[1600ms]`
-const FINE = `${STROKE} stroke-ink/55 [stroke-width:2] delay-200 duration-[1600ms]`
-const PENCIL = `${STROKE} stroke-pencil [stroke-width:2.6] delay-500 duration-[1400ms]`
-const FADE_IN = 'opacity-(--fill) transition-opacity delay-[1100ms] duration-700'
+const STROKE = 'fill-none [stroke-dasharray:1] [stroke-dashoffset:var(--draw)] transition-[stroke-dashoffset] ease-in-out-strong'
+const INK = `${STROKE} stroke-ink stroke-[3.2] duration-1600`
+const FINE = `${STROKE} stroke-ink/55 stroke-2 delay-200 duration-1600`
+const PENCIL = `${STROKE} stroke-pencil stroke-[2.6] delay-500 duration-1400`
+const FADE_IN = 'opacity-(--fill) transition-opacity delay-1100 duration-700'
 
 export function CabinetBlueprint() {
   return (
     <svg viewBox={`0 0 ${W} ${H}`} aria-hidden="true" className="size-full" strokeLinecap="round" strokeLinejoin="round">
       <defs>
         <pattern id="plano-rayado" width="22" height="22" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-          <line x1="0" y1="0" x2="0" y2="22" className="stroke-ink/30 [stroke-width:2]" />
+          <line x1="0" y1="0" x2="0" y2="22" className="stroke-ink/30 stroke-2" />
         </pattern>
       </defs>
 
@@ -96,7 +96,7 @@ export function CabinetBlueprint() {
       <g className={FADE_IN}>
         {NOTES.map((note) => (
           <g key={note.text}>
-            {note.leader && <path d={line(...note.leader)} className="fill-none stroke-pencil/70 [stroke-width:2]" />}
+            {note.leader && <path d={line(...note.leader)} className="fill-none stroke-pencil/70 stroke-2" />}
             <text
               x={(note.at[0] / 100) * W}
               y={(note.at[1] / 100) * H}

@@ -134,7 +134,7 @@ export function ScrollMarquee({ primary, secondary }: ScrollMarqueeProps) {
         </div>
         <div
           ref={bottom}
-          className="w-max text-[clamp(3rem,10vw,8.5rem)] leading-[1] font-semibold tracking-[-0.02em] whitespace-nowrap text-ink/12 uppercase will-change-transform [font-stretch:110%]"
+          className="w-max text-[clamp(3rem,10vw,8.5rem)] leading-none font-semibold tracking-[-0.02em] whitespace-nowrap text-ink/12 uppercase will-change-transform font-stretch-110%"
         >
           {row(secondary)}
         </div>

@@ -21,7 +21,7 @@ export function SubmitButton({ sending }: SubmitButtonProps) {
       ) : (
         <>
           <span>Enviar mi idea</span>
-          <span aria-hidden="true" className="transition-transform duration-200 ease-(--ease-out-strong) group-hover:translate-x-1">
+          <span aria-hidden="true" className="transition-transform duration-200 ease-out-strong group-hover:translate-x-1">
             →
           </span>
         </>

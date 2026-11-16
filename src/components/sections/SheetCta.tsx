@@ -24,7 +24,7 @@ export function SheetCta({ title, rows }: SheetCtaProps) {
         <div className="border-2 border-ink/70 p-1.5">
           <div className="grid gap-10 border border-ink/40 p-6 sm:p-10 lg:grid-cols-12 lg:items-end lg:p-14">
             <div className="lg:col-span-7">
-              <h2 id="cta-titulo" className="text-4xl leading-[1.04] font-medium tracking-[-0.025em] text-balance [font-stretch:105%] sm:text-5xl">
+              <h2 id="cta-titulo" className="text-4xl leading-[1.04] font-medium tracking-tight text-balance font-stretch-105% sm:text-5xl">
                 {title}
               </h2>
               <Button to={QUOTE_PATH} withArrow className="mt-8">

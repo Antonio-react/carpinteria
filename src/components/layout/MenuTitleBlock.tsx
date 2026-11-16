@@ -7,7 +7,7 @@ import { PhoneLinks } from '@/components/ui/PhoneLinks'
  * Rótulo a máquina en "lápiz rojo" para fondo oscuro: el --color-pencil de la web (#b83d26) no llega
  * al contraste mínimo sobre el negro del menú en letra pequeña; este tono, más claro, sí (≈6:1).
  */
-const LABEL = 'border-white/15 py-2.5 pr-3 font-type text-xs text-[#e07055]'
+const LABEL = 'border-white/15 py-2.5 pr-3 font-type text-xs text-pencil-light'
 const VALUE = 'border-white/15 pl-3 text-[13px] text-name/85'
 
 /**

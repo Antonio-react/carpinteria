@@ -24,7 +24,7 @@ export function SectionHeading({ eyebrow, title, intro, id, level = 'h2', tone =
   return (
     <div className={`max-w-3xl ${className}`}>
       {eyebrow && <p className={`mb-4 text-xs font-medium tracking-[0.2em] uppercase ${muted}`}>{eyebrow}</p>}
-      <Heading id={id} className={`leading-[1.02] font-medium tracking-[-0.025em] text-balance [font-stretch:105%] ${titleSize}`}>
+      <Heading id={id} className={`leading-[1.02] font-medium tracking-tight text-balance font-stretch-105% ${titleSize}`}>
         {title}
       </Heading>
       {/* Entradilla corta y grande: a la izquierda (justificada abriría huecos grandes entre palabras). */}

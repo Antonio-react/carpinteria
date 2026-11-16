@@ -29,7 +29,7 @@ const STEPS: readonly { title: string; text: string; stage: ProcessStage; classN
     text: 'Lo fabricamos en nuestro taller, lo llevamos y lo montamos nosotros mismos, en cualquier punto de España.',
     stage: 'build',
     className: 'md:col-span-5 md:-ml-10 md:mt-8',
-    sheetClassName: '-rotate-[0.6deg]',
+    sheetClassName: 'rotate-[-0.6deg]',
     textClassName: 'md:pl-12',
   },
 ]
@@ -57,9 +57,9 @@ export function ProcessSection({ level = 'h2' }: ProcessSectionProps) {
           title="Medimos, diseñamos y montamos nosotros"
           intro="Entre tu idea y el mueble terminado no hay nadie más: quien te toma las medidas es quien lo dibuja, lo fabrica y te lo monta, estés donde estés."
         />
-        <ol className="mt-16 grid gap-14 md:grid-cols-[repeat(14,minmax(0,1fr))] md:gap-x-0 md:gap-y-8 lg:mt-20 lg:compact:mt-14">
+        <ol className="mt-16 grid gap-14 md:grid-cols-14 md:gap-x-0 md:gap-y-8 lg:mt-20 lg:compact:mt-14">
           {STEPS.map((step) => (
-            <ProcessStep key={step.title} {...step} />
+            <ProcessStep key={step.title} {...step} headingLevel={level === 'h1' ? 'h2' : 'h3'} />
           ))}
         </ol>
       </Container>

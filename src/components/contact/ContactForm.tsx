@@ -28,7 +28,13 @@ const titleId = (index: number) => `paso-${FORM_STEPS[index]?.id ?? index}-titul
  * Es UN solo formulario: los pasos que no se ven solo están ocultos, así al enviar viajan todos
  * los campos. Los nombres de campo coinciden con el formulario gemelo de index.html.
  */
-export default function ContactForm() {
+interface ContactFormProps {
+  /** Nivel de los títulos de paso: uno por debajo del título de la sección (h2 en Inicio → h3; h1 en Contacto → h2). */
+  stepHeadingLevel?: 'h2' | 'h3'
+}
+
+export default function ContactForm({ stepHeadingLevel = 'h3' }: ContactFormProps) {
+  const StepHeading = stepHeadingLevel
   const { formRef, status, step, errors, answers, senderName, next, back, onSubmit, onChange, reset } = useContactForm()
   const headings = useRef<(HTMLHeadingElement | null)[]>([])
   const previousStep = useRef(step)
@@ -82,16 +88,16 @@ export default function ContactForm() {
     if (!item) return null
     return (
       <section hidden={step !== index} aria-labelledby={titleId(index)} className="motion-safe:animate-rise">
-        <h3
+        <StepHeading
           id={titleId(index)}
           ref={(node) => {
             headings.current[index] = node
           }}
           tabIndex={-1}
-          className="scroll-mt-28 text-2xl font-medium tracking-[-0.02em] outline-none [font-stretch:105%] sm:text-3xl"
+          className="scroll-mt-28 text-2xl font-medium tracking-[-0.02em] outline-none font-stretch-105% sm:text-3xl"
         >
           {item.title}
-        </h3>
+        </StepHeading>
         <p className="mt-2 text-sm text-muted">{item.intro}</p>
         <div className="mt-6">{children}</div>
       </section>
@@ -119,7 +125,7 @@ export default function ContactForm() {
       // clara con un pequeño margen (el <div> que envuelve el formulario).
       // Escritorio: misma altura en los 3 pasos (la del más largo) y botones fijos abajo: centrado
       // junto al texto de la izquierda sin saltar al cambiar de paso.
-      className="rounded-md [background:linear-gradient(rgb(28_25_22/0.55),rgb(28_25_22/0.55))_top/100%_1px_no-repeat,linear-gradient(rgb(28_25_22/0.55),rgb(28_25_22/0.55))_bottom/100%_1px_no-repeat,linear-gradient(rgb(28_25_22/0.55),rgb(28_25_22/0.55))_left/1px_100%_no-repeat,linear-gradient(rgb(28_25_22/0.55),rgb(28_25_22/0.55))_right/1px_100%_no-repeat,var(--color-paper)] outline-1 -outline-offset-6 outline-ink/35 p-6 sm:p-9 lg:flex lg:min-h-[40rem] lg:flex-col lg:compact:min-h-[38.5rem] lg:compact:p-6"
+      className="rounded-md [background:linear-gradient(rgb(28_25_22/0.55),rgb(28_25_22/0.55))_top/100%_1px_no-repeat,linear-gradient(rgb(28_25_22/0.55),rgb(28_25_22/0.55))_bottom/100%_1px_no-repeat,linear-gradient(rgb(28_25_22/0.55),rgb(28_25_22/0.55))_left/1px_100%_no-repeat,linear-gradient(rgb(28_25_22/0.55),rgb(28_25_22/0.55))_right/1px_100%_no-repeat,var(--color-paper)] outline-1 -outline-offset-6 outline-ink/35 p-6 sm:p-9 lg:flex lg:min-h-160 lg:flex-col lg:compact:min-h-154 lg:compact:p-6"
     >
       <input type="hidden" name="form-name" value={FORM_NAME} />
       <p className="hidden">
@@ -221,7 +227,7 @@ export default function ContactForm() {
             className="group inline-flex min-h-12 items-center gap-3 rounded-full bg-ink px-7 text-sm font-medium text-paper transition-transform duration-150 ease-out active:scale-[0.97]"
           >
             Siguiente
-            <span aria-hidden="true" className="transition-transform duration-200 ease-(--ease-out-strong) group-hover:translate-x-1">
+            <span aria-hidden="true" className="transition-transform duration-200 ease-out-strong group-hover:translate-x-1">
               →
             </span>
           </button>

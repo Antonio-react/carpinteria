@@ -42,7 +42,7 @@ export function WorkTypeChoice({ name, options, labelledBy, error, onPick }: Wor
               const input = event.currentTarget.querySelector('input')
               if (input?.checked) window.setTimeout(onPick, 120)
             }}
-            className="group relative flex cursor-pointer flex-col justify-center border-b border-ink/15 py-3.5 pr-16 pl-3 transition-[background-color,box-shadow] duration-150 ease-out hover:bg-ink/[0.03] has-checked:bg-oak/10 has-checked:shadow-[inset_3px_0_0_var(--color-oak)] has-focus-visible:ring-2 has-focus-visible:ring-oak has-focus-visible:ring-inset"
+            className="group relative flex cursor-pointer flex-col justify-center border-b border-ink/15 py-3.5 pr-16 pl-3 transition-[background-color,box-shadow] duration-150 ease-out hover:bg-ink/3 has-checked:bg-oak/10 has-checked:shadow-[inset_3px_0_0_var(--color-oak)] has-focus-visible:ring-2 has-focus-visible:ring-oak has-focus-visible:ring-inset"
           >
             <input
               id={index === 0 ? `campo-${name}` : undefined}
@@ -61,7 +61,7 @@ export function WorkTypeChoice({ name, options, labelledBy, error, onPick }: Wor
               seed={index + 7}
               className="pointer-events-none absolute top-1/2 right-1.5 h-10 w-auto -translate-y-1/2 opacity-60 group-has-checked:opacity-90"
             />
-            <span className="relative text-lg leading-tight font-medium tracking-[-0.01em] [font-stretch:105%]">{option.value}</span>
+            <span className="relative text-lg leading-tight font-medium tracking-[-0.01em] font-stretch-105%">{option.value}</span>
             <span className="relative mt-1 text-xs leading-snug text-muted">{option.hint}</span>
           </label>
         ))}
