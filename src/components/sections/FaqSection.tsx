@@ -64,7 +64,7 @@ export function FaqSection() {
           <p className="max-w-sm text-left text-xl leading-snug text-ink/75">Si te queda alguna duda, pregúntanos directamente</p>
           <a
             href={`mailto:${siteConfig.email}`}
-            className="mt-3 inline-flex min-h-11 items-center underline decoration-ink/30 underline-offset-4 hover:decoration-ink"
+            className="mt-3 inline-flex min-h-11 items-center underline decoration-pencil decoration-1 underline-offset-4 transition-colors duration-150 hover:text-pencil"
           >
             <EmailText email={siteConfig.email} />
           </a>

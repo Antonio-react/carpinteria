@@ -16,8 +16,10 @@ const MENU_ID = 'menu-movil'
  * - Escritorio: logo a la izquierda del todo, navegación en píldora CENTRADA y botón
  *   "Pedir presupuesto" a la derecha del todo.
  * - Móvil/tableta: logo y botón de menú (pantalla completa).
- * Sobre el hero oscuro es transparente; cuando sube el contenido claro, pasa a sólida.
- * En pantallas "compact" (móvil, tableta y portátiles) se esconde al bajar y vuelve al subir.
+ * - Escritorio: SIN barra de fondo. Solo flotan las tres piezas (logo, píldora translúcida y botón), y cada
+ *   una cambia de color según lo que tenga debajo: claras sobre fondo oscuro, oscuras sobre fondo claro.
+ * - Móvil/tableta: barra a todo el ancho, transparente sobre el hero y sólida sobre el contenido claro.
+ * Se esconde al bajar y vuelve al subir en todas las pantallas (nunca con el menú abierto).
  */
 export function Navbar() {
   const { pathname } = useLocation()
@@ -35,8 +37,6 @@ export function Navbar() {
   // (las tarjetas del carrusel): en cuanto hay scroll, la barra transparente coge fondo oscuro.
   const scrolled = useScrolled(8)
   const darkBacking = overlay && !menuOpen && pathname !== '/' && scrolled
-  // Móvil, tableta y portátiles (variante "compact" de index.css): se esconde al bajar y vuelve al
-  // subir (nunca con el menú abierto). Monitores grandes: siempre visible.
   const { hidden, reveal } = useHideOnScroll()
   const tucked = hidden && !menuOpen
 
@@ -44,10 +44,12 @@ export function Navbar() {
     <>
       <header
         onFocusCapture={reveal}
-        className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,color,transform] duration-300 ease-(--ease-out-strong) motion-reduce:transition-none ${
-          tucked ? 'compact:-translate-y-full' : ''
+        className={`fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,color,transform] duration-300 ease-(--ease-out-strong) motion-reduce:transition-none lg:border-transparent ${
+          tucked ? '-translate-y-full' : ''
         } ${
-          overlay ? `border-b text-white ${darkBacking ? 'border-white/10 bg-night/80 backdrop-blur-md' : 'border-transparent'}` : 'border-b border-ink/10 bg-bone/85 text-ink backdrop-blur-md'
+          overlay
+            ? `text-white ${darkBacking ? 'border-white/10 max-lg:bg-night/80 max-lg:backdrop-blur-md' : 'border-transparent'}`
+            : 'border-ink/10 text-ink max-lg:bg-bone/85 max-lg:backdrop-blur-md'
         }`}
       >
         <div className="relative flex h-16 items-center justify-between px-4 sm:px-6 lg:h-20 lg:px-10">
@@ -59,11 +61,12 @@ export function Navbar() {
               scrollTopIfSame('/')
             }}
             className="grid min-h-11 min-w-11 place-items-center rounded-full transition-transform duration-150 active:scale-95">
-            <BrandBadge size={48} />
+            {/* Escritorio: unos px más grande (56); el dibujo es vectorial, al escalarlo no se emborrona. */}
+            <BrandBadge size={48} className="lg:scale-[1.1667]" />
           </Link>
 
           <div className="absolute left-1/2 hidden -translate-x-1/2 lg:block">
-            <NavPill links={NAV_LINKS} variant={variant} />
+            <NavPill links={NAV_LINKS} variant={variant} backed={darkBacking} />
           </div>
 
           <Link

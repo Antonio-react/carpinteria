@@ -6,7 +6,7 @@
  * estrecho; un monitor panorámico de 34" también puede ser bajo, pero es muy ancho, y NO cuenta como portátil).
  * Por ancho, solo lo estrecho de verdad (menos de 1280px: móvil y tableta). Así una ventana a media pantalla
  * en un monitor alto (p. ej. 1376x1018) se ve como escritorio.
- * Ahí la barra se esconde al bajar y los bloques grandes se compactan. En monitores se queda todo como siempre.
+ * Ahí los bloques grandes se compactan. En monitores se queda todo como siempre.
  */
 @custom-variant compact {
   @media (max-width: 1279.98px), (max-height: 900px) and (max-width: 1919.98px) {
@@ -77,17 +77,19 @@
   @keyframes rise {
     from { opacity: 0; transform: translateY(16px); }
   }
+  /* Las brasas: el punto ALTO es igual en todas partes; el BAJO se puede hundir más (--ember-low,
+     --flicker-low) para que el cambio se note en pantallas pequeñas sin encender más el fuego (FireGlow). */
   @keyframes ember-breathe {
-    0% { opacity: 0.45; }
+    0% { opacity: var(--ember-low, 0.45); }
     100% { opacity: 1; }
   }
   /* Parpadeo de las brasas: solo brillo, con saltos irregulares (más amplios que al principio). */
   @keyframes ember-flicker {
     0%, 100% { opacity: 0.85; }
     18% { opacity: 1; }
-    34% { opacity: 0.6; }
+    34% { opacity: var(--flicker-low, 0.6); }
     52% { opacity: 0.95; }
-    71% { opacity: 0.65; }
+    71% { opacity: calc(var(--flicker-low, 0.6) + 0.05); }
   }
   @keyframes appear {
     from {

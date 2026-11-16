@@ -11,7 +11,9 @@
  */
 export function FireGlow() {
   return (
-    <div aria-hidden="true" className="absolute inset-0">
+    // Móvil: la chimenea se ve pequeña. En vez de encenderla más (perdería sutileza), se apaga más al
+    // bajar la luz: el punto alto es el mismo y el cambio se nota más. En tableta y escritorio, como siempre.
+    <div aria-hidden="true" className="absolute inset-0 max-md:[--ember-low:0.12] max-md:[--flicker-low:0.42]">
       {/* Luz cálida que sale del cristal y se refleja en el zócalo: pegada a la chimenea, para que no
           parezca que la luz (o la chimenea) sobresale del cerco. */}
       <div className="absolute top-[74%] left-[12%] h-[20%] w-[22%] bg-[radial-gradient(closest-side,rgb(255_140_60/0.16),transparent)] mix-blend-screen motion-safe:animate-ember-breathe" />

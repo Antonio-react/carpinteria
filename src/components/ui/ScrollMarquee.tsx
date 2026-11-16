@@ -14,7 +14,8 @@ const RESUME_AFTER = 1200 // ms tras soltar el dedo
 /**
  * Dos líneas de texto gigante que se desplazan solas, despacio y en sentidos opuestos.
  * Eco del nombre gigante del hero. Se puede interactuar con ella:
- * - Escritorio: se para con el ratón encima.
+ * - Escritorio: se para con el ratón encima; pinchando y arrastrando a los lados se mueve a mano
+ *   (cursor de mano).
  * - Móvil: al tocarla se para; arrastrando el dedo a los lados se mueve a mano (el gesto
  *   vertical sigue siendo scroll de la página). Al soltar, sigue sola.
  * - Botón de pausa (teclado y lectores de pantalla: lo que se mueve solo debe poder pararse).
@@ -91,8 +92,12 @@ export function ScrollMarquee({ primary, secondary }: ScrollMarqueeProps) {
   const onPointerLeave = (event: PointerEvent) => {
     if (event.pointerType === 'mouse') hovering.current = false
   }
-  const onPointerDown = (event: PointerEvent) => {
-    if (event.pointerType === 'mouse') return
+  const onPointerDown = (event: PointerEvent<HTMLDivElement>) => {
+    // Ratón: solo el botón principal. Se "captura" el puntero para seguir arrastrando aunque salga de la cinta.
+    if (event.pointerType === 'mouse') {
+      if (event.button !== 0) return
+      event.currentTarget.setPointerCapture(event.pointerId)
+    }
     touching.current = true
     lastX.current = event.clientX
   }
@@ -122,7 +127,7 @@ export function ScrollMarquee({ primary, secondary }: ScrollMarqueeProps) {
         onPointerMove={onPointerMove}
         onPointerUp={release}
         onPointerCancel={release}
-        className="touch-pan-y overflow-hidden py-10 select-none lg:py-16"
+        className="cursor-grab touch-pan-y overflow-hidden py-10 select-none active:cursor-grabbing lg:py-16"
       >
         <div ref={top} className="w-max font-serif text-[clamp(4rem,13vw,11rem)] leading-[1.05] whitespace-nowrap text-ink italic will-change-transform">
           {row(primary)}

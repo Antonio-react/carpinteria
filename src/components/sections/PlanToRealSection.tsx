@@ -4,7 +4,6 @@ import roomLarge from '@/assets/hero/room-1400.webp'
 import roomSmall from '@/assets/hero/room-800.webp'
 import { CabinetBlueprint } from '@/components/sections/CabinetBlueprint'
 import { BeforeAfter } from '@/components/ui/BeforeAfter'
-import { PencilUnderline } from '@/components/ui/PencilUnderline'
 import { Container } from '@/components/ui/Container'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { useRevealOnce } from '@/hooks/useRevealOnce'
@@ -50,7 +49,7 @@ export function PlanToRealSection() {
           id="plano-titulo"
           title={
             <>
-              Primero lo dibujamos. Luego lo <PencilUnderline>montamos</PencilUnderline>
+              Primero lo dibujamos. Luego lo montamos
             </>
           }
           intro="Cada mueble empieza como un plano a lápiz sobre las medidas reales de tu pared. Arrastra la barra y compara el plano con el mueble ya montado."

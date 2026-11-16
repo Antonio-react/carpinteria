@@ -1,5 +1,4 @@
 import { Container } from '@/components/ui/Container'
-import { PencilUnderline } from '@/components/ui/PencilUnderline'
 import { PinnedNote } from '@/components/ui/PinnedNote'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { SpecSheet, type SpecRow } from '@/components/ui/SpecSheet'
@@ -28,7 +27,7 @@ export function IntroSection() {
             id="quienes-somos"
             title={
               <>
-                Hacemos en madera lo que tienes en la <PencilUnderline>cabeza</PencilUnderline>
+                Hacemos en madera lo que tienes en la cabeza
               </>
             }
           />

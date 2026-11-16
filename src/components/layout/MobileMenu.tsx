@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { NavLink as RouterNavLink } from 'react-router'
+import { MenuTitleBlock } from '@/components/layout/MenuTitleBlock'
 import { Button } from '@/components/ui/Button'
 import { QUOTE_PATH, type NavLink } from '@/data/navigation'
 import { useSamePageScrollTop } from '@/hooks/useSamePageScrollTop'
@@ -61,7 +62,13 @@ export function MobileMenu({ id, open, links, onClose }: MobileMenuProps) {
           >
             {({ isActive }) => (
               <>
-                {link.label}
+                {/* Número de cajón (como las etiquetas de la cajonera de Inicio): decorativo. */}
+                <span className="flex items-baseline gap-4">
+                  <span aria-hidden="true" className="w-6 font-type text-[13px] tracking-[0.05em] text-[#e07055]">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  {link.label}
+                </span>
                 {isActive && <span aria-hidden="true" className="size-2.5 rounded-full bg-oak" />}
               </>
             )}
@@ -69,6 +76,8 @@ export function MobileMenu({ id, open, links, onClose }: MobileMenuProps) {
         ))}
       </nav>
       <div className="mt-auto phone-land:pt-5">
+        {/* Cajetín con correo y horario: solo si la pantalla es alta (en móviles bajos y apaisados no cabe). */}
+        <MenuTitleBlock className="mb-5 hidden [@media(min-height:680px)]:grid phone-land:hidden!" />
         {/* Cierra el menú también si ya estás en Contacto (la página no cambia y no se cerraría solo). */}
         <Button to={QUOTE_PATH} onClick={onClose} tone="light" withArrow className="w-full justify-between phone-land:w-auto!">
           Pedir presupuesto
