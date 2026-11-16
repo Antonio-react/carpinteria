@@ -235,7 +235,7 @@ export default function ContactForm() {
     <p className="mt-4 px-1 text-left text-sm text-muted">
       ¿Prefieres no rellenar nada? Escríbenos directamente a{' '}
       {/* Móvil: el correo en su propia línea y sin cortarse; desde sm, seguido en la frase. */}
-      <a href={`mailto:${siteConfig.email}`} className="mt-1 block w-fit whitespace-nowrap text-ink underline decoration-ink/30 underline-offset-4 hover:decoration-ink sm:mt-0 sm:inline sm:whitespace-normal">
+      <a href={`mailto:${siteConfig.email}`} className="mt-1 block w-fit whitespace-nowrap text-ink underline decoration-pencil decoration-1 underline-offset-4 transition-colors duration-150 hover:text-pencil sm:mt-0 sm:inline sm:whitespace-normal">
         <EmailText email={siteConfig.email} />
       </a>
       <span className="hidden sm:inline">.</span>

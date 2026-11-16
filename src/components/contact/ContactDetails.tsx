@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import { siteConfig } from '@/config/site'
 import { BrandMark } from '@/components/ui/BrandMark'
 import { EmailText } from '@/components/ui/EmailText'
@@ -5,74 +6,88 @@ import { PhoneLinks } from '@/components/ui/PhoneLinks'
 import { formatLocality } from '@/utils/address'
 import { mapsHref } from '@/utils/contactLinks'
 
-/** Rótulo a máquina de escribir con cinta roja, en vez de etiquetas en mayúsculas de plantilla. */
-const LABEL = 'font-type text-sm text-pencil'
+const LINE = 'border-ink/20'
+/** Rótulo a máquina en rojo lápiz (como el cajetín del menú móvil y la ficha del taller). */
+const LABEL = `${LINE} border-r py-3.5 pr-4 font-type text-xs text-pencil`
+const VALUE = `${LINE} min-w-0 pl-4 text-[15px] leading-relaxed text-ink [overflow-wrap:anywhere]`
+const LINK = 'underline decoration-ink/30 underline-offset-4 hover:decoration-ink'
 
 /**
- * Datos de contacto como la tarjeta del taller: papel de estraza pegado con cinta, algo torcido, con el
- * logo como sello de tinta y los datos escritos "a mano". El email va destacado; los teléfonos,
- * discretos (la empresa prefiere el formulario y el correo, y no se promociona WhatsApp).
+ * Datos de contacto en un cajetín de plano: rótulo a la izquierda y dato a la derecha, el mismo formato
+ * que el menú móvil. Abajo a la derecha, el logo como sello de la empresa (tinta suave, girado y pisando
+ * el borde, como estampado a mano). Cada teléfono es una zona táctil de 44 px.
  */
 export function ContactDetails() {
   const { email, telefonos, direccion, horario } = siteConfig
-  return (
-    <div
-      className="relative -rotate-1 bg-[#dcc6a0] bg-[radial-gradient(circle_at_20%_30%,rgb(255_250_235/0.35),transparent_45%),repeating-linear-gradient(115deg,rgb(120_85_45/0.05)_0_2px,transparent_2px_6px)] px-5 pt-10 pb-8 shadow-[0_22px_44px_-22px_rgb(28_25_22/0.55),0_2px_6px_rgb(28_25_22/0.1)] sm:px-9"
-    >
-      {/* Cinta de carrocero */}
-      <span aria-hidden="true" className="absolute -top-3 left-10 h-7 w-24 -rotate-3 bg-[#efe3c4]/85 shadow-[0_1px_2px_rgb(28_25_22/0.12)]" />
-      {/* Sello del taller, de fondo: a media altura y cortado por el borde derecho, muy suave. No aparta
-          el texto (va detrás); el recorte lo hace este contenedor, así la cinta de arriba no se corta. */}
-      <span aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
-        <span className="absolute top-1/2 -right-10 grid size-40 -translate-y-1/2 rotate-12 place-items-center rounded-full border-[3px] border-ink/10 text-ink/10 mix-blend-multiply">
-          <BrandMark size={128} />
-        </span>
-      </span>
+  const rows: { label: string; value: ReactNode; flush?: boolean }[] = [
+    {
+      label: 'escríbenos',
+      flush: true,
+      value: (
+        <a href={`mailto:${email}`} className={`inline-flex min-h-11 items-center font-medium ${LINK}`}>
+          <span>
+            <EmailText email={email} />
+          </span>
+        </a>
+      ),
+    },
+    {
+      label: 'llámanos',
+      flush: true,
+      value: <PhoneLinks phones={[telefonos.principal, telefonos.secundario]} linkClassName={LINK} />,
+    },
+    {
+      label: 'horario',
+      value: (
+        <>
+          {horario.dias}, <span className="whitespace-nowrap">{horario.manana}</span> y{' '}
+          <span className="whitespace-nowrap">{horario.tarde}</span>
+        </>
+      ),
+    },
+    {
+      label: 'taller',
+      value: (
+        <>
+          <a
+            href={mapsHref(direccion)}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Ver el taller en Google Maps: ${direccion.calle}, ${formatLocality(direccion)} (se abre en una pestaña nueva)`}
+            className={`inline-block ${LINK}`}
+          >
+            {direccion.calle}, {direccion.poligono}
+            <br />
+            {formatLocality(direccion)}
+            <span aria-hidden="true" className="ml-1.5 inline-block text-ink/60 no-underline">
+              ↗
+            </span>
+          </a>
+        </>
+      ),
+    },
+  ]
+  const last = rows.length - 1
 
-      <dl className="relative grid gap-6 text-ink">
-        <div>
-          <dt className={LABEL}>escríbenos</dt>
-          <dd className="mt-1">
-            <a href={`mailto:${email}`} className="inline-flex min-h-11 items-center text-[15px] font-medium underline decoration-ink/30 underline-offset-4 hover:decoration-ink sm:text-lg">
-              <span>
-                <EmailText email={email} />
-              </span>
-            </a>
+  return (
+    <dl className={`relative grid grid-cols-[auto_minmax(0,1fr)] border ${LINE} bg-paper/45 px-4`}>
+      {rows.map((row, index) => (
+        <div key={row.label} className="contents">
+          <dt className={`${LABEL} ${row.flush ? 'flex items-center' : ''} ${index > 0 ? 'border-t' : ''}`}>{row.label}</dt>
+          {/* La última fila deja sitio abajo para el sello (que no tape la dirección). */}
+          <dd className={`${VALUE} ${row.flush ? 'py-1' : 'pt-3.5'} ${row.flush ? '' : index === last ? 'pb-12' : 'pb-3.5'} ${index > 0 ? 'border-t' : ''}`}>
+            {row.value}
           </dd>
         </div>
-        <div>
-          <dt className={LABEL}>cuándo estamos</dt>
-          <dd className="mt-1 leading-relaxed">
-            {horario.dias}, {horario.manana} y {horario.tarde}
-          </dd>
-        </div>
-        <div>
-          <dt className={LABEL}>el taller</dt>
-          <dd className="mt-1 leading-relaxed">
-            <a
-              href={mapsHref(direccion)}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`Ver el taller en Google Maps: ${direccion.calle}, ${formatLocality(direccion)} (se abre en una pestaña nueva)`}
-              className="inline-block underline decoration-ink/30 underline-offset-4 hover:decoration-ink"
-            >
-              {direccion.calle}, {direccion.poligono}
-              <br />
-              {formatLocality(direccion)}
-              <span aria-hidden="true" className="ml-1.5 inline-block text-ink/60 no-underline">↗</span>
-            </a>
-          </dd>
-        </div>
-        <div>
-          <dt className={LABEL}>o llámanos</dt>
-          <dd className="mt-1 text-sm leading-relaxed text-ink/75">
-            <PhoneLinks
-              phones={[telefonos.principal, telefonos.secundario]}
-              linkClassName="underline decoration-ink/25 underline-offset-4 hover:text-ink hover:decoration-ink"
-            />
-          </dd>
-        </div>
-      </dl>
-    </div>
+      ))}
+      {/* Sello de la empresa abajo a la derecha, no justo en la esquina: algo hacia dentro, girado y
+          pisando un poco el borde, como estampado deprisa a mano. Tinta suave (multiply). */}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute right-6 -bottom-9 grid size-20 md:-bottom-6 rotate-[-14deg] place-items-center rounded-full border-2 border-ink/25 text-ink/35 mix-blend-multiply"
+      >
+        <BrandMark size={66} />
+      </span>
+    </dl>
   )
 }

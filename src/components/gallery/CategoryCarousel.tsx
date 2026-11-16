@@ -12,10 +12,10 @@ import { useTilt } from '@/hooks/useTilt'
 /**
  * Carrusel "coverflow" de categorías: sirve solo para ELEGIR categoría.
  * - Tarjeta central grande (enlace a la página de la categoría); laterales inclinadas en perspectiva.
- * - Píldoras arriba. Flechas: a los lados de la tarjeta central en móvil/tableta, debajo en escritorio.
+ * - Píldoras arriba. Flechas en los extremos: fuera de las tarjetas si caben; si no, sobre la última
+ *   tarjeta visible (nunca junto a la central).
  * - Pantallas intermedias (variante "compact" a partir de lg: portátiles y tabletas apaisadas): tarjeta
- *   más pequeña, calculada con el alto de la pantalla, y flechas a los extremos, fuera de las tarjetas,
- *   para que todo quepa a la vista sin tener que bajar para llegar a ellas.
+ *   más pequeña, calculada con el alto de la pantalla, para que todo quepa a la vista.
  * - Móvil: deslizamiento con el dedo. Escritorio: flechas (botones o ← → del teclado), sin arrastre con ratón.
  * - Sin rueda del ratón (evita "scroll jacking").
  * - En móvil se ven 3 tarjetas: la central y parte de las dos laterales.
@@ -128,22 +128,22 @@ export function CategoryCarousel({ tone = 'light' }: CategoryCarouselProps) {
           })}
         </div>
 
-        {/* Flechas: en móvil y tableta a los lados de la tarjeta central; en escritorio, juntas debajo;
-            en pantallas intermedias, en los extremos (fuera de las tarjetas). */}
-        <div className="lg:mt-12 lg:flex lg:justify-center lg:gap-3 lg:compact:mt-0 lg:compact:block">
-          <ArrowButton
-            direction="previous"
-            onClick={previous}
-            label="Categoría anterior"
-            className="absolute top-1/2 left-[max(0.25rem,calc(50%-var(--card-w)/2-4.25rem))] -translate-y-1/2 lg:static lg:translate-y-0 lg:compact:absolute lg:compact:left-0 lg:compact:-translate-y-1/2"
-          />
-          <ArrowButton
-            direction="next"
-            onClick={next}
-            label="Categoría siguiente"
-            className="absolute top-1/2 right-[max(0.25rem,calc(50%-var(--card-w)/2-4.25rem))] -translate-y-1/2 lg:static lg:translate-y-0 lg:compact:absolute lg:compact:right-0 lg:compact:-translate-y-1/2"
-          />
-        </div>
+        {/* Flechas en los extremos del carrusel (borde del contenedor, alineadas con título y píldoras):
+            fuera de las tarjetas si hay sitio; si no, encima de la última tarjeta visible, nunca junto a
+            la central. */}
+        <ArrowButton
+          direction="previous"
+          onClick={previous}
+          label="Categoría anterior"
+          className="absolute top-1/2 left-0 -translate-y-1/2"
+        />
+        <ArrowButton
+          direction="next"
+          onClick={next}
+          label="Categoría siguiente"
+          className="absolute top-1/2 right-0 -translate-y-1/2"
+        />
+
 
         <p className="sr-only" aria-live="polite">
           {current?.name}, {index + 1} de {CATEGORIES.length}

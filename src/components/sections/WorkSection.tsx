@@ -22,7 +22,7 @@ export function WorkSection({ level = 'h2' }: WorkSectionProps) {
   return (
     <section
       aria-labelledby="trabajos-titulo"
-      className={`relative isolate overflow-x-clip ${isPage ? 'bg-night pt-36 pb-28 text-name lg:pt-44 lg:compact:pt-32 lg:pb-36 lg:compact:pb-24' : 'bg-bone py-24 lg:py-36 lg:compact:py-24'}`}
+      className={`relative isolate overflow-x-clip ${isPage ? 'bg-night pt-sheet pb-28 text-name lg:pb-36 lg:compact:pb-24' : 'bg-bone py-24 lg:py-36 lg:compact:py-24'}`}
     >
       {isPage && (
         <>
@@ -37,9 +37,14 @@ export function WorkSection({ level = 'h2' }: WorkSectionProps) {
             id="trabajos-titulo"
             level={level}
             tone={tone}
+            // Móvil: en dos líneas. Desde 640px, en UNA: la letra se ajusta al ancho (sin pasar de la escala
+            // normal), así no salta de 1 a 2 líneas y vuelta a 1 al cambiar de tamaño de letra.
+            className="sm:max-w-none"
+            titleSize="text-4xl sm:text-[min(3rem,calc((100vw-3rem)/15.2))] lg:text-6xl lg:compact:text-5xl"
             title={
               <>
-                Lo que ha salido de nuestro taller
+                Lo que ha salido <br className="sm:hidden" />
+                de nuestro taller
               </>
             }
           />

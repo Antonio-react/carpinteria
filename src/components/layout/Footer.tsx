@@ -76,6 +76,10 @@ export function Footer() {
                 linkClassName="underline decoration-name/20 underline-offset-4 hover:text-name hover:decoration-name"
               />
             </li>
+            {/* Mismo orden que el cajetín de Contacto: correo, teléfonos, horario y taller. */}
+            <li className="text-name/75">
+              {horario.dias}: {horario.manana} y {horario.tarde}
+            </li>
             <li className="text-name/75">
               <a
                 href={mapsHref(direccion)}
@@ -89,9 +93,6 @@ export function Footer() {
                 {formatLocality(direccion)}
                 <span aria-hidden="true" className="ml-1.5 inline-block no-underline">↗</span>
               </a>
-            </li>
-            <li className="text-name/75">
-              {horario.dias}: {horario.manana} y {horario.tarde}
             </li>
           </ul>
         </div>

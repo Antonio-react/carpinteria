@@ -37,7 +37,7 @@ export function RootLayout() {
             title={sheet.title}
             signature={SIGNATURE}
             tone={sheet.tone}
-            className="absolute top-[4.75rem] right-4 z-10 max-w-[calc(100%-2rem)] sm:right-6 lg:top-[5.5rem] lg:right-10"
+            className="absolute top-(--sheet-top) right-4 z-10 max-w-[calc(100%-2rem)] sm:right-6 lg:right-10"
           />
         )}
         <Suspense

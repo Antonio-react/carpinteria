@@ -8,7 +8,7 @@ export default function NotFoundPage() {
   return (
     <>
       <PageMeta title="Página no encontrada · Carpintería y Decoración" description="La página que buscas no existe o ha cambiado de dirección." />
-      <section aria-labelledby="error-titulo" className="grid min-h-svh place-items-center pt-24 pb-16">
+      <section aria-labelledby="error-titulo" className="grid min-h-svh place-items-center pt-sheet pb-16">
         <Container className="text-center">
           <div className="text-oak">
             <SawSpinner size={72} label="Sierra girando" className="motion-safe:[&>span:first-child]:[animation-duration:3s]" />

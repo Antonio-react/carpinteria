@@ -35,7 +35,7 @@ export default function WorksPage() {
           </ul>
         </Container>
       </section>
-      <NoteCta title="Cada encargo empieza desde cero. Cuéntanos el tuyo" text="Al pedir presupuesto puedes adjuntar fotos de referencia." />
+      <NoteCta title="Cada encargo empieza desde cero" text="Cuéntanos el tuyo. Al pedir presupuesto puedes adjuntar fotos de referencia." />
     </>
   )
 }

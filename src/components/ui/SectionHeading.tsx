@@ -11,16 +11,20 @@ interface SectionHeadingProps {
   level?: 'h1' | 'h2'
   tone?: 'light' | 'dark'
   className?: string
+  /** Tamaños del título, si una página necesita otros (por defecto, la escala de toda la web). */
+  titleSize?: string
 }
 
+const TITLE_SIZE = 'text-4xl sm:text-5xl lg:text-6xl lg:compact:text-5xl'
+
 /** Cabecera de sección: título grande, con antetítulo y entradilla opcionales. */
-export function SectionHeading({ eyebrow, title, intro, id, level = 'h2', tone = 'light', className = '' }: SectionHeadingProps) {
+export function SectionHeading({ eyebrow, title, intro, id, level = 'h2', tone = 'light', className = '', titleSize = TITLE_SIZE }: SectionHeadingProps) {
   const muted = tone === 'light' ? 'text-muted' : 'text-name/70'
   const Heading = level
   return (
     <div className={`max-w-3xl ${className}`}>
       {eyebrow && <p className={`mb-4 text-xs font-medium tracking-[0.2em] uppercase ${muted}`}>{eyebrow}</p>}
-      <Heading id={id} className="text-4xl leading-[1.02] font-medium tracking-[-0.025em] text-balance [font-stretch:105%] sm:text-5xl lg:text-6xl lg:compact:text-5xl">
+      <Heading id={id} className={`leading-[1.02] font-medium tracking-[-0.025em] text-balance [font-stretch:105%] ${titleSize}`}>
         {title}
       </Heading>
       {/* Entradilla corta y grande: a la izquierda (justificada abriría huecos grandes entre palabras). */}

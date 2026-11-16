@@ -25,6 +25,27 @@
   }
 }
 
+/*
+ * Cajetín (TitleBlock) y comienzo de la página: el cajetín va fijo a --sheet-top y el contenido de las
+ * páginas que lo llevan empieza SIEMPRE --sheet-gap por debajo de él (utilidad pt-sheet). Así el título
+ * no puede pisarlo en ninguna pantalla. --sheet-h es el alto del cajetín: una fila en móvil y tableta;
+ * dos (con la firma) desde lg.
+ */
+:root {
+  --sheet-top: 4.75rem;
+  --sheet-h: 1.875rem;
+  --sheet-gap: 2rem;
+}
+@media (min-width: 64rem) {
+  :root {
+    --sheet-top: 5.5rem;
+    --sheet-h: 3.5rem;
+  }
+}
+@utility pt-sheet {
+  padding-top: calc(var(--sheet-top) + var(--sheet-h) + var(--sheet-gap));
+}
+
 @theme {
   /* ── Colores ── */
   /* Hero (oscurecido) */
@@ -143,21 +164,25 @@
   }
 
   /*
-   * Textos de más de una línea, justificados (bordes parejos a los dos lados) en móvil y escritorio.
+   * Textos de más de una línea, justificados (bordes parejos a los dos lados) desde tableta (≥768px).
+   * En móvil, alineados a la izquierda: en columnas tan estrechas el justificado abría huecos grandes
+   * entre palabras aun partiendo palabras.
    * Excepción (text-left): las entradillas grandes de 1-2 líneas bajo los títulos y la franja final.
    * Con partición de palabras en español (lang="es"): sin ella, en columnas estrechas quedan huecos
    * grandes entre palabras. Los títulos NO se justifican (en letra grande abre espacios feos).
    * La última línea de cada párrafo queda alineada a la izquierda (así funciona text-align: justify).
    */
-  p,
-  li {
-    text-align: justify;
-    hyphens: auto;
-    -webkit-hyphens: auto;
-  }
-  /* Lo que va centrado a propósito (404, pie) sigue centrado. */
-  .text-center :is(p, li) {
-    text-align: center;
+  @media (min-width: 48rem) {
+    p,
+    li {
+      text-align: justify;
+      hyphens: auto;
+      -webkit-hyphens: auto;
+    }
+    /* Lo que va centrado a propósito (404, pie) sigue centrado. */
+    .text-center :is(p, li) {
+      text-align: center;
+    }
   }
 
   ::selection {

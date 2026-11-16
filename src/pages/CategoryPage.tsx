@@ -22,32 +22,10 @@ export default function CategoryPage() {
   return (
     <>
       <PageMeta title={`${category.name} a medida · Carpintería y Decoración`} description={category.seoDescription} />
-      <section aria-labelledby="categoria-titulo" className="pt-32 pb-20 lg:pt-40 lg:compact:pt-32 lg:pb-28 lg:compact:pb-20">
+      <section aria-labelledby="categoria-titulo" className="pt-sheet pb-20 lg:pb-28 lg:compact:pb-20">
         <Container>
-          {/* Arriba, "volver" discreto (para quien quiera salir enseguida); el botón principal va bajo
-              las fotos. Móvil: solo el enlace de volver; desde sm, también la ruta (Inicio / Trabajos / …). */}
-          <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2">
-            <BackLink to={back.to} label={back.label} state={back.state} variant="text" />
-          <nav aria-label="Ruta" className="hidden text-sm text-muted sm:block">
-            <ol className="flex flex-wrap items-center gap-2">
-              <li>
-                <Link to="/" className="inline-flex min-h-11 items-center hover:text-ink">
-                  Inicio
-                </Link>
-              </li>
-              <li aria-hidden="true">/</li>
-              <li>
-                <Link to="/trabajos" className="inline-flex min-h-11 items-center hover:text-ink">
-                  Trabajos
-                </Link>
-              </li>
-              <li aria-hidden="true">/</li>
-              <li aria-current="page" className="text-ink">
-                {category.name}
-              </li>
-            </ol>
-          </nav>
-          </div>
+          {/* Arriba, "volver" discreto (para quien quiera salir enseguida); el botón principal va bajo las fotos. */}
+          <BackLink to={back.to} label={back.label} state={back.state} variant="text" />
 
           <div className="mt-8 grid gap-8 lg:grid-cols-12">
             <h1 id="categoria-titulo" className="text-5xl leading-none font-medium tracking-[-0.03em] [font-stretch:110%] sm:text-6xl lg:col-span-6 lg:text-7xl lg:compact:text-6xl">
