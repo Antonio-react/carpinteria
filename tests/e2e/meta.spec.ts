@@ -62,3 +62,21 @@ test('metadatos comunes: idioma, robots, favicon y Open Graph', async ({ page })
   const image = await page.request.get(new URL(ogImage ?? '', 'http://x').pathname)
   expect(image.status(), 'La imagen para compartir (og-image.jpg) no existe').toBe(200)
 })
+
+// Sin estos archivos, Netlify devuelve la web (index.html) en su lugar por la regla de la SPA, y
+// Lighthouse marca "robots.txt no es válido". Los genera vite/seoFiles.ts al compilar.
+test('robots.txt, sitemap.xml y llms.txt existen y no son la página web', async ({ request }) => {
+  const robots = await (await request.get('/robots.txt')).text()
+  expect(robots).toMatch(/^User-agent: \*/)
+  expect(robots).toMatch(/^Sitemap: https:\/\/.+\/sitemap\.xml$/m)
+
+  const sitemap = await (await request.get('/sitemap.xml')).text()
+  expect(sitemap).toContain('<urlset')
+  expect(sitemap).toContain('/trabajos/salones</loc>')
+
+  const llms = await (await request.get('/llms.txt')).text()
+  expect(llms).toMatch(/^# Carpintería y Decoración/)
+  expect(llms).toContain('](https://')
+
+  for (const text of [robots, sitemap, llms]) expect(text).not.toContain('<!doctype html>')
+})

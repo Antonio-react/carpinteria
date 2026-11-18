@@ -1,5 +1,6 @@
 import salonesCoverLarge from '@/assets/gallery/salones-portada-960.webp'
 import salonesCoverSmall from '@/assets/gallery/salones-portada-480.webp'
+import { CATEGORY_NAMES, type CategorySlug } from '@/data/categorySlugs'
 
 /** Foto de la galería (cuando lleguen las reales, se añaden aquí). */
 export interface GalleryPhoto {
@@ -12,7 +13,7 @@ export interface GalleryPhoto {
 }
 
 export interface Category {
-  slug: string
+  slug: CategorySlug
   name: string
   /** Frase corta para la tarjeta del carrusel. */
   tagline: string
@@ -41,7 +42,7 @@ const salonesCover: GalleryPhoto = {
 export const CATEGORIES: readonly Category[] = [
   {
     slug: 'armarios',
-    name: 'Armarios',
+    name: CATEGORY_NAMES.armarios,
     tagline: 'Empotrados y vestidores',
     description:
       'Armarios empotrados y vestidores hechos al milímetro para aprovechar cada hueco de la casa: interiores organizados a medida, puertas correderas o abatibles y acabados en madera natural o lacados.',
@@ -51,7 +52,7 @@ export const CATEGORIES: readonly Category[] = [
   },
   {
     slug: 'puertas',
-    name: 'Puertas',
+    name: CATEGORY_NAMES.puertas,
     tagline: 'De paso, correderas y de entrada',
     description:
       'Puertas de paso, correderas y de entrada fabricadas y colocadas por nuestro equipo, con el acabado y los herrajes que pide cada casa y ajustadas a su hueco real.',
@@ -61,7 +62,7 @@ export const CATEGORIES: readonly Category[] = [
   },
   {
     slug: 'suelos',
-    name: 'Suelos',
+    name: CATEGORY_NAMES.suelos,
     tagline: 'Tarima y madera',
     description:
       'Tarima y suelos de madera colocados con cuidado, desde la preparación de la base hasta el último rodapié, para que el suelo dure tanto como la casa.',
@@ -71,7 +72,7 @@ export const CATEGORIES: readonly Category[] = [
   },
   {
     slug: 'cocinas',
-    name: 'Cocinas',
+    name: CATEGORY_NAMES.cocinas,
     tagline: 'Muebles de cocina hechos en el taller',
     description:
       'Cocinas a medida pensadas para el espacio y la forma de cocinar de cada familia, con muebles fabricados en nuestro taller y montados por nosotros, sin intermediarios.',
@@ -81,7 +82,7 @@ export const CATEGORIES: readonly Category[] = [
   },
   {
     slug: 'salones',
-    name: 'Salones',
+    name: CATEGORY_NAMES.salones,
     tagline: 'Muebles de salón y estanterías',
     description:
       'Muebles de salón, estanterías y paneles que reúnen televisión, chimenea y almacenaje en una sola pieza, hecha para la pared exacta de cada casa.',
@@ -92,7 +93,7 @@ export const CATEGORIES: readonly Category[] = [
   },
   {
     slug: 'otros-trabajos',
-    name: 'Otros trabajos',
+    name: CATEGORY_NAMES['otros-trabajos'],
     tagline: 'Escaleras, revestimientos y más',
     description:
       'Escaleras, revestimientos, mobiliario y encargos especiales que no caben en una sola categoría.',

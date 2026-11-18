@@ -53,7 +53,10 @@ export default defineConfig({
     // falsos fallos de contraste o posiciones). El hero con movimiento se revisa a mano.
     reducedMotion: 'reduce',
     screenshot: 'only-on-failure',
-    trace: 'retain-on-failure',
+    // Sin grabación (trace.zip, ~2 MB por fallo): con 8 tamaños de pantalla, un fallo repetido llenó
+    // tests/e2e-results con 300 MB. En local no hay reintentos, así que solo se graba en CI. Para
+    // depurar un fallo concreto: npm run test:e2e -- --trace on
+    trace: 'on-first-retry',
   },
   projects: [
     ...VIEWPORTS.map((project) => ({ ...project, testMatch: VIEWPORT_TESTS })),
