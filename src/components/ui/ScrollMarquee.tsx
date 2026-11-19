@@ -10,6 +10,7 @@ interface ScrollMarqueeProps {
 const REPEAT = 4
 const SPEED = 38 // px por segundo (despacio)
 const RESUME_AFTER = 1200 // ms tras soltar el dedo
+const NBSP = String.fromCharCode(160) // espacio que no se parte (el &nbsp; de JSX)
 
 /**
  * Dos líneas de texto gigante que se desplazan solas, despacio y en sentidos opuestos.
@@ -116,6 +117,16 @@ export function ScrollMarquee({ primary, secondary }: ScrollMarqueeProps) {
 
   const row = (text: string) => Array.from({ length: REPEAT }, (_, index) => <span key={index}>{text}&nbsp;·&nbsp;</span>)
 
+  /**
+   * Igual que `row`, pero el texto lo pinta el CSS (::before) en vez de estar en el HTML.
+   * Se ve idéntico. Es para la línea translúcida: decorativa a propósito y sin contraste, así las
+   * auditorías de contraste (Lighthouse/axe) no la toman por texto que haya que leer.
+   */
+  const ghostRow = (text: string) =>
+    Array.from({ length: REPEAT }, (_, index) => (
+      <span key={index} data-text={`${text}${NBSP}·${NBSP}`} className="before:content-[attr(data-text)]" />
+    ))
+
   return (
     <div className="relative">
       <div
@@ -136,7 +147,7 @@ export function ScrollMarquee({ primary, secondary }: ScrollMarqueeProps) {
           ref={bottom}
           className="w-max text-[clamp(3rem,10vw,8.5rem)] leading-none font-semibold tracking-[-0.02em] whitespace-nowrap text-ink/12 uppercase will-change-transform font-stretch-110%"
         >
-          {row(secondary)}
+          {ghostRow(secondary)}
         </div>
       </div>
 

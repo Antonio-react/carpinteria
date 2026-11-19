@@ -16,6 +16,9 @@ src/config/site.ts
 # Solo inspiración visual: nunca se publica
 docs/referencias/
 
+# Notas internas de trabajo (auditorías, comparativas): nunca se publican
+docs/notas/
+
 # Registros de Playwright
 .playwright-mcp/
 
