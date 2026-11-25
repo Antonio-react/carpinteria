@@ -1,4 +1,5 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { ZoomablePhoto, type ZoomablePhotoHandle } from '@/components/gallery/ZoomablePhoto'
 import { ArrowButton } from '@/components/ui/ArrowButton'
 import type { GalleryPhoto } from '@/data/categories'
 import { useSwipe } from '@/hooks/useSwipe'
@@ -18,22 +19,41 @@ interface LightboxProps {
  * Escape y devuelve el foco a la foto pulsada).
  * - Escritorio: flechas a los lados y teclas ← →. Móvil: flechas debajo de la foto y deslizar el dedo.
  * - Se cierra con la X, con Escape o pulsando fuera de la foto.
+ * - La foto se puede ampliar hasta ×3 (ZoomablePhoto) o con la lupa de arriba.
  * - Mientras está abierto, la página de debajo no hace scroll.
  */
 export function Lightbox({ photos, index, onIndexChange, onClose, categoryName }: LightboxProps) {
   const dialog = useRef<HTMLDialogElement>(null)
+  const zoom = useRef<ZoomablePhotoHandle>(null)
+  const [zoomed, setZoomed] = useState(false)
   const open = index !== null
   const total = photos.length
   const photo = index !== null ? photos[index] : undefined
 
   const go = (step: number) => {
     if (index === null || total < 2) return
+    setZoomed(false) // la foto nueva empieza sin ampliar
     onIndexChange((index + step + total) % total)
+  }
+  const close = () => {
+    setZoomed(false)
+    onClose()
   }
   const swipe = useSwipe(
     () => go(1),
     () => go(-1),
   )
+
+  // La foto anterior y la siguiente se descargan ya, para que al pasar no haya espera.
+  useEffect(() => {
+    if (index === null || total < 2) return
+    for (const step of [1, -1]) {
+      const neighbour = photos[(index + step + total) % total]
+      const image = new Image()
+      image.decoding = 'async'
+      image.src = neighbour.srcLarge ?? neighbour.src
+    }
+  }, [index, photos, total])
 
   // Abrir / cerrar el <dialog> y bloquear el scroll de la página mientras está abierto.
   useEffect(() => {
@@ -57,7 +77,7 @@ export function Lightbox({ photos, index, onIndexChange, onClose, categoryName }
       onCancel={(event) => {
         // Escape: se cierra desde el estado de React (así no se desincroniza).
         event.preventDefault()
-        onClose()
+        close()
       }}
       onKeyDown={(event) => {
         if (event.key === 'ArrowRight') go(1)
@@ -65,45 +85,51 @@ export function Lightbox({ photos, index, onIndexChange, onClose, categoryName }
       }}
       onClick={(event) => {
         // Pulsar fuera de la foto (en el fondo) cierra el visor.
-        if (event.target === event.currentTarget) onClose()
+        if (event.target === event.currentTarget) close()
       }}
       className="m-0 h-dvh max-h-none w-screen max-w-none bg-night/95 p-0 text-name backdrop:bg-night/80 open:grid open:grid-rows-[auto_minmax(0,1fr)_auto]"
     >
-      {/* Barra superior: contador y cerrar */}
+      {/* Barra superior: contador, lupa y cerrar */}
       <div className="flex items-center justify-between px-4 py-3 sm:px-6">
         <p className="text-sm tracking-[0.12em] text-name/70 tabular-nums" aria-live="polite">
           {index !== null && total > 0 ? `${index + 1} / ${total}` : ''}
         </p>
-        <button
-          type="button"
-          onClick={onClose}
-          aria-label="Cerrar las fotos"
-          className="grid size-12 place-items-center rounded-full text-2xl text-name/80 transition-colors hover:bg-white/10 hover:text-name"
-        >
-          <span aria-hidden="true">×</span>
-        </button>
+        <div className="flex items-center gap-1">
+          <button
+            type="button"
+            onClick={() => zoom.current?.toggle()}
+            aria-label={zoomed ? 'Ver la foto entera' : 'Ampliar la foto'}
+            aria-pressed={zoomed}
+            className="grid size-12 place-items-center rounded-full text-name/80 transition-colors hover:bg-white/10 hover:text-name"
+          >
+            <svg viewBox="0 0 20 20" aria-hidden="true" className="size-5 fill-none stroke-current stroke-[1.8]">
+              <circle cx="8.5" cy="8.5" r="5.5" />
+              <path d={zoomed ? 'M12.5 12.5 17 17M6 8.5h5' : 'M12.5 12.5 17 17M8.5 6v5M6 8.5h5'} strokeLinecap="round" />
+            </svg>
+          </button>
+          <button
+            type="button"
+            onClick={close}
+            aria-label="Cerrar las fotos"
+            className="grid size-12 place-items-center rounded-full text-2xl text-name/80 transition-colors hover:bg-white/10 hover:text-name"
+          >
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
       </div>
 
-      {/* Foto: deslizable con el dedo; pulsar en el hueco de alrededor también cierra */}
+      {/* Foto: deslizable con el dedo (sin ampliar); pulsar en el hueco de alrededor también cierra */}
       <div
         className="relative flex min-h-0 touch-pan-y items-center justify-center px-2 select-none sm:px-20"
         onPointerDown={swipe.onPointerDown}
         onPointerUp={swipe.onPointerUp}
         onPointerCancel={swipe.onPointerCancel}
         onClick={(event) => {
-          if (event.target === event.currentTarget) onClose()
+          if (event.target === event.currentTarget) close()
         }}
       >
         {photo && (
-          <img
-            key={photo.src}
-            src={photo.src}
-            alt={photo.alt}
-            width={photo.width}
-            height={photo.height}
-            draggable={false}
-            className="max-h-[calc(100dvh-8.5rem)] max-w-full rounded-[12px] object-contain shadow-[0_30px_80px_-20px_rgb(0_0_0/0.7)] motion-safe:animate-rise"
-          />
+          <ZoomablePhoto key={photo.src} ref={zoom} photo={photo} onZoomChange={setZoomed} onGestureStart={swipe.onPointerCancel} />
         )}
 
         {total > 1 && (

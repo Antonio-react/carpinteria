@@ -13,6 +13,7 @@ npm i --no-save sharp potrace
 | `hero-layers.mjs` | Capas del hero en `src/assets/hero/` (mueble recortado + sala) | Foto del hero ampliada con IA (4240 × 5656) |
 | `hero-doors.mjs` | Interiores del mueble y roble para las puertas que se abren (`inside-column`, `inside-top`, `oak-side`) | `docs/referencias/mueble-abierto.png` (foto del mueble abierto, de frente) |
 | `hero-oak-frame.mjs` | `oak-frame-top.webp`: el cerco de arriba de la estantería de roble, que el recorte del mueble cortaba (se superpone; no toca piece-*.webp) | `src/assets/hero-original.jpeg` |
+| `gallery.mjs` | Fotos de la galería en `src/assets/gallery/<categoría>/` (480, 960 y 1600 de ancho, más la versión `-zoom` de 3200 px que solo se descarga al ampliar en el visor) y la portada 4:5 de cada carpeta, sacada del original | Fotos originales del cliente (fuera del proyecto), una subcarpeta por categoría |
 | `logo.mjs` | Logo vectorizado, sierra del spinner, favicon e icono de iPhone | `docs/referencias/Logo.jpg` |
 
 ```bash
@@ -20,7 +21,14 @@ node scripts/images/hero-layers.mjs <foto-ampliada.png> src/assets/hero
 node scripts/images/hero-doors.mjs docs/referencias/mueble-abierto.png src/assets/hero-original.jpeg src/assets/hero
 node scripts/images/hero-oak-frame.mjs
 node scripts/images/logo.mjs
+node scripts/images/gallery.mjs "<carpeta con las subcarpetas Puertas, Cocinas...>"
 ```
+
+Notas de la galería:
+- Para añadir fotos o una categoría nueva: se ponen los originales en una carpeta (una subcarpeta por
+  categoría), se apuntan en la lista `PHOTOS` del script (y la portada en `COVERS`) y se ejecuta. Luego
+  se añaden en `src/data/categories.ts` con su texto alternativo y sus medidas (las que imprime el script).
+- Máximo 10 fotos por categoría. Las "fotos en movimiento" del móvil pierden el vídeo al convertirlas.
 
 Notas del hero:
 - El recorte sigue el borde real del mueble (medido sobre la foto original de 1792 × 2390; el

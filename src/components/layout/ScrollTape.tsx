@@ -31,10 +31,11 @@ export function ScrollTape() {
       frame = 0
       const max = document.documentElement.scrollHeight - window.innerHeight
       const progress = max > 0 ? Math.min(Math.max(window.scrollY / max, 0), 1) : 0
-      const percent = (progress * 100).toFixed(2)
       if (tape.current) tape.current.style.clipPath = `inset(0 0 ${(100 - progress * 100).toFixed(2)}% 0)`
       if (hook.current) {
-        hook.current.style.top = `${percent}%`
+        // Con transform (no con top): moverlo no obliga al navegador a recolocar nada en cada fotograma.
+        // La cinta ocupa todo el alto de la pantalla, así que su punta está a progress × alto.
+        hook.current.style.transform = `translateY(${(progress * window.innerHeight).toFixed(1)}px)`
         hook.current.style.opacity = progress > 0.002 ? '1' : '0'
       }
     }
@@ -85,7 +86,7 @@ export function ScrollTape() {
         <div className="absolute inset-0 opacity-0 transition-opacity duration-150 pointer-fine:group-hover:opacity-25" style={TAPE_STYLE} />
         <div ref={tape} className="relative size-full shadow-[-1px_0_2px_rgb(0_0_0/0.25)]" style={{ ...TAPE_STYLE, clipPath: 'inset(0 0 100% 0)' }} />
         {/* Gancho metálico de la punta */}
-        <div ref={hook} className="absolute right-0 h-1 w-2.5 -translate-y-full rounded-l-[1px] bg-[#3a3632] opacity-0 shadow-[-1px_0_2px_rgb(0_0_0/0.35)] sm:w-3" />
+        <div ref={hook} className="absolute top-0 right-0 h-1 w-2.5 -translate-y-full will-change-transform rounded-l-[1px] bg-[#3a3632] opacity-0 shadow-[-1px_0_2px_rgb(0_0_0/0.35)] sm:w-3" />
       </div>
     </div>
   )

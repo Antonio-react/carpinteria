@@ -1,11 +1,12 @@
 /**
- * Direcciones (/trabajos/<slug>) y nombres de las categorías de la galería, en el orden del carrusel.
+ * Direcciones (/trabajos/<slug>) y nombres de las categorías de la galería, en el orden en que salen en
+ * toda la web (carrusel, "Todos los trabajos", hojas 02.x): alfabético, con "Otros trabajos" al final.
  *
  * Archivo aparte y sin imports (sin fotos) para que también lo pueda leer `vite/seoFiles.ts` al
  * compilar y generar el sitemap y el llms.txt. Para añadir una categoría: su slug y nombre aquí y su
  * ficha en categories.ts.
  */
-export const CATEGORY_SLUGS = ['armarios', 'puertas', 'suelos', 'cocinas', 'salones', 'otros-trabajos'] as const
+export const CATEGORY_SLUGS = ['armarios', 'cocinas', 'puertas', 'salones', 'suelos', 'otros-trabajos'] as const
 
 export type CategorySlug = (typeof CATEGORY_SLUGS)[number]
 

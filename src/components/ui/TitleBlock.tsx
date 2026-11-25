@@ -7,9 +7,10 @@ interface TitleBlockProps {
   className?: string
 }
 
+// muted al 70 % (antes 50 %): "Hoja", "Esc." y la firma quedaban por debajo del contraste mínimo de lectura.
 const TONES = {
-  light: { box: 'border-ink/25 text-ink', line: 'border-ink/25', muted: 'text-ink/50' },
-  dark: { box: 'border-name/25 text-name', line: 'border-name/25', muted: 'text-name/50' },
+  light: { box: 'border-ink/25 text-ink', line: 'border-ink/25', muted: 'text-ink/70' },
+  dark: { box: 'border-name/25 text-name', line: 'border-name/25', muted: 'text-name/70' },
 } as const
 
 /**

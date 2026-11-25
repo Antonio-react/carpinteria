@@ -39,3 +39,9 @@ desktop.ini
 # Resultados e informes de los tests de Playwright
 tests/e2e-results/
 tests/e2e-report/
+
+# Fotos originales de los trabajos (se optimizan a src/assets/gallery/): nunca se publican
+docs/fotos trabajos/
+
+# Permisos personales de Claude Code (solo este equipo)
+.claude/settings.local.json

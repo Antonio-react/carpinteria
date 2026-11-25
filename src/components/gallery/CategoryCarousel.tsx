@@ -1,4 +1,4 @@
-import type { CSSProperties, KeyboardEvent } from 'react'
+import { useEffect, useRef, type CSSProperties, type KeyboardEvent } from 'react'
 import { Link, useLocation } from 'react-router'
 import { CategoryPills } from '@/components/gallery/CategoryPills'
 import { FolderCard } from '@/components/gallery/FolderCard'
@@ -17,6 +17,7 @@ import { useTilt } from '@/hooks/useTilt'
  * - Pantallas intermedias (variante "compact" a partir de lg: portátiles y tabletas apaisadas): tarjeta
  *   más pequeña, calculada con el alto de la pantalla, para que todo quepa a la vista.
  * - Móvil: deslizamiento con el dedo. Escritorio: flechas (botones o ← → del teclado), sin arrastre con ratón.
+ *   Las ← → del teclado funcionan con el foco dentro del carrusel o con el ratón encima (sin hacer clic).
  * - Sin rueda del ratón (evita "scroll jacking").
  * - En móvil se ven 3 tarjetas: la central y parte de las dos laterales.
  * - Solo la central se inclina hacia el cursor (useTilt).
@@ -62,6 +63,29 @@ export function CategoryCarousel({ tone = 'light' }: CategoryCarouselProps) {
     }
   }
 
+  // Con el ratón encima (sin haber hecho clic), las ← → del teclado también mueven el carrusel.
+  const regionRef = useRef<HTMLDivElement>(null)
+  const hoveredRef = useRef(false)
+  useEffect(() => {
+    const onWindowKeyDown = (event: globalThis.KeyboardEvent) => {
+      if (!hoveredRef.current || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return
+      // Si el foco ya está dentro del carrusel, lo mueve su propio onKeyDown (no mover dos veces)
+      if (regionRef.current?.contains(document.activeElement)) return
+      // Nunca quitarle las flechas a un campo de texto
+      const target = event.target as HTMLElement | null
+      if (target?.closest('input, textarea, select, [contenteditable="true"]')) return
+      if (event.key === 'ArrowRight') {
+        event.preventDefault()
+        next()
+      } else if (event.key === 'ArrowLeft') {
+        event.preventDefault()
+        previous()
+      }
+    }
+    window.addEventListener('keydown', onWindowKeyDown)
+    return () => window.removeEventListener('keydown', onWindowKeyDown)
+  }, [next, previous])
+
   return (
     <div>
       <CategoryPills names={CATEGORIES.map((category) => category.name)} activeIndex={index} onSelect={goTo} tone={tone} />
@@ -70,7 +94,14 @@ export function CategoryCarousel({ tone = 'light' }: CategoryCarouselProps) {
         role="region"
         aria-roledescription="carrusel"
         aria-label="Categorías de trabajos"
+        ref={regionRef}
         onKeyDown={onKeyDown}
+        onPointerEnter={(event) => {
+          if (event.pointerType === 'mouse') hoveredRef.current = true
+        }}
+        onPointerLeave={() => {
+          hoveredRef.current = false
+        }}
         className="relative mt-14 overflow-x-clip pt-8 [--card-w:min(60vw,22rem)] md:[--card-w:min(34vw,22rem)] lg:[--card-w:24rem] lg:compact:[--card-w:min(20rem,calc((100svh-16rem)*0.8),28vw)] phone-land:mt-8! phone-land:pt-4! phone-land:[--card-w:min(15rem,calc((100svh-6rem)*0.8))]!"
       >
         <div
@@ -87,7 +118,6 @@ export function CategoryCarousel({ tone = 'light' }: CategoryCarouselProps) {
               <FolderCard
                 slug={category.slug}
                 name={category.name}
-                tagline={category.tagline}
                 cover={category.cover}
                 active={active}
               />
@@ -104,8 +134,8 @@ export function CategoryCarousel({ tone = 'light' }: CategoryCarouselProps) {
                     ref={tilt.ref}
                     to={categoryPath(category)}
                     state={CAROUSEL_STATE}
-                    // Mismo texto que se ve en la tarjeta (nombre, frase y "Ver trabajos"), sin la descripción larga de la foto.
-                    aria-label={`${category.name}, ${category.tagline}, Ver trabajos`}
+                    // Mismo texto que se ve en la tarjeta (nombre y "Ver trabajos"), sin la descripción larga de la foto.
+                    aria-label={`${category.name}, Ver trabajos`}
                     onPointerMove={tilt.onPointerMove}
                     onPointerLeave={tilt.onPointerLeave}
                     draggable={false}

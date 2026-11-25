@@ -1,10 +1,7 @@
-import { lazy } from 'react'
 import { Link } from 'react-router'
+import { CategoryCarousel } from '@/components/gallery/CategoryCarousel'
 import { Container } from '@/components/ui/Container'
-import { LazySection } from '@/components/ui/LazySection'
 import { SectionHeading } from '@/components/ui/SectionHeading'
-
-const CategoryCarousel = lazy(() => import('@/components/gallery/CategoryCarouselLazy'))
 
 interface WorkSectionProps {
   /** En la página de Trabajos el título es el h1; en inicio, un h2 con enlace a la página. */
@@ -12,7 +9,9 @@ interface WorkSectionProps {
 }
 
 /**
- * Trabajos: el carrusel de categorías (se carga cuando el usuario se acerca).
+ * Trabajos: el carrusel de categorías. Se monta directamente con la página: es lo primero que se ve en
+ * Trabajos (antes iba en una sección diferida y salía la sierra un momento aunque ya estuviera
+ * descargado), y su código ya llega dentro del de la página, que se descarga aparte y por adelantado.
  * En la página Trabajos (h1) es una "exposición": fondo oscuro como el hero y una luz cenital
  * sobre la tarjeta central, como un mueble expuesto en tienda. En Inicio, sobre claro.
  */
@@ -54,9 +53,9 @@ export function WorkSection({ level = 'h2' }: WorkSectionProps) {
             </Link>
           )}
         </div>
-        <LazySection id="carrusel-trabajos" minHeight="36rem" className="mt-12">
+        <div id="carrusel-trabajos" className="mt-12">
           <CategoryCarousel tone={tone} />
-        </LazySection>
+        </div>
       </Container>
     </section>
   )

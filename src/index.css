@@ -83,6 +83,7 @@
   /* Entrada del hero: caída corta y lenta con un ligero desenfoque que se aclara (más elegante). */
   --animate-drop: drop 1100ms var(--ease-out-strong) both;
   --animate-rise: rise 600ms var(--ease-out-strong) both;
+  --animate-folder-drop: folder-drop 900ms cubic-bezier(0.33, 1, 0.68, 1) both;
   --animate-ember-breathe: ember-breathe 3.2s ease-in-out infinite alternate;
   --animate-ember-flicker: ember-flicker 1.9s ease-in-out infinite;
   --animate-saw-spin: saw-spin 0.9s linear infinite;
@@ -97,6 +98,15 @@
   }
   @keyframes rise {
     from { opacity: 0; transform: translateY(16px); }
+  }
+  /* Carpetas de "Todos los trabajos": caen desde arriba algo giradas (--tilt, cada una hacia un lado),
+     rebotan un poco al tocar la mesa y se asientan. */
+  @keyframes folder-drop {
+    0% { opacity: 0; transform: translateY(-90px) rotate(var(--tilt, -4deg)); }
+    35% { opacity: 1; }
+    60% { transform: translateY(6px) rotate(calc(var(--tilt, -4deg) * -0.3)); }
+    80% { transform: translateY(-3px) rotate(calc(var(--tilt, -4deg) * 0.1)); }
+    100% { opacity: 1; transform: none; }
   }
   /* Las brasas: el punto ALTO es igual en todas partes; el BAJO se puede hundir más (--ember-low,
      --flicker-low) para que el cambio se note en pantallas pequeñas sin encender más el fuego (FireGlow). */
