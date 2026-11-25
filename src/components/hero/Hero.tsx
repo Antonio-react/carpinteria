@@ -1,4 +1,4 @@
-import { useRef, type ReactNode } from 'react'
+import { useEffect, useRef, type ReactNode } from 'react'
 import pieceLarge from '@/assets/hero/piece-1400.webp'
 import pieceFull from '@/assets/hero/piece-2000.webp'
 import pieceSmall from '@/assets/hero/piece-800.webp'
@@ -11,9 +11,9 @@ import { HeroDoors, type HeroDoorsHandle } from '@/components/hero/HeroDoors'
 import { HeroPeek } from '@/components/hero/HeroPeek'
 import { PIECE_CLIPS } from '@/components/hero/heroPieces'
 import { Button } from '@/components/ui/Button'
-import { DropIn } from '@/components/ui/DropIn'
 import { siteConfig } from '@/config/site'
 import { QUOTE_PATH } from '@/data/navigation'
+import { useHeroIntro } from '@/hooks/useHeroIntro'
 import { useHeroParallax } from '@/hooks/useHeroParallax'
 
 /**
@@ -62,6 +62,7 @@ const CANVAS =
 // Ancho real que ocupa el lienzo: ~50 % en escritorio, ~85 % en tableta, todo el ancho en móvil.
 const SIZES = '(min-width: 1280px) 50vw, (min-width: 768px) 85vw, 100vw'
 const PIECE_SRCSET = `${pieceSmall} 800w, ${pieceLarge} 1400w, ${pieceFull} 2000w`
+const ROOM_SRCSET = `${roomSmall} 800w, ${roomLarge} 1400w`
 
 const ALT =
   'Mueble de salón a medida hecho por la empresa: puertas lacadas en blanco con pantalla empotrada, estantería de roble y zócalo negro con chimenea'
@@ -70,10 +71,28 @@ export function Hero() {
   const doors = useRef<HeroDoorsHandle>(null)
   const bind = useHeroParallax(doors)
 
+  // Entrada (solo la primera vez que se abre la web): cae el nombre, aparece la escena entera (sala y
+  // mueble a la vez, con sus fotos completas; antes salían sueltos el suelo, las brasas y el cerco del
+  // roble), luego el botón y el lema, y el fuego se enciende. Ver useHeroIntro.
+  const { intro, sceneShown, footerShown, fireLit, pieceRef, markPieceReady, roomRef, markRoomReady } = useHeroIntro()
+  const fade = (shown: boolean) =>
+    `${intro ? 'transition-opacity duration-300 ease-out motion-reduce:transition-none' : ''} ${shown ? 'opacity-100' : 'opacity-0'}`
+  const rise = (shown: boolean, delay = '') =>
+    `${intro ? `transition-[opacity,translate] duration-500 ease-out motion-reduce:transition-none ${delay}` : ''} ${shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`
+
+  // index.html pinta la portada en negro desde el primer instante (antes salía color hueso hasta que
+  // arrancaba React). Con el hero ya pintado se quita, para que el resto de páginas tengan su fondo.
+  useEffect(() => {
+    document.documentElement.style.removeProperty('background-color')
+  }, [])
+
   /** Una pieza del mueble: la misma foto recortada por su junta. */
   const piece = (key: keyof typeof PIECE_CLIPS, extra?: ReactNode) => (
     <div ref={bind(key)} className="absolute inset-0 will-change-transform" style={{ clipPath: PIECE_CLIPS[key] }}>
       <img
+        ref={key === 'cabinet' ? pieceRef : undefined}
+        onLoad={key === 'cabinet' ? markPieceReady : undefined}
+        onError={key === 'cabinet' ? markPieceReady : undefined}
         src={pieceFull}
         srcSet={PIECE_SRCSET}
         sizes={SIZES}
@@ -95,11 +114,16 @@ export function Hero() {
       aria-label="Presentación"
       className={`sticky top-0 isolate h-svh overflow-hidden bg-night text-white data-[covered=true]:**:[animation-play-state:paused] ${SCENE_VARS}`}
     >
-      {/* 1. Sala oscurecida: solo en la mitad inferior, para que detrás del nombre quede negro limpio. */}
-      <div ref={bind('room')} className={`${CANVAS} z-0 will-change-transform`}>
+      {/* 1. Sala oscurecida: solo en la mitad inferior, para que detrás del nombre quede negro limpio.
+          La envoltura la hace esperar al mueble (el scroll ya cambia la opacidad de la sala por dentro). */}
+      <div className={`absolute inset-0 z-0 ${fade(sceneShown)}`}>
+      <div ref={bind('room')} className={`${CANVAS} will-change-transform`}>
         <img
+          ref={roomRef}
+          onLoad={markRoomReady}
+          onError={markRoomReady}
           src={roomLarge}
-          srcSet={`${roomSmall} 800w, ${roomLarge} 1400w`}
+          srcSet={ROOM_SRCSET}
           sizes={SIZES}
           alt=""
           aria-hidden="true"
@@ -115,7 +139,7 @@ export function Hero() {
         <div className="absolute inset-0 [clip-path:polygon(42.271%_85.091%,96.618%_96.416%,99.336%_96.935%,99.336%_100%,42.271%_100%)] mask-[linear-gradient(to_right,transparent_43%,#000_52%)]">
           <img
             src={roomLarge}
-            srcSet={`${roomSmall} 800w, ${roomLarge} 1400w`}
+            srcSet={ROOM_SRCSET}
             sizes={SIZES}
             alt=""
             aria-hidden="true"
@@ -126,21 +150,26 @@ export function Hero() {
           />
         </div>
       </div>
+      </div>
 
       {/* 2. Nombre gigante. */}
       <div ref={bind('name')} className="absolute inset-x-0 top-(--name-top) z-10 origin-top px-4 text-center will-change-transform md:px-10 phone-land:origin-top-left! phone-land:px-6! phone-land:text-left!">
         <GiantName
+          animate={intro}
           lineClassName="text-(length:--name-size) font-semibold leading-[0.88] tracking-[-0.02em] whitespace-nowrap text-name/55 font-stretch-110%"
           connectorClassName="font-serif font-normal italic text-name/68 font-stretch-100%"
         />
       </div>
 
       {/* 3. Mueble en piezas (de atrás a delante). */}
-      <div ref={bind('group')} className={`${CANVAS} z-20 will-change-transform`}>
+      <div
+        ref={bind('group')}
+        className={`${CANVAS} z-20 will-change-transform ${fade(sceneShown)}`}
+      >
         {piece(
           'cabinet',
           <>
-            <FireGlow />
+            <FireGlow lit={fireLit} />
             {/* Borde de arriba del mueble junto a su esquina derecha, que el recorte de la foto dejaba bajo
                 (scripts/images/hero-oak-frame.mjs). Lienzo: x 1340–1655, y 0–200. */}
             <img
@@ -170,14 +199,15 @@ export function Hero() {
         ref={bind('footer')}
         className="absolute inset-x-0 bottom-0 z-40 flex flex-col-reverse items-start gap-3 px-4 pb-8 sm:flex-row sm:items-end sm:justify-between sm:px-6 md:pb-10 lg:px-10 phone-land:right-auto! phone-land:flex-col-reverse! phone-land:items-start! phone-land:px-6! phone-land:pb-6!"
       >
-        <DropIn order={3}>
+        {/* Aparecen suavemente después de la escena (la primera vez); el scroll cambia la opacidad del bloque. */}
+        <div className={rise(footerShown)}>
           <Button to={QUOTE_PATH} tone="light" withArrow>
             Pedir presupuesto
           </Button>
-        </DropIn>
-        <DropIn as="p" order={4} className="font-serif text-3xl text-name/85 italic sm:text-4xl phone-land:text-3xl!">
+        </div>
+        <p className={`font-serif text-3xl text-name/85 italic sm:text-4xl phone-land:text-3xl! ${rise(footerShown, 'delay-150')}`}>
           {siteConfig.lema}
-        </DropIn>
+        </p>
       </div>
     </section>
   )

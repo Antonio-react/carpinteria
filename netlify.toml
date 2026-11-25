@@ -20,13 +20,16 @@
 #   meter dentro de otra (frame-ancestors, evita "clickjacking"). Estilos 'unsafe-inline' porque React
 #   pinta algunos estilos en el atributo style (animaciones, carrusel). Si algún día se añade un
 #   servicio externo (mapa, vídeo...), hay que permitir su dominio aquí o no cargará.
+#   El 'sha256-…' de script-src autoriza SOLO el script pequeño de index.html que pinta la portada en
+#   negro al empezar. Si se cambia ese script (aunque sea un espacio), hay que recalcular su huella
+#   o se bloqueará.
 # - HSTS: el navegador usa siempre HTTPS. Permissions-Policy: la web no pide cámara, micro ni ubicación.
 [[headers]]
   for = "/*"
   [headers.values]
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'sha256-8qiAHzjdGb66ldeBquCnMwAQYGmWyqtiF9JiJYQvzaA='; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests"
     X-Frame-Options = "DENY"
     Strict-Transport-Security = "max-age=31536000"
     Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=()"

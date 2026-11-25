@@ -11,6 +11,15 @@
     <!-- Indexación controlada por VITE_ROBOTS (.env): "noindex" en pruebas, "index, follow" al publicar. -->
     <meta name="robots" content="%VITE_ROBOTS%" />
     <meta name="theme-color" content="#0f0d0b" />
+    <!-- La portada empieza en negro (el color del hero) mientras arranca React, en vez de color hueso
+         y de golpe negro. El hero quita este fondo al pintarse (src/components/hero/Hero.tsx).
+         Las fotos del hero NO se precargan aquí: se probó (25-nov) y PageSpeed bajaba (en escritorio,
+         99 sin precarga frente a ~75 con ella).
+         OJO: Netlify solo deja ejecutar este script por su huella (sha256 en netlify.toml). Si se
+         cambia, aunque sea un espacio, hay que recalcularla o se bloqueará. -->
+    <script>
+      if (location.pathname === '/') document.documentElement.style.backgroundColor = '#0f0d0b'
+    </script>
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />

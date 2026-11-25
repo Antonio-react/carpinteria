@@ -9,26 +9,38 @@
  * pegado a la chimenea, que "respira" (más grande parecía que la chimenea sobresalía del cerco).
  * Con prefers-reduced-motion queda quieto, pero encendido (las capas se ven igual, sin animar).
  */
-export function FireGlow() {
+interface FireGlowProps {
+  /**
+   * false = quieto (así sale al abrir la web, como con "reducir movimiento"); al pasar a true el fuego
+   * "se enciende" y empieza a moverse. La respiración arranca en su punto alto (retraso negativo) para
+   * que la luz no baje de golpe al empezar.
+   */
+  lit?: boolean
+}
+
+export function FireGlow({ lit = true }: FireGlowProps) {
+  const breathe = lit ? 'motion-safe:animate-ember-breathe' : ''
+  const flicker = lit ? 'motion-safe:animate-ember-flicker' : ''
+  const fromPeak = lit ? { animationDelay: '-3.2s' } : undefined
   return (
     // Móvil: la chimenea se ve pequeña. En vez de encenderla más (perdería sutileza), se apaga más al
     // bajar la luz: el punto alto es el mismo y el cambio se nota más. En tableta y escritorio, como siempre.
     <div aria-hidden="true" className="absolute inset-0 max-md:[--ember-low:0.12] max-md:[--flicker-low:0.42]">
       {/* Luz cálida que sale del cristal y se refleja en el zócalo: pegada a la chimenea, para que no
           parezca que la luz (o la chimenea) sobresale del cerco. */}
-      <div className="absolute top-[74%] left-[12%] h-[20%] w-[22%] bg-[radial-gradient(closest-side,rgb(255_140_60/0.16),transparent)] mix-blend-screen motion-safe:animate-ember-breathe" />
+      <div className={`absolute top-[74%] left-[12%] h-[20%] w-[22%] bg-[radial-gradient(closest-side,rgb(255_140_60/0.16),transparent)] mix-blend-screen ${breathe}`} style={fromPeak} />
 
       {/* Luz del fuego en el suelo: un charco aplanado delante de la chimenea, que respira al mismo ritmo
           que las brasas. */}
-      <div className="absolute top-[84.5%] left-[11%] h-[6.5%] w-[23%] bg-[radial-gradient(closest-side,rgb(255_140_60/0.16),rgb(255_120_50/0.06)_60%,transparent)] mix-blend-screen motion-safe:animate-ember-breathe" />
+      <div className={`absolute top-[84.5%] left-[11%] h-[6.5%] w-[23%] bg-[radial-gradient(closest-side,rgb(255_140_60/0.16),rgb(255_120_50/0.06)_60%,transparent)] mix-blend-screen ${breathe}`} style={fromPeak} />
 
       {/* Interior del cristal DENTRO del cerco negro (el "core" de hero-layers.mjs: (299,1418) (440,1438)
           (440,1657) (299,1613) en la foto original). Con el cristal entero, las brasas tapaban el cerco. */}
       <div className="absolute top-[72.623%] left-[18.056%] h-[12.416%] w-[8.514%] [clip-path:polygon(0_0,100%_8.37%,100%_100%,0_81.59%)]">
         {/* Resplandor de las brasas: ilumina las paredes y el fondo del hogar entero (no solo la base). */}
-        <div className="absolute inset-0 bg-[radial-gradient(90%_60%_at_55%_92%,rgb(255_135_50/0.8),rgb(210_75_20/0.38)_45%,transparent_80%),radial-gradient(120%_100%_at_50%_75%,rgb(255_120_45/0.28),rgb(180_60_20/0.12)_60%,transparent)] mix-blend-screen motion-safe:animate-ember-breathe" />
+        <div className={`absolute inset-0 bg-[radial-gradient(90%_60%_at_55%_92%,rgb(255_135_50/0.8),rgb(210_75_20/0.38)_45%,transparent_80%),radial-gradient(120%_100%_at_50%_75%,rgb(255_120_45/0.28),rgb(180_60_20/0.12)_60%,transparent)] mix-blend-screen ${breathe}`} style={fromPeak} />
         {/* Lecho de brasas: una franja baja, más viva, siguiendo la inclinación del fondo. */}
-        <div className="absolute inset-x-[10%] bottom-[8%] h-[16%] origin-center rotate-16 rounded-[50%] bg-[radial-gradient(closest-side,rgb(255_205_120/0.95),rgb(255_95_25/0.65)_45%,transparent)] blur-[1.5px] mix-blend-screen motion-safe:animate-ember-flicker" />
+        <div className={`absolute inset-x-[10%] bottom-[8%] h-[16%] origin-center rotate-16 rounded-[50%] bg-[radial-gradient(closest-side,rgb(255_205_120/0.95),rgb(255_95_25/0.65)_45%,transparent)] blur-[1.5px] mix-blend-screen ${flicker}`} />
       </div>
     </div>
   )

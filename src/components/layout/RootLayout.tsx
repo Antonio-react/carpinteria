@@ -8,6 +8,7 @@ import { SawSpinner } from '@/components/ui/SawSpinner'
 import { TitleBlock } from '@/components/ui/TitleBlock'
 import { siteConfig } from '@/config/site'
 import { sheetFor } from '@/data/sheets'
+import { useSitePrefetch } from '@/hooks/useSitePrefetch'
 
 const SIGNATURE = `${siteConfig.nombre} · Taller de ${siteConfig.direccion.localidad}`
 
@@ -18,6 +19,7 @@ const SIGNATURE = `${siteConfig.nombre} · Taller de ${siteConfig.direccion.loca
 export function RootLayout() {
   const { pathname } = useLocation()
   const sheet = sheetFor(pathname)
+  useSitePrefetch()
 
   return (
     <>
