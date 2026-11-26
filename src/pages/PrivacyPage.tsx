@@ -1,4 +1,5 @@
 import { LegalPage } from '@/components/ui/LegalPage'
+import { PAGES } from '@/data/pages'
 import { LegalSection } from '@/components/ui/LegalSection'
 import { siteConfig } from '@/config/site'
 import { formatLocality } from '@/utils/address'
@@ -7,7 +8,7 @@ import { formatLocality } from '@/utils/address'
 export default function PrivacyPage() {
   const { titular, nif, direccion, email } = siteConfig
   return (
-    <LegalPage title="Política de privacidad" description="Cómo tratamos los datos que nos envías por el formulario o por correo." updated="noviembre de 2026">
+    <LegalPage page={PAGES.privacy} updated="noviembre de 2026">
       <LegalSection title="Responsable del tratamiento">
         <p>
           En cumplimiento del Reglamento (UE) 2016/679 del Parlamento Europeo y del Consejo, de 27 de abril de 2016 (RGPD), y de la Ley

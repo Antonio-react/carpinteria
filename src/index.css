@@ -64,6 +64,8 @@
   --color-pencil: #b83d26;
   /* El mismo lápiz rojo, más claro, para rótulos sobre fondo oscuro (contraste ≈6:1 sobre el negro) */
   --color-pencil-light: #e07055;
+  /* El mismo lápiz rojo, algo más oscuro, para rótulos pequeños sobre madera clara (≈4,9:1 sobre sawdust) */
+  --color-pencil-dark: #aa3720;
   --color-placeholder: #d8d1c6;
   /* Contacto: tono cálido de taller (madera clara / serrín) */
   --color-sawdust: #ecdcc4;
@@ -101,12 +103,14 @@
   }
   /* Carpetas de "Todos los trabajos": caen desde arriba algo giradas (--tilt, cada una hacia un lado),
      rebotan un poco al tocar la mesa y se asientan. */
+  /* Termina en su postura de reposo (--rest: algo torcida y a su altura, como dejada sobre la mesa),
+     la misma que DropOnScroll le pone fija; sin --rest, recta. */
   @keyframes folder-drop {
     0% { opacity: 0; transform: translateY(-90px) rotate(var(--tilt, -4deg)); }
     35% { opacity: 1; }
     60% { transform: translateY(6px) rotate(calc(var(--tilt, -4deg) * -0.3)); }
     80% { transform: translateY(-3px) rotate(calc(var(--tilt, -4deg) * 0.1)); }
-    100% { opacity: 1; transform: none; }
+    100% { opacity: 1; transform: var(--rest, none); }
   }
   /* Las brasas: el punto ALTO es igual en todas partes; el BAJO se puede hundir más (--ember-low,
      --flicker-low) para que el cambio se note en pantallas pequeñas sin encender más el fuego (FireGlow). */

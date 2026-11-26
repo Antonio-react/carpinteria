@@ -6,6 +6,7 @@ import { PlanToRealSection } from '@/components/sections/PlanToRealSection'
 import { CategoryDrawers } from '@/components/sections/CategoryDrawers'
 import { ScrollMarquee } from '@/components/ui/ScrollMarquee'
 import { siteConfig } from '@/config/site'
+import { PAGES } from '@/data/pages'
 import type { CSSProperties } from 'react'
 import { CURTAIN_SCREENS, CURTAIN_SCREENS_MOBILE } from '@/hooks/useHeroParallax'
 
@@ -17,10 +18,7 @@ import { CURTAIN_SCREENS, CURTAIN_SCREENS_MOBILE } from '@/hooks/useHeroParallax
 export default function HomePage() {
   return (
     <>
-      <PageMeta
-        title="Carpintería y Decoración · Muebles a medida en toda España"
-        description="Ebanistería y carpintería familiar con más de 40 años de experiencia. Medimos, diseñamos y montamos muebles a medida en toda España. Presupuesto gratis."
-      />
+      <PageMeta title={PAGES.home.title} description={PAGES.home.description} />
       <Hero />
       {/* Tramo de scroll en el que el mueble se abre entero antes de que suba la página. */}
       {/* Móvil (y móvil apaisado): más corto, la página sube antes (ver CURTAIN_SCREENS_MOBILE). */}

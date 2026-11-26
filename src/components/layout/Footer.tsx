@@ -48,11 +48,12 @@ export function Footer() {
             onClick={() => scrollTopIfSame('/')}
             className="inline-flex items-center gap-4"
           >
-            <BrandBadge size={60} />
-            <span className="text-lg leading-tight font-medium font-stretch-110%">
+            <BrandBadge size={88} desktopSize={120} />
+            {/* Nombre a 20 px en móvil y 24 en escritorio, para compensar el logo grande (88 / 120). */}
+            <span className="text-xl leading-tight font-medium font-stretch-110% lg:text-2xl">
               Carpintería
               <br />
-              <span className="font-serif text-xl font-normal italic">y</span> Decoración
+              <span className="font-serif text-2xl font-normal italic lg:text-[1.75rem]">y</span> Decoración
             </span>
           </Link>
           <p className="mt-6 max-w-sm text-sm leading-relaxed text-name/65">
@@ -120,7 +121,7 @@ export function Footer() {
           </div>
         </nav>
       </Container>
-      <Container className="flex flex-col items-center gap-2 border-t border-white/10 py-6 text-center text-xs text-name/50 sm:flex-row sm:justify-between sm:text-left">
+      <Container className="flex flex-col items-center gap-2 border-t border-white/10 py-6 text-center text-xs text-name/60 sm:flex-row sm:justify-between sm:text-left">
         <p>© {year} Carpintería y Decoración. Todos los derechos reservados.</p>
         <p>
           Web diseñada y desarrollada por <span className="font-medium text-name/80">Antonio</span>

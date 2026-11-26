@@ -4,6 +4,8 @@ interface SawSpinnerProps {
   size?: number
   /** Texto para lectores de pantalla. */
   label?: string
+  /** Solo adorno (404): se oculta a lectores de pantalla y no se anuncia como carga. */
+  decorative?: boolean
   className?: string
 }
 
@@ -11,9 +13,13 @@ interface SawSpinnerProps {
  * Indicador de carga: la sierra circular del logo girando.
  * Con prefers-reduced-motion gira mucho más despacio (sigue indicando actividad sin marear).
  */
-export function SawSpinner({ size = 48, label = 'Cargando', className = '' }: SawSpinnerProps) {
+export function SawSpinner({ size = 48, label = 'Cargando', decorative = false, className = '' }: SawSpinnerProps) {
   return (
-    <span role="status" className={`inline-flex items-center justify-center ${className}`}>
+    <span
+      role={decorative ? undefined : 'status'}
+      aria-hidden={decorative || undefined}
+      className={`inline-flex items-center justify-center ${className}`}
+    >
       <span
         aria-hidden="true"
         className="inline-block animate-saw-spin bg-current motion-reduce:[animation-duration:6s]"
@@ -26,7 +32,7 @@ export function SawSpinner({ size = 48, label = 'Cargando', className = '' }: Sa
           maskPosition: 'center',
         }}
       />
-      <span className="sr-only">{label}</span>
+      {!decorative && <span className="sr-only">{label}</span>}
     </span>
   )
 }

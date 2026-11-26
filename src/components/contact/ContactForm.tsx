@@ -1,5 +1,6 @@
 import { useEffect, useRef, type ReactNode } from 'react'
 import { Link } from 'react-router'
+import { AnswersSummary } from '@/components/contact/AnswersSummary'
 import { AttachmentFields } from '@/components/contact/AttachmentFields'
 import { CheckboxField } from '@/components/contact/CheckboxField'
 import { FormProgress } from '@/components/contact/FormProgress'
@@ -16,9 +17,17 @@ import { sketchFor } from '@/data/sketches'
 
 /** Opciones del paso 1: las categorías de la galería (sin "Otros trabajos") y "Otro". */
 const WORK_TYPES: readonly WorkTypeOption[] = [
-  ...CATEGORIES.filter((category) => category.slug !== 'otros-trabajos').map((category) => ({ value: category.name, hint: category.tagline, sketch: sketchFor(category.slug) })),
-  { value: 'Otro', hint: 'Cualquier otro trabajo en madera', sketch: sketchFor('otros-trabajos') },
+  ...CATEGORIES.filter((category) => category.slug !== 'otros-trabajos').map((category) => ({ value: category.name, sketch: sketchFor(category.slug) })),
+  { value: 'Otro', sketch: sketchFor('otros-trabajos') },
 ]
+/** Cómo se nombra cada tipo en el aviso de enviado ("tu idea para el armario"). "Otro" no lleva nada. */
+const IDEA_FOR: Readonly<Record<string, string>> = {
+  Armarios: 'el armario',
+  Cocinas: 'la cocina',
+  Puertas: 'las puertas',
+  Salones: 'el salón',
+  Suelos: 'el suelo',
+}
 /** Por debajo de lg, el formulario va debajo del texto de la sección (no al lado). */
 const STACKED_LAYOUT = '(max-width: 1023px)'
 const titleId = (index: number) => `paso-${FORM_STEPS[index]?.id ?? index}-titulo`
@@ -72,7 +81,9 @@ export default function ContactForm({ stepHeadingLevel = 'h3' }: ContactFormProp
       <div ref={successRef} tabIndex={-1} className="space-y-6 outline-none">
         <FormStatusMessage tone="success" title="Mensaje enviado">
           <p>
-            Gracias{senderName ? `, ${senderName}` : ''}. Hemos recibido tu idea y te contestaremos lo antes posible.
+            Gracias{senderName ? `, ${senderName}` : ''}. Hemos recibido tu idea
+            {IDEA_FOR[answers.tipo] ? ` para ${IDEA_FOR[answers.tipo]}` : ''}. Te escribiremos lo antes posible para
+            hablarlo y, si hace falta, quedar para tomar medidas.
           </p>
         </FormStatusMessage>
         <button type="button" onClick={reset} className="inline-flex min-h-11 items-center text-sm font-medium underline decoration-ink/30 underline-offset-4 hover:decoration-ink">
@@ -142,6 +153,7 @@ export default function ContactForm({ stepHeadingLevel = 'h3' }: ContactFormProp
         {stepPanel(
           1,
           <div className="grid gap-6">
+            <AnswersSummary tipo={answers.tipo} />
             <TextField
               name="mensaje"
               label="Tu idea"
@@ -165,16 +177,12 @@ export default function ContactForm({ stepHeadingLevel = 'h3' }: ContactFormProp
         {stepPanel(
           2,
           <div className="grid gap-6 sm:grid-cols-2">
-            {answers.tipo && (
-              <p className="flex flex-wrap items-center gap-2 text-sm sm:col-span-2">
-                <span className="text-muted">Tu consulta:</span>
-                <span className="rounded-full bg-ink px-3 py-1 text-paper">{answers.tipo}</span>
-                {answers.ubicacion && <span className="rounded-full border border-ink/20 px-3 py-1">{answers.ubicacion}</span>}
-              </p>
-            )}
+            <AnswersSummary tipo={answers.tipo} ubicacion={answers.ubicacion} className="sm:col-span-2" />
             <TextField name="nombre" label="Nombre" autoComplete="name" required error={errors.nombre} />
             <TextField name="email" label="Correo electrónico" type="email" autoComplete="email" required error={errors.email} />
-            <TextField name="telefono" label="Teléfono" type="tel" autoComplete="tel" error={errors.telefono} className="sm:col-span-2" />
+            {/* Empresa (opcional) debajo de Nombre, para quien escribe por un negocio; Teléfono a su lado. */}
+            <TextField name="empresa" label="Empresa" autoComplete="organization" />
+            <TextField name="telefono" label="Teléfono" type="tel" autoComplete="tel" error={errors.telefono} />
             <div className="sm:col-span-2">
               <CheckboxField name="privacidad" required error={errors.privacidad}>
                 He leído la{' '}
@@ -213,9 +221,14 @@ export default function ContactForm({ stepHeadingLevel = 'h3' }: ContactFormProp
           <button
             type="button"
             onClick={back}
-            className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-muted transition-colors hover:text-ink"
+            // Botón en píldora como "Siguiente" pero claro (borde fino y fondo suave): se ve que es un botón sin
+            // competir con el principal.
+            className="group inline-flex min-h-12 items-center gap-3 rounded-full border border-ink/20 bg-ink/4 px-6 text-sm font-medium text-ink transition-[background-color,border-color,transform] duration-150 ease-out hover:border-ink/35 hover:bg-ink/8 active:scale-[0.97]"
           >
-            <span aria-hidden="true">←</span> Atrás
+            <span aria-hidden="true" className="transition-transform duration-200 ease-out-strong group-hover:-translate-x-1">
+              ←
+            </span>
+            Atrás
           </button>
         ) : (
           <span />

@@ -2,16 +2,17 @@ import { PageMeta } from '@/components/layout/PageMeta'
 import { Button } from '@/components/ui/Button'
 import { Container } from '@/components/ui/Container'
 import { SawSpinner } from '@/components/ui/SawSpinner'
+import { PAGES } from '@/data/pages'
 
 /** Página 404 personalizada, con botón para volver al inicio. */
 export default function NotFoundPage() {
   return (
     <>
-      <PageMeta title="Página no encontrada · Carpintería y Decoración" description="La página que buscas no existe o ha cambiado de dirección." />
+      <PageMeta title={PAGES.notFound.title} description={PAGES.notFound.description} />
       <section aria-labelledby="error-titulo" className="grid min-h-svh place-items-center pt-sheet pb-16">
         <Container className="text-center">
           <div className="text-oak">
-            <SawSpinner size={72} label="Sierra girando" className="motion-safe:[&>span:first-child]:[animation-duration:3s]" />
+            <SawSpinner size={72} decorative className="motion-safe:[&>span:first-child]:[animation-duration:3s]" />
           </div>
           <p className="mt-8 text-sm tracking-[0.2em] text-muted uppercase">Error 404</p>
           <h1 id="error-titulo" className="mt-4 text-5xl font-medium tracking-[-0.03em] text-balance font-stretch-110% sm:text-6xl">

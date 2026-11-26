@@ -1,11 +1,12 @@
 import { LegalPage } from '@/components/ui/LegalPage'
+import { PAGES } from '@/data/pages'
 import { LegalSection } from '@/components/ui/LegalSection'
 import { siteConfig } from '@/config/site'
 
 /** Política de cookies: la web no usa cookies (sin analítica, sin terceros, fuentes alojadas en la propia web). */
 export default function CookiesPage() {
   return (
-    <LegalPage title="Política de cookies" description="Política de cookies de Carpintería y Decoración: esta web no utiliza cookies de análisis, publicidad ni de terceros." updated="noviembre de 2026">
+    <LegalPage page={PAGES.cookies} updated="noviembre de 2026">
       <LegalSection title="Esta web no usa cookies">
         <p>
           No utilizamos cookies de análisis, de publicidad ni de redes sociales, ni herramientas de estadísticas como Google

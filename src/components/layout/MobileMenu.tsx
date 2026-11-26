@@ -5,6 +5,9 @@ import { Button } from '@/components/ui/Button'
 import { QUOTE_PATH, type NavLink } from '@/data/navigation'
 import { useSamePageScrollTop } from '@/hooks/useSamePageScrollTop'
 
+/** Lo que puede recibir el foco con Tab (para la trampa de foco del menú). */
+const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select, textarea, [tabindex]:not([tabindex="-1"])'
+
 interface MobileMenuProps {
   id: string
   open: boolean
@@ -37,6 +40,25 @@ export function MobileMenu({ id, open, links, onClose }: MobileMenuProps) {
     for (const el of behind) el.inert = true
     firstLinkRef.current?.focus()
     const onKey = (event: KeyboardEvent) => {
+      // Trampa de foco de ventana modal: del último elemento (menú o barra) Tab vuelve al primero, y
+      // Mayús+Tab del primero al último. Sin esto, el foco salía del documento y se quedaba en <body>.
+      if (event.key === 'Tab' && dialog) {
+        const header = dialog.parentElement?.querySelector<HTMLElement>(':scope > header')
+        const focusables = [header, dialog]
+          .flatMap((root) => (root ? [...root.querySelectorAll<HTMLElement>(FOCUSABLE)] : []))
+          .filter((el) => el.getClientRects().length > 0)
+        const first = focusables[0]
+        const last = focusables[focusables.length - 1]
+        const active = document.activeElement
+        if (first && last && event.shiftKey && (active === first || !focusables.includes(active as HTMLElement))) {
+          event.preventDefault()
+          last.focus()
+        } else if (first && last && !event.shiftKey && (active === last || !focusables.includes(active as HTMLElement))) {
+          event.preventDefault()
+          first.focus()
+        }
+        return
+      }
       if (event.key !== 'Escape') return
       onClose()
       // Con Escape el foco vuelve al botón que abrió el menú (si no, se pierde al cerrarse).
@@ -58,8 +80,12 @@ export function MobileMenu({ id, open, links, onClose }: MobileMenuProps) {
       aria-modal="true"
       aria-label="Menú"
       inert={!open}
-      className={`fixed inset-0 z-40 flex flex-col overflow-y-auto bg-night px-6 pt-28 pb-10 text-name phone-land:pt-20! phone-land:pb-5! transition-[opacity,transform] duration-300 ease-out-strong lg:hidden ${
-        open ? 'translate-y-0 opacity-100' : 'pointer-events-none -translate-y-4 opacity-0'
+      className={`fixed inset-0 z-40 flex flex-col overflow-y-auto bg-night px-6 pt-28 pb-10 text-name phone-land:pt-20! phone-land:pb-5! duration-300 ease-out-strong lg:hidden ${
+        // Cerrado: invisible (si no, solo transparente, sigue "visible"). La visibilidad se anima solo al
+        // cerrar (espera al fundido); al abrir cambia al momento, para poder darle el foco al primer enlace.
+        open
+          ? 'visible translate-y-0 opacity-100 transition-[opacity,transform]'
+          : 'pointer-events-none invisible -translate-y-4 opacity-0 transition-[opacity,transform,visibility]'
       }`}
     >
       <nav aria-label="Menú móvil" className="flex flex-col gap-2 phone-land:grid! phone-land:grid-cols-2! phone-land:gap-x-10!">

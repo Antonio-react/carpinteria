@@ -8,6 +8,7 @@ import { SawSpinner } from '@/components/ui/SawSpinner'
 import { TitleBlock } from '@/components/ui/TitleBlock'
 import { siteConfig } from '@/config/site'
 import { sheetFor } from '@/data/sheets'
+import { PAGE_LOADING_BG } from '@/styles/backgrounds'
 import { useSitePrefetch } from '@/hooks/useSitePrefetch'
 
 const SIGNATURE = `${siteConfig.nombre} · Taller de ${siteConfig.direccion.localidad}`
@@ -44,9 +45,12 @@ export function RootLayout() {
         )}
         <Suspense
           fallback={
-            // La sierra solo se ve si la página tarda más de 300 ms (si no, ni aparece: sin parpadeo).
-            <div className="grid min-h-svh animate-appear-late place-items-center text-oak">
-              <SawSpinner size={64} label="Cargando página" />
+            // El fondo de la página (si tiene uno propio) sale al momento; la sierra solo si tarda más de
+            // 300 ms (si no, ni aparece: sin parpadeo).
+            <div className={`grid min-h-svh place-items-center text-oak ${PAGE_LOADING_BG[pathname] ?? ''}`}>
+              <div className="animate-appear-late">
+                <SawSpinner size={64} label="Cargando página" />
+              </div>
             </div>
           }
         >

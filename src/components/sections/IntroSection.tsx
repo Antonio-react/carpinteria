@@ -36,8 +36,9 @@ export function IntroSection() {
             corta para un sitio concreto. Tomamos las medidas, lo dibujamos contigo y lo montamos nosotros, sin
             intermediarios. Trabajamos para particulares y para empresas.
           </p>
-          {/* Móvil: tal cual. Tableta y escritorio: nota más grande (con 320 px se quedaba pequeña al lado del texto). */}
-          <PinnedNote tilt={4} curl signature="El taller" className="mt-12 ml-4 max-w-xs md:max-w-sm lg:mt-14 lg:max-w-md">
+          {/* Móvil: tal cual. Tableta y escritorio: nota más grande (con 320 px se quedaba pequeña al lado del texto).
+              En escritorio baja 2rem sin empujar nada (translate) para acortar el hueco hasta el comparador. */}
+          <PinnedNote tilt={4} curl signature="El taller" className="mt-12 ml-4 max-w-xs md:max-w-sm lg:mt-14 lg:max-w-md lg:translate-y-8">
             <span className="block md:text-[1.75rem] md:text-balance lg:text-[2rem]">Ninguna pared está recta. Por eso medimos nosotros.</span>
           </PinnedNote>
         </div>

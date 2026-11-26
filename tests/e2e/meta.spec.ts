@@ -49,7 +49,15 @@ test('metadatos comunes: idioma, robots, favicon y Open Graph', async ({ page })
   await page.goto('/')
   await expect(page.locator('html')).toHaveAttribute('lang', 'es')
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /\S/)
-  await expect(page.locator('link[rel="icon"]')).toHaveAttribute('href', '/favicon.svg')
+  // Favicon como en la escuela: PNG 32 y 192 (el que pide Google) y el SVG.
+  for (const href of ['/favicon-32.png', '/favicon-192.png', '/favicon.svg']) {
+    await expect(page.locator(`link[rel="icon"][href="${href}"]`), `Falta el icono ${href}`).toHaveCount(1)
+  }
+  // Ficha del negocio para Google (vite/seoHead.ts): JSON válido con nombre y dirección.
+  const jsonLd = await page.locator('script[type="application/ld+json"]').textContent()
+  const business = JSON.parse(jsonLd ?? '{}') as { name?: string; address?: { streetAddress?: string } }
+  expect(business.name, 'El JSON-LD no trae el nombre del negocio').toBeTruthy()
+  expect(business.address?.streetAddress, 'El JSON-LD no trae la dirección').toBeTruthy()
   await expect(page.locator('link[rel="apple-touch-icon"]')).toHaveCount(1)
   for (const property of ['og:title', 'og:description', 'og:url', 'og:image', 'og:image:alt', 'og:locale', 'og:type']) {
     await expect(page.locator(`meta[property="${property}"]`), `Falta ${property}`).toHaveAttribute('content', /\S/)

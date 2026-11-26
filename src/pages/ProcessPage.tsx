@@ -2,15 +2,13 @@ import { PageMeta } from '@/components/layout/PageMeta'
 import { SheetCta } from '@/components/sections/SheetCta'
 import { FaqSection } from '@/components/sections/FaqSection'
 import { ProcessSection } from '@/components/sections/ProcessSection'
+import { PAGES } from '@/data/pages'
 
 /** Página Cómo trabajamos: los tres pasos (planos que se dibujan) y preguntas frecuentes. */
 export default function ProcessPage() {
   return (
     <>
-      <PageMeta
-        title="Cómo trabajamos · Carpintería y Decoración"
-        description="Medimos, diseñamos y montamos nosotros mismos, sin intermediarios y en toda España. Presupuesto gratis."
-      />
+      <PageMeta title={PAGES.process.title} description={PAGES.process.description} />
       <ProcessSection level="h1" />
       <FaqSection />
       <SheetCta

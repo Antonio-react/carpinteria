@@ -4,6 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 import path from 'path'
 import { preloadCritical } from './vite/preloadCritical.ts'
 import { seoFiles } from './vite/seoFiles.ts'
+import { seoHead } from './vite/seoHead.ts'
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
@@ -15,6 +16,7 @@ export default defineConfig(({ mode }) => {
       react(),
       tailwindcss(),
       preloadCritical(),
+      seoHead(env.VITE_SITE_DOMAIN),
       seoFiles(env.VITE_SITE_DOMAIN),
     ],
     resolve: {

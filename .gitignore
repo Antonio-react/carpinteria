@@ -21,6 +21,7 @@ docs/notas/
 
 # Registros de Playwright
 .playwright-mcp/
+.taste-skill/
 
 # Editor directories and files
 .vscode/*

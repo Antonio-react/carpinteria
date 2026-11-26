@@ -2,7 +2,8 @@
  * Fotos de la galería: de los originales del cliente (fuera de Git por su peso) a WEBP ligeros en
  * src/assets/gallery/<categoría>/.
  *
- * Uso: node scripts/images/gallery.mjs "<carpeta con las subcarpetas Puertas, Cocinas...>"
+ * Uso: node scripts/images/gallery.mjs "<carpeta con las subcarpetas Puertas, Cocinas...>" [--solo-portadas]
+ *   --solo-portadas: regenera solo las portadas del carrusel y las fotos de tarjeta, sin tocar las fotos.
  *
  * - Tres tamaños por foto: 480 y 960 de ancho para el mosaico (móvil / escritorio) y 1600 para el visor.
  * - Y una versión para el zoom (NN-zoom.webp, 3200 px por el lado largo y menos compresión): solo se
@@ -19,7 +20,8 @@ import { mkdir } from 'node:fs/promises'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..')
 const SOURCE = process.argv[2]
-if (!SOURCE) {
+const ONLY_COVERS = process.argv.includes('--solo-portadas')
+if (!SOURCE || SOURCE.startsWith('--')) {
   console.error('Falta la carpeta de originales: node scripts/images/gallery.mjs "<carpeta>"')
   process.exit(1)
 }
@@ -68,12 +70,23 @@ const PHOTOS = {
  * en vertical (0 = se queda la parte de arriba entera y se recorta abajo; por defecto 0.5, centrado).
  */
 const COVERS = {
-  puertas: { photo: 1, focusX: 0.5 },
-  cocinas: { photo: 3, focusX: 0.5 },
+  puertas: { photo: 4, focusX: 0.36 }, // la cristalera de roble con arcos: marco izquierdo y los cuatro arcos enteros
+  cocinas: { photo: 1, focusX: 0.5 }, // la cocina en L de madera: la esquina y la ventana con luz
   salones: { photo: 1, focusX: 0.5, focusY: 0 }, // el salón entero con la luz del techo; lo que sobra se quita del suelo
 }
 
-for (const [category, photos] of Object.entries(PHOTOS)) {
+/**
+ * Foto de la tarjeta en "Todos los trabajos" (tarjeta-480/960/1600.webp), solo si la foto pide otra
+ * forma que la portada 4:5: la tarjeta toma la forma de su foto (si es apaisada, la tarjeta se
+ * ensancha). `aspect` (opcional): ancho/alto del recorte, a toda la altura de la foto; sin él, la foto
+ * entera. `focusX`: como en COVERS. Sin entrada, la tarjeta usa la portada.
+ */
+const CARDS = {
+  puertas: { photo: 4, aspect: 3 / 2, focusX: 0.39 }, // la cristalera de roble entera, con algo de la sala a los lados
+  cocinas: { photo: 1 }, // la cocina en L de madera, entera (apaisada)
+}
+
+for (const [category, photos] of ONLY_COVERS ? [] : Object.entries(PHOTOS)) {
   const outDir = resolve(root, 'src/assets/gallery', category)
   await mkdir(outDir, { recursive: true })
 
@@ -141,5 +154,26 @@ for (const [category, { photo, focusX, focusY = 0.5 }] of Object.entries(COVERS)
       .webp({ quality: 78, effort: 6 })
       .toFile(resolve(outDir, `portada-${target}.webp`))
     console.log(`${category}/portada-${target}.webp  ${info.width}x${info.height}  ${(info.size / 1024).toFixed(0)} KB`)
+  }
+}
+
+// Fotos de tarjeta: también del ORIGINAL, una sola compresión.
+for (const [category, { photo, aspect: wanted, focusX = 0.5 }] of Object.entries(CARDS)) {
+  const outDir = resolve(root, 'src/assets/gallery', category)
+  const entry = PHOTOS[category][photo - 1]
+  const rotated = await sharp(resolve(SOURCE, entry.file), { failOn: 'none' }).rotate().toBuffer({ resolveWithObject: true })
+  const { width, height } = rotated.info
+  const aspect = wanted ?? width / height
+  const cropWidth = Math.min(width, Math.round(height * aspect))
+  const cropHeight = Math.round(cropWidth / aspect)
+  const left = Math.max(0, Math.min(width - cropWidth, Math.round(width * focusX - cropWidth / 2)))
+  const top = Math.round((height - cropHeight) / 2)
+  for (const target of WIDTHS) {
+    const info = await sharp(rotated.data)
+      .extract({ left, top, width: cropWidth, height: cropHeight })
+      .resize(target, Math.round(target / aspect))
+      .webp({ quality: 78, effort: 6 })
+      .toFile(resolve(outDir, `tarjeta-${target}.webp`))
+    console.log(`${category}/tarjeta-${target}.webp  ${info.width}x${info.height}  ${(info.size / 1024).toFixed(0)} KB`)
   }
 }

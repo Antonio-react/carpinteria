@@ -110,10 +110,11 @@ await cut({ left: 450, top: 205, width: 186, height: 436 }, shade(leftWhite, 0.8
 
 // 2) Interior del armario alto: blanco de la puerta de encima de la tele.
 const topWhite = await meanColor(heroSrc, 880, 300, 260, 180)
+// Al cuádruple del recorte: se muestra a 344 × 314 y así tiene resolución para pantallas de móvil.
 // Solo el interior (y 198–355): sin la franja de la tapa (137–196, muy gruesa y con una sombra que se
 // veía como una línea) ni el canto de abajo (356–362). Los cantos de arriba y abajo los dibuja HeroDoors,
 // con el mismo grosor en todos los huecos.
-await cut({ left: 850, top: 198, width: 172, height: 157 }, shade(topWhite, 0.85), 'inside-top.webp', { flop: true })
+await cut({ left: 850, top: 198, width: 172, height: 157 }, shade(topWhite, 0.85), 'inside-top.webp', { flop: true, scale: 4 })
 
 // 3) Roble: la veta del fondo de la estantería (en sombra en la foto), coloreada con el tono del canto,
 //    algo más cálido y sin aclarar (aclarado se veía brillante y artificial junto al blanco del frente).
@@ -131,7 +132,7 @@ for (let i = 0; i < grain.length; i++) {
   for (let c = 0; c < 3; c++) oak[i * 3 + c] = Math.max(0, Math.min(255, Math.round(oakTone[c] * WARM[c] * k)))
 }
 await sharp(oak, { raw: { width: g.width, height: g.height, channels: 3 } })
-  .resize(110, 380)
+  .resize(220, 760) // el doble de su tamaño en pantalla (110 × 380), para pantallas de móvil
   .webp({ quality: 82 })
   .toFile(`${outDir}/oak-side.webp`)
-console.log('oak-side.webp 110 × 380')
+console.log('oak-side.webp 220 × 760')

@@ -1,14 +1,12 @@
 import { PageMeta } from '@/components/layout/PageMeta'
 import { ContactSection } from '@/components/sections/ContactSection'
+import { PAGES } from '@/data/pages'
 
 /** Página Contacto: frase de cabecera, datos y formulario. */
 export default function ContactPage() {
   return (
     <>
-      <PageMeta
-        title="Contacto y presupuesto · Carpintería y Decoración"
-        description="Cuéntanos tu idea y la hacemos realidad. Pide presupuesto gratis por el formulario o por correo; te respondemos lo antes posible."
-      />
+      <PageMeta title={PAGES.contact.title} description={PAGES.contact.description} />
       <ContactSection level="h1" />
     </>
   )

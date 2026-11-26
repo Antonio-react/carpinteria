@@ -8,7 +8,7 @@ import { mapsHref } from '@/utils/contactLinks'
 
 const LINE = 'border-ink/20'
 /** Rótulo a máquina en rojo lápiz (como el cajetín del menú móvil y la ficha del taller). */
-const LABEL = `${LINE} border-r py-3.5 pr-4 font-type text-xs text-pencil`
+const LABEL = `${LINE} border-r py-3.5 pr-4 font-type text-xs text-pencil-dark`
 const VALUE = `${LINE} min-w-0 pl-4 text-[15px] leading-relaxed text-ink wrap-anywhere`
 const LINK = 'underline decoration-ink/30 underline-offset-4 hover:decoration-ink'
 
@@ -24,7 +24,8 @@ export function ContactDetails() {
       label: 'escríbenos',
       flush: true,
       value: (
-        <a href={`mailto:${email}`} className={`inline-flex min-h-11 items-center font-medium ${LINK}`}>
+        // Letra algo menor solo en el correo: así cabe en una línea también a 390 px y en portátiles de ~1024 px.
+        <a href={`mailto:${email}`} className={`inline-flex min-h-11 items-center text-[13px] font-medium tracking-tight sm:text-sm sm:tracking-normal lg:text-[13px] lg:tracking-tight xl:text-[15px] xl:tracking-normal ${LINK}`}>
           <span>
             <EmailText email={email} />
           </span>

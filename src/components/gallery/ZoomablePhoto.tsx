@@ -204,7 +204,7 @@ export function ZoomablePhoto({ photo, onZoomChange, onGestureStart, ref }: Zoom
       onPointerCancel={onPointerEnd}
       onClick={onClick}
       onWheel={onWheel}
-      className={`relative max-w-full touch-none overflow-hidden rounded-[12px] shadow-[0_30px_80px_-20px_rgb(0_0_0/0.7)] motion-safe:animate-rise ${zoomed ? 'cursor-zoom-out' : 'cursor-zoom-in'}`}
+      className={`relative max-w-full touch-none overflow-hidden rounded-xl shadow-[0_30px_80px_-20px_rgb(0_0_0/0.7)] motion-safe:animate-rise ${zoomed ? 'cursor-zoom-out' : 'cursor-zoom-in'}`}
     >
       <img
         src={detailSrc ?? photo.srcLarge ?? photo.src}

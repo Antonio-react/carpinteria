@@ -45,7 +45,8 @@ export function Navbar() {
       <header
         onFocusCapture={reveal}
         className={`fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,color,transform] duration-300 ease-out-strong motion-reduce:transition-none lg:border-transparent ${
-          tucked ? '-translate-y-full' : ''
+          // Escondida sube 1rem de más: el logo de escritorio sobresale 5 px por debajo de la barra y asomaba.
+          tucked ? '-translate-y-[calc(100%+1rem)]' : ''
         } ${
           overlay
             ? `text-white ${darkBacking ? 'border-white/10 max-lg:bg-night/80 max-lg:backdrop-blur-md' : 'border-transparent'}`
@@ -60,9 +61,11 @@ export function Navbar() {
               closeMenu()
               scrollTopIfSame('/')
             }}
-            className="grid min-h-11 min-w-11 place-items-center rounded-full transition-transform duration-150 active:scale-95">
-            {/* Escritorio: unos px más grande (56); el dibujo es vectorial, al escalarlo no se emborrona. */}
-            <BrandBadge size={48} className="lg:scale-[1.1667]" />
+            className="grid min-h-11 min-w-11 place-items-center rounded-full transition-transform duration-150 active:scale-95 mt-2 self-start lg:mt-[0.8333rem]">
+            {/* Móvil 56 px, a 8 px del borde de arriba (llega justo al borde de abajo de la barra de 64). Escritorio 72 px, con el borde de arriba a la altura del de la
+                píldora del centro (no centrado en la barra): la píldora mide 53,3 px en una barra de 80,
+                así que empieza a 13,3 px (0.8333rem). */}
+            <BrandBadge size={56} desktopSize={72} />
           </Link>
 
           <div className="absolute left-1/2 hidden -translate-x-1/2 lg:block">

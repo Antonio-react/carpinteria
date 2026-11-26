@@ -3,11 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Carpintería y Decoración · Muebles a medida en toda España</title>
-    <meta
-      name="description"
-      content="Ebanistería y carpintería familiar con más de 40 años de experiencia. Medimos, diseñamos y montamos muebles a medida en toda España. Presupuesto gratis."
-    />
+    <!-- El título, la descripción, el canonical, og:url/og:title/og:description y la ficha del negocio
+         para Google (JSON-LD) los añade al compilar vite/seoHead.ts, con los datos de src/data/pages.ts y
+         src/config/site.ts: aquí no se escriben a mano (como en la web de la escuela). -->
     <!-- Indexación controlada por VITE_ROBOTS (.env): "noindex" en pruebas, "index, follow" al publicar. -->
     <meta name="robots" content="%VITE_ROBOTS%" />
     <meta name="theme-color" content="#0f0d0b" />
@@ -21,19 +19,17 @@
       if (location.pathname === '/') document.documentElement.style.backgroundColor = '#0f0d0b'
     </script>
 
+    <!-- Favicon como en la escuela: PNG 32 (pestañas) y 192 (Google, múltiplo de 48) con fondo
+         transparente; el SVG para los navegadores que lo usan. Generados con scripts/images/logo.mjs. -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
-    <!-- Imagen y textos al compartir el enlace: una sola configuración para toda la web. -->
+    <!-- Imagen al compartir el enlace: una sola configuración para toda la web (los textos, vite/seoHead.ts). -->
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="es_ES" />
     <meta property="og:site_name" content="Carpintería y Decoración" />
-    <meta property="og:title" content="Carpintería y Decoración · Muebles a medida" />
-    <meta
-      property="og:description"
-      content="Más de 40 años haciendo muebles a medida. Medimos, diseñamos y montamos en toda España. Presupuesto gratis."
-    />
-    <meta property="og:url" content="https://%VITE_SITE_DOMAIN%/" />
     <meta property="og:image" content="https://%VITE_SITE_DOMAIN%/og-image.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -50,6 +46,7 @@
     -->
     <form name="contacto" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data" hidden>
       <input type="text" name="nombre" />
+      <input type="text" name="empresa" />
       <input type="email" name="email" />
       <input type="tel" name="telefono" />
       <input type="text" name="ubicacion" />

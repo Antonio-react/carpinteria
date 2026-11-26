@@ -4,6 +4,7 @@
  *   - src/assets/brand/saw.svg    solo la sierra, centrada en su eje (spinner de carga)
  *   - public/favicon.svg          logo completo sobre círculo blanco
  *   - public/apple-touch-icon.png icono para iPhone (180 × 180)
+ *   - public/favicon-32.png, favicon-192.png  favicon en PNG, fondo transparente (192 para Google)
  *
  * Uso (sharp y potrace no son dependencias del proyecto; se instalan solo para esto):
  *   npm i --no-save sharp potrace
@@ -52,4 +53,9 @@ await writeFile('public/favicon.svg', favicon)
 
 // 4) Icono para iPhone.
 await sharp(Buffer.from(favicon)).resize(160, 160, { fit: 'contain', background: '#ffffff' }).extend({ top: 10, bottom: 10, left: 10, right: 10, background: '#ffffff' }).flatten({ background: '#ffffff' }).png().toFile('public/apple-touch-icon.png')
+// Favicon en PNG como en la escuela: 32 (pestañas) y 192 (múltiplo de 48, el que pide Google), con el
+// fondo TRANSPARENTE alrededor del círculo (decidido por Antonio: más natural). Solo el de iPhone es opaco.
+for (const size of [32, 192]) {
+  await sharp(Buffer.from(favicon), { density: 300 }).resize(size, size, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } }).png().toFile(`public/favicon-${size}.png`)
+}
 console.log('Logo, sierra, favicon e icono generados.')

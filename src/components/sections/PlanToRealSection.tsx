@@ -43,7 +43,7 @@ export function PlanToRealSection() {
   )
 
   return (
-    <section aria-labelledby="plano-titulo" className="bg-bone py-24 lg:py-36 lg:compact:py-24">
+    <section aria-labelledby="plano-titulo" className="bg-bone py-24 lg:pt-24 lg:pb-36 lg:compact:pt-12 lg:compact:pb-24">
       <Container className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
         <SectionHeading
           id="plano-titulo"

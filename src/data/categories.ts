@@ -1,4 +1,4 @@
-import { CATEGORY_NAMES, CATEGORY_SLUGS, type CategorySlug } from '@/data/categorySlugs'
+import { CATEGORY_NAMES, CATEGORY_SEO_DESCRIPTIONS, CATEGORY_SLUGS, type CategorySlug } from '@/data/categorySlugs'
 
 /** Foto de la galería. */
 export interface GalleryPhoto {
@@ -29,6 +29,12 @@ export interface Category {
   placeholderCount: number
   /** Texto para el título y la descripción SEO de su página. */
   seoDescription: string
+  /**
+   * Foto de su tarjeta en "Todos los trabajos" cuando pide otra forma que la portada 4:5 del carrusel
+   * (tarjeta-*.webp de scripts/images/gallery.mjs). La foto ES la carpeta: la tarjeta toma su forma y,
+   * si es apaisada, se ensancha (ver src/data/cardSizes.ts). Sin ella, la tarjeta usa la portada.
+   */
+  cardCover?: GalleryPhoto
 }
 
 export const MAX_PHOTOS_PER_CATEGORY = 10
@@ -67,6 +73,18 @@ function galleryCover(category: CategorySlug, alt: string): GalleryPhoto {
     alt,
     width: 960,
     height: 1200,
+  }
+}
+
+/** Foto de tarjeta (480/960/1600) con su propia forma; `width`/`height`: medidas de la de 960. */
+function galleryCard(category: CategorySlug, width: number, height: number, alt: string): GalleryPhoto {
+  return {
+    src: galleryFile(category, 'tarjeta-960'),
+    srcSmall: galleryFile(category, 'tarjeta-480'),
+    srcLarge: galleryFile(category, 'tarjeta-1600'),
+    alt,
+    width,
+    height,
   }
 }
 
@@ -109,7 +127,7 @@ const CATEGORY_LIST: readonly Category[] = [
       'Armarios empotrados y vestidores hechos al milímetro para aprovechar cada hueco de la casa: interiores organizados a medida, puertas correderas o abatibles y acabados en madera natural o lacados.',
     photos: [],
     placeholderCount: 6,
-    seoDescription: 'Armarios empotrados y vestidores a medida, medidos, fabricados y montados por nosotros en toda España.',
+    seoDescription: CATEGORY_SEO_DESCRIPTIONS.armarios,
   },
   {
     slug: 'puertas',
@@ -117,10 +135,11 @@ const CATEGORY_LIST: readonly Category[] = [
     tagline: 'De paso, correderas y de entrada',
     description:
       'Puertas de paso, correderas y de entrada fabricadas y colocadas por nuestro equipo, con el acabado y los herrajes que pide cada casa y ajustadas a su hueco real.',
-    cover: galleryCover('puertas', 'Puerta doble de madera oscura con cristaleras y montante en arco'),
+    cover: galleryCover('puertas', 'Cristalera de roble con arcos de medio punto que separa dos estancias'),
+    cardCover: galleryCard('puertas', 960, 640, 'Cristalera de roble con arcos de medio punto que separa dos estancias'),
     photos: puertasPhotos,
     placeholderCount: 0,
-    seoDescription: 'Puertas de madera a medida: de paso, correderas y de entrada, fabricadas y colocadas por nosotros.',
+    seoDescription: CATEGORY_SEO_DESCRIPTIONS.puertas,
   },
   {
     slug: 'suelos',
@@ -130,7 +149,7 @@ const CATEGORY_LIST: readonly Category[] = [
       'Tarima y suelos de madera colocados con cuidado, desde la preparación de la base hasta el último rodapié, para que el suelo dure tanto como la casa.',
     photos: [],
     placeholderCount: 6,
-    seoDescription: 'Colocación de tarima y suelos de madera, de la base al rodapié, en toda España.',
+    seoDescription: CATEGORY_SEO_DESCRIPTIONS.suelos,
   },
   {
     slug: 'cocinas',
@@ -138,10 +157,11 @@ const CATEGORY_LIST: readonly Category[] = [
     tagline: 'Muebles de cocina hechos en el taller',
     description:
       'Cocinas a medida pensadas para el espacio y la forma de cocinar de cada familia, con muebles fabricados en nuestro taller y montados por nosotros, sin intermediarios.',
-    cover: galleryCover('cocinas', 'Cocina abierta con muebles verde salvia y vigas de madera en el techo'),
+    cover: galleryCover('cocinas', 'Cocina en L con muebles de madera clara, encimera negra y ventana sobre el fregadero'),
+    cardCover: galleryCard('cocinas', 960, 540, 'Cocina en L con muebles de madera clara, armarios altos beige, encimera negra y ventana sobre el fregadero'),
     photos: cocinasPhotos,
     placeholderCount: 0,
-    seoDescription: 'Cocinas de madera a medida, diseñadas, fabricadas y montadas por nuestro taller familiar.',
+    seoDescription: CATEGORY_SEO_DESCRIPTIONS.cocinas,
   },
   {
     slug: 'salones',
@@ -152,7 +172,7 @@ const CATEGORY_LIST: readonly Category[] = [
     cover: galleryCover('salones', 'Mueble de salón a medida con pantalla empotrada, estantería de roble y zócalo negro con chimenea'),
     photos: salonesPhotos,
     placeholderCount: 5,
-    seoDescription: 'Muebles de salón a medida: paneles, estanterías y muebles para televisión y chimenea hechos para cada pared.',
+    seoDescription: CATEGORY_SEO_DESCRIPTIONS.salones,
   },
   {
     slug: 'otros-trabajos',
@@ -162,7 +182,7 @@ const CATEGORY_LIST: readonly Category[] = [
       'Escaleras, revestimientos, mobiliario y encargos especiales que no caben en una sola categoría.',
     photos: [],
     placeholderCount: 6,
-    seoDescription: 'Escaleras, revestimientos, mobiliario y encargos especiales en madera hechos a medida.',
+    seoDescription: CATEGORY_SEO_DESCRIPTIONS['otros-trabajos'],
   },
 ]
 

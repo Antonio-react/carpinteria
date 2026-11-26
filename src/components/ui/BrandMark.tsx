@@ -1,8 +1,8 @@
 import logoUrl from '@/assets/brand/logo.svg'
 
 interface BrandMarkProps {
-  /** Lado en píxeles (el logo es casi cuadrado). */
-  size?: number
+  /** Lado en píxeles (el logo es casi cuadrado), o una medida CSS ("94%") para que siga a su contenedor. */
+  size?: number | string
   className?: string
 }
 

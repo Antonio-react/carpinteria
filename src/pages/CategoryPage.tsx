@@ -8,6 +8,7 @@ import { Container } from '@/components/ui/Container'
 import { CATEGORIES, categoryPath, findCategory } from '@/data/categories'
 import { backTargetFor, readCategoryOrigin } from '@/data/categoryOrigin'
 import { QUOTE_PATH } from '@/data/navigation'
+import { categoryTitle } from '@/data/pages'
 import NotFoundPage from '@/pages/NotFoundPage'
 
 /** Página propia de cada categoría (/trabajos/:slug): descripción general y galería simple. */
@@ -21,11 +22,12 @@ export default function CategoryPage() {
 
   return (
     <>
-      <PageMeta title={`${category.name} a medida · Carpintería y Decoración`} description={category.seoDescription} />
+      <PageMeta title={categoryTitle(category.name)} description={category.seoDescription} />
       <section aria-labelledby="categoria-titulo" className="pt-sheet pb-20 lg:pb-28 lg:compact:pb-20">
         <Container>
-          {/* Arriba, "volver" discreto (para quien quiera salir enseguida); el botón principal va bajo las fotos. */}
-          <BackLink to={back.to} label={back.label} state={back.state} variant="text" />
+          {/* "Volver" arriba (para quien quiera salir enseguida) y otra vez bajo las fotos: los dos iguales, en
+              píldora con borde para que se vean, y a la izquierda, en el mismo sitio. */}
+          <BackLink to={back.to} label={back.label} state={back.state} />
 
           <div className="mt-8 grid gap-8 lg:grid-cols-12">
             <h1 id="categoria-titulo" className="text-5xl leading-none font-medium tracking-[-0.03em] font-stretch-110% sm:text-6xl lg:col-span-6 lg:text-7xl lg:compact:text-6xl">
@@ -39,7 +41,7 @@ export default function CategoryPage() {
           </div>
 
           {/* Al terminar de ver las fotos: volver a donde se abrió la categoría. */}
-          <div className="mt-10 flex justify-center">
+          <div className="mt-10">
             <BackLink to={back.to} label={back.label} state={back.state} />
           </div>
 

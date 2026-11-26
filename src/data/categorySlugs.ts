@@ -18,3 +18,16 @@ export const CATEGORY_NAMES: Record<CategorySlug, string> = {
   salones: 'Salones',
   'otros-trabajos': 'Otros trabajos',
 }
+
+/**
+ * Descripción para Google de la página de cada categoría (mejor entre 70 y 160 caracteres). Aquí y no en
+ * categories.ts para que vite/seoHead.ts pueda escribirla al compilar en el HTML de cada categoría.
+ */
+export const CATEGORY_SEO_DESCRIPTIONS: Record<CategorySlug, string> = {
+  armarios: 'Armarios empotrados y vestidores a medida, medidos, fabricados y montados por nosotros en toda España.',
+  puertas: 'Puertas de madera a medida: de paso, correderas y de entrada, fabricadas y colocadas por nosotros.',
+  suelos: 'Colocación de tarima y suelos de madera, de la base al rodapié, en toda España.',
+  cocinas: 'Cocinas de madera a medida, diseñadas, fabricadas y montadas por nuestro taller familiar.',
+  salones: 'Muebles de salón a medida: paneles, estanterías y muebles para televisión y chimenea hechos para cada pared.',
+  'otros-trabajos': 'Escaleras, revestimientos, mobiliario y encargos especiales en madera hechos a medida.',
+}

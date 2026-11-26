@@ -1,5 +1,6 @@
 import { Link } from 'react-router'
 import { PhotoPlaceholder } from '@/components/ui/PhotoPlaceholder'
+import { cardPhoto, cardSizeSpec } from '@/data/cardSizes'
 import { categoryPath, type Category } from '@/data/categories'
 import type { CategoryLinkState } from '@/data/categoryOrigin'
 import { sketchFor } from '@/data/sketches'
@@ -14,22 +15,29 @@ interface CategoryCardProps {
 
 /**
  * Tarjeta de una categoría en la página de Trabajos: portada (o su boceto a lápiz), nombre y frase.
- * La foto es la misma portada que en el carrusel (4:5), para que las dos se vean igual.
+ * La foto ES la carpeta: la tarjeta toma su forma (la portada 4:5 del carrusel, o su foto de tarjeta
+ * si la tiene) y, si es apaisada, se ensancha (src/data/cardSizes.ts).
+ * Esquinas casi rectas (4/6 px): parecen fotos impresas dejadas sobre la mesa, no tarjetas de app.
  */
 export function CategoryCard({ category, placeholderShape = 'aspect-4/5' }: CategoryCardProps) {
   const { name, tagline } = category
-  const photo = category.cover
+  const photo = cardPhoto(category)
+  const size = cardSizeSpec(category)
+  const ratio = photo ? `${photo.width} / ${photo.height}` : null
+  const srcSet = photo?.srcSmall
+    ? [`${photo.srcSmall} 480w`, `${photo.src} 960w`, ...(photo.srcLarge ? [`${photo.srcLarge} 1600w`] : [])].join(', ')
+    : undefined
   return (
     <Link to={categoryPath(category)} state={FOLDERS_STATE} className="group block transition-transform duration-200 ease-out hover:-translate-y-0.5">
       <div
-        style={photo ? { aspectRatio: `${photo.width} / ${photo.height}` } : undefined}
-        className={`overflow-hidden rounded-[14px] border border-ink/10 bg-paper sm:rounded-[20px] ${photo ? '' : placeholderShape}`}
+        style={ratio ? { aspectRatio: ratio } : undefined}
+        className={`overflow-hidden rounded-sm border border-ink/10 bg-paper sm:rounded-md ${ratio ? '' : placeholderShape}`}
       >
         {photo ? (
           <img
             src={photo.src}
-            srcSet={photo.srcSmall ? `${photo.srcSmall} 480w, ${photo.src} 960w` : undefined}
-            sizes="(min-width: 1024px) 33vw, 50vw"
+            srcSet={srcSet}
+            sizes={size.sizes}
             alt={photo.alt}
             width={photo.width}
             height={photo.height}

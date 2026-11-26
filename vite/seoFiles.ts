@@ -1,5 +1,6 @@
 import type { Plugin } from 'vite'
 import { CATEGORY_NAMES, CATEGORY_SLUGS } from '../src/data/categorySlugs.ts'
+import { LEGAL_PAGES, MAIN_PAGES, type PageInfo } from '../src/data/pages.ts'
 
 /**
  * Genera al compilar robots.txt, sitemap.xml y llms.txt, con el dominio de VITE_SITE_DOMAIN.
@@ -15,24 +16,7 @@ import { CATEGORY_NAMES, CATEGORY_SLUGS } from '../src/data/categorySlugs.ts'
  * <meta name="robots"> (VITE_ROBOTS). Si se bloqueara aquí, Google ni siquiera vería ese "noindex".
  */
 
-interface SitePage {
-  path: string
-  title: string
-  description: string
-}
-
-const PAGES: readonly SitePage[] = [
-  { path: '/', title: 'Inicio', description: 'quiénes somos y un mueble de salón hecho por el taller' },
-  { path: '/trabajos', title: 'Trabajos', description: 'galería de trabajos por categorías' },
-  { path: '/como-trabajamos', title: 'Cómo trabajamos', description: 'medimos, diseñamos y montamos, y preguntas frecuentes' },
-  { path: '/contacto', title: 'Contacto', description: 'pedir presupuesto gratis, correo, teléfonos, horario y dirección del taller' },
-]
-
-const LEGAL_PAGES: readonly SitePage[] = [
-  { path: '/aviso-legal', title: 'Aviso legal', description: 'datos del titular' },
-  { path: '/privacidad', title: 'Política de privacidad', description: 'qué se hace con los datos del formulario' },
-  { path: '/cookies', title: 'Política de cookies', description: 'la web no usa cookies de terceros' },
-]
+// Páginas, nombres y resúmenes: src/data/pages.ts (el mismo archivo que usan las páginas y index.html).
 
 function robotsTxt(origin: string) {
   return `User-agent: *\nAllow: /\n\nSitemap: ${origin}/sitemap.xml\n`
@@ -40,7 +24,7 @@ function robotsTxt(origin: string) {
 
 function sitemapXml(origin: string) {
   const paths = [
-    ...PAGES.map((page) => page.path),
+    ...MAIN_PAGES.map((page) => page.path),
     ...CATEGORY_SLUGS.map((slug) => `/trabajos/${slug}`),
     ...LEGAL_PAGES.map((page) => page.path),
   ]
@@ -50,7 +34,7 @@ function sitemapXml(origin: string) {
 
 /** Resumen en Markdown para asistentes de IA (formato llmstxt.org: un H1, una cita y listas de enlaces). */
 function llmsTxt(origin: string) {
-  const link = (page: SitePage) => `- [${page.title}](${origin}${page.path}): ${page.description}`
+  const link = (page: PageInfo) => `- [${page.name}](${origin}${page.path}): ${page.summary}`
   const categories = CATEGORY_SLUGS.map((slug) => `- [${CATEGORY_NAMES[slug]}](${origin}/trabajos/${slug})`)
 
   return [
@@ -62,7 +46,7 @@ function llmsTxt(origin: string) {
     '',
     '## Páginas',
     '',
-    ...PAGES.map(link),
+    ...MAIN_PAGES.map(link),
     '',
     '## Categorías de trabajos',
     '',
